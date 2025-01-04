@@ -176,6 +176,7 @@ $cyan-700: shade-color($cyan, 40%) !default;
 $cyan-800: shade-color($cyan, 60%) !default;
 $cyan-900: shade-color($cyan, 80%) !default;
 
+
 $blues: (
   "blue-100": $blue-100,
   "blue-200": $blue-200,
@@ -298,26 +299,53 @@ $cyans: (
 // fusv-enable
 
 // scss-docs-start theme-color-variables
-$primary:       $blue !default;
-$secondary:     $gray-600 !default;
-$success:       $green !default;
+// $primary:       $blue !default;
+// $secondary:     $gray-600 !default;
+// $success:       $green !default;
+// $info:          $cyan !default;
+// $warning:       $yellow !default;
+// $danger:        $red !default;
+// $light:         $gray-100 !default;
+// $dark:          $gray-900 !default;
+$secondary-100-sup: #2B2B2B  !default;
+$secondary-100: tint-color($secondary-100-sup, 80%)!default;
 $info:          $cyan !default;
 $warning:       $yellow !default;
 $danger:        $red !default;
 $light:         $gray-100 !default;
 $dark:          $gray-900 !default;
+$primary:       #BF9958 !default;
+$primary-02:    #6E5E57 !default;
+$secondary:     black !default;
+$secondary-25: #F8F8F8 !default;
+$secondary-50: #DEDEDE !default;
+
+$secondary-200: #888381 !default;
+$success:  #E0B770 !default;
+$success-200:  #9D7A3F !default;
+$neutral-100: #FDFBF6!default;
+$neutral-200: #F7F0EA!default;
+
 // scss-docs-end theme-color-variables
 
 // scss-docs-start theme-colors-map
 $theme-colors: (
   "primary":    $primary,
+  "primary-02": $primary-02,
   "secondary":  $secondary,
+  "secondary-25":  $secondary-25,
+  "secondary-50":  $secondary-50,
+  "secondary-100":  $secondary-100,
+  "secondary-200":  $secondary-200,
   "success":    $success,
+  "success-200":    $success-200,
+  "neutral-100":    $neutral-100,
+  "neutral-200":    $neutral-200,
   "info":       $info,
   "warning":    $warning,
   "danger":     $danger,
   "light":      $light,
-  "dark":       $dark
+  "dark":       $dark,
 ) !default;
 // scss-docs-end theme-colors-map
 
