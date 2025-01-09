@@ -1,8 +1,11 @@
 @import "bootstrap/scss/functions";
 @import "./variables";
-
+@import "/node_modules/bootstrap";
+@import "bootstrap/scss/utilities/api";
+@import "./utilities.scss";
 @import "bootstrap/scss/bootstrap.scss";
-
+//字體
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
 .linear{
     background: linear-gradient(90deg, #FFFFFF, #ECE6DC);
 }
