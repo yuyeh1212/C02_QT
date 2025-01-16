@@ -541,14 +541,12 @@ $grid-breakpoints: (
 
 // scss-docs-start container-max-widths
 $container-max-widths: (
-  // sm: 540px,
-  // md: 720px,
-  // lg: 960px,
-  // xl: 1140px,
-  // xxl: 1320px
   sm: 540px,
   md: 720px,
-  lg:1968px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1320px
+
 ) !default;
 // scss-docs-end container-max-widths
 
@@ -836,6 +834,13 @@ $table-variants: (
   "danger":     shift-color($danger, $table-bg-scale),
   "light":      $light,
   "dark":       $dark,
+  "primary-02": $primary-02, 
+  "secondary-25":  $secondary-25,
+  "secondary-50":  $secondary-50,
+  "secondary-200":  $secondary-200,
+  "success-200":    $success-200,
+  "neutral-100":    $neutral-100,
+  "neutral-200":    $neutral-200,
 ) !default;
 // scss-docs-end table-loop
 
