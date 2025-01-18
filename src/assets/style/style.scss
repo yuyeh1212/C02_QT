@@ -9,7 +9,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@200..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
 //基礎設置
 @import"./base.scss";
-
+//表格
+@import "./table.scss";
 .linear{
     background: linear-gradient(90deg, #FFFFFF, #ECE6DC);
 }
