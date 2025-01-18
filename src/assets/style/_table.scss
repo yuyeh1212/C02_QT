@@ -1,0 +1,7 @@
+:root {
+    --custom-table-padding: .25rem;
+}
+
+.table-spacing-sm > :not(caption) > * > * {
+    padding: var(--custom-table-padding);
+}
