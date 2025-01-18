@@ -25,15 +25,15 @@ function App() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
   const artWorksCollection = [
-    { title:'img1',img:'../../public/workImg1.png'},
-    { title:'img2',img:'../../public/workImg2.png'},
-    { title:'img3',img:'../../public/workImg3.png'},
-    { title:'img4',img:'../../public/workImg4.png'},
-    { title:'img5',img:'../../public/workImg5.png'},
-    { title:'img6',img:'../../public/workImg6.png'},
-    { title:'img7',img:'../../public/workImg7.png'},
-    { title:'img8',img:'../../public/workImg8.png'},
-    { title:'img9',img:'../../public/workImg9.png'}
+    { title:'img1',img:'/workImg1.png'},
+    { title:'img2',img:'/workImg2.png'},
+    { title:'img3',img:'/workImg3.png'},
+    { title:'img4',img:'/workImg4.png'},
+    { title:'img5',img:'/workImg5.png'},
+    { title:'img6',img:'/workImg6.png'},
+    { title:'img7',img:'/workImg7.png'},
+    { title:'img8',img:'/workImg8.png'},
+    { title:'img9',img:'/workImg9.png'}
   ];
 
   const collectionSettings = {
@@ -48,11 +48,11 @@ function App() {
 
 
   const allCards = [
-    { title: "lily_dreamnails", text: "細心到連最小的細節都照顧到！整體氛圍超棒，還能與毛小孩互動，簡直是完美的美甲體驗，每次都很期待！", img: "../../public/2149265944.jpg" },
-    { title: "semily_beautygram", text: "美甲師超用心，細節處理得超完美！狗狗和貓咪的陪伴讓整個過程好放鬆，下次一定還會來！", img: "../../public/2149171315.jpg" },
-    { title: "sophie_lifestyle", text: "手足護理超級細心，技術沒話說！不僅過程輕鬆愉快，美甲的效果也特別好，真心推薦給朋友們！", img: "../../public/2149171329.jpg" },
-    { title: "grace_cutevibes", text: "第一次來就超喜歡！不僅款式好看，細節處理也很到位，過程中還能和美甲師聊天，真的超放鬆，絕對...", img: "../../public/26544.jpg" },
-    { title: "julia_nailtime", text: "這裡環境溫馨舒適，美甲做得超細緻，光療的細節處理也非常到位，封層效果讓指甲持久又好看，五星好評！", img: "../../public/nail.jpg" }
+    { title: "lily_dreamnails", text: "細心到連最小的細節都照顧到！整體氛圍超棒，還能與毛小孩互動，簡直是完美的美甲體驗，每次都很期待！", img: "/2149265944.jpg" },
+    { title: "semily_beautygram", text: "美甲師超用心，細節處理得超完美！狗狗和貓咪的陪伴讓整個過程好放鬆，下次一定還會來！", img: "/2149171315.jpg" },
+    { title: "sophie_lifestyle", text: "手足護理超級細心，技術沒話說！不僅過程輕鬆愉快，美甲的效果也特別好，真心推薦給朋友們！", img: "/2149171329.jpg" },
+    { title: "grace_cutevibes", text: "第一次來就超喜歡！不僅款式好看，細節處理也很到位，過程中還能和美甲師聊天，真的超放鬆，絕對...", img: "/26544.jpg" },
+    { title: "julia_nailtime", text: "這裡環境溫馨舒適，美甲做得超細緻，光療的細節處理也非常到位，封層效果讓指甲持久又好看，五星好評！", img: "/nail.jpg" }
   ];
 
   // react-slick 設定
