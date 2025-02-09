@@ -1,52 +1,72 @@
-import React, { Component } from "react";
-import Slider from "react-slick";
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/autoplay";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { Link } from "react-router-dom";
 
 function Section1() {
-  var settings = {
-    dots: true,
-    infinite: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 2000,
-    pauseOnHover: true,
-  };
+  const [manicureData] = useState([
+    {
+      id: 1,
+      image: "/3270.jpg",
+      title: "精心時刻",
+      subTitle: "為您提供專業的手足部美甲",
+      description: "享受舒適獨立的居家工作室服務",
+    },
+    {
+      id: 2,
+      image: "/2149171335.png",
+      title: "精心時刻",
+      subTitle: "為您提供專業的手足部美甲",
+      description: "讓我們一起打造屬於您的美麗時刻！",
+    },
+    {
+      id: 3,
+      image: "/3785.jpg",
+      title: "精心時刻",
+      subTitle: "為您提供專業的手足部美甲",
+      description: "萌寵陪伴與溫馨氣氛，增添更多溫暖。",
+    },
+  ]);
+
   return (
-    <div className="slider-container">
-      <Slider {...settings}>
-        <div className="card text-white">
-          <img src="../public/3270.jpg" alt="" />
-          <div className="card-img-overlay d-flex flex-column justify-content-center align-items-center">
-            <h1 className="card-title fs-10">精心時刻</h1>
-            <h5 className="subTitle fs-7">為您提供專業的手足部美甲</h5>
-            <div className="card-text fs-5">
-              <p>享受舒適獨立的居家工作室服務</p>
-              <p>讓我們一起打造屬於您的美麗時刻！</p>
-              <p>萌寵陪伴與溫馨氣氛，增添更多溫暖。</p>
+    <div className="w-full">
+      <Swiper
+        modules={[Navigation, Pagination, Autoplay]}
+        navigation
+        pagination={{ clickable: true }}
+        slidesPerView={1}
+        spaceBetween={30}
+        autoplay={{ delay: 3000 }}
+        className="h-[942px]"
+      >
+        {manicureData.map((item) => (
+          <SwiperSlide key={item.id} className="relative h-[942px]">
+            {/* 設定背景圖片 */}
+            <div
+              className="absolute inset-0 bg-cover bg-center"
+              style={{ backgroundImage: `url('${item.image}')` }}
+            ></div>
+            {/* 文字區塊 */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-black text-center bg-black/40 py-14">
+              <h1 className="fs-10 fw-bold">{item.title}</h1>
+              <h2 className="fs-7 fw-medium">{item.subTitle}</h2>
+              <p className="fs-5 fw-medium">{item.description}</p>
+              <Link
+                className="btn mt-6 px-5 py-4 btn-primary text-white"
+                to="/reservation"
+              >
+                立即預約
+                <ArrowForwardIcon className="text-white" />
+              </Link>
             </div>
-            <Link className="btn btn-primary btn-lg fs-5 px-5 py-4 text-white" to='/reservation'>
-              前往預約<ArrowForwardIcon className='text-white' />
-            </Link>
-          </div>
-        </div>
-        <div className="card text-white text-center">
-          <img src="../public/3785.jpg" alt="" />
-          <div className="card-img-overlay d-flex flex-column justify-content-center align-items-center">
-            <h1 className="card-title fs-10">精心時刻</h1>
-            <h5 className="subTitle fs-7">為您提供專業的手足部美甲</h5>
-            <div className="card-text fs-5">
-              <p>享受舒適獨立的居家工作室服務</p>
-              <p>讓我們一起打造屬於您的美麗時刻！</p>
-              <p>萌寵陪伴與溫馨氣氛，增添更多溫暖。</p>
-            </div>
-            <Link className="btn btn-primary btn-lg fs-5 px-5 py-4 text-white" to='/reservation'>
-              前往預約<ArrowForwardIcon className='text-white' />
-            </Link>
-          </div>
-        </div>
-      </Slider>
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </div>
   );
 }
