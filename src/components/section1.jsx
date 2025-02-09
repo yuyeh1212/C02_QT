@@ -58,12 +58,16 @@ function Section1() {
             {/* 文字區塊 */}
             <div
               className="absolute inset-0 flex flex-col items-center justify-center text-white text-center py-14 bg-black bg-opacity-50"
-              style={{ backgroundImage: `url( '${item.image}')` }}
+              style={{ backgroundImage: `url( '${item.image}')`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat"
+              }}
             >
-              <h1 className="fs-10 fw-bold leading-lg">{item.title}</h1>
-              <h2 className="fs-7 fw-medium leading-lg">{item.subTitle}</h2>
+              <h1 className="fs-10 fw-bold leading-lg pb-8">{item.title}</h1>
+              <h2 className="fs-7 fw-medium leading-lg pb-8">{item.subTitle}</h2>
               <p className="fs-5 fw-medium leading-lg">{item.description1}</p>
-              <p className="fs-5 fw-medium leading-lg">{item.description2}</p>
+              <p className="fs-5 fw-medium leading-lg py-3">{item.description2}</p>
               <p className="fs-5 fw-medium leading-lg">{item.description3}</p>
               <Link
                 className="btn mt-6 px-5 py-4 btn-primary text-white"
