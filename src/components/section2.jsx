@@ -40,12 +40,9 @@ function Section2() {
     <div className="bg-neutral-200 py-12">
       <section className="container mx-auto text-center">
         <h2 className="text-primary-02 fs-7 font-semibold mb-6">預約步驟</h2>
-        <div className="flex flex-col md:flex-row flex-wrap justify-center gap-8 md:gap-12 px-4 max-w-screen-lg mx-auto">
+        <div className="row gap-8 px-4 mx-auto">
           {cardData.map((item, index) => (
-            <div
-              key={index}
-              className="flex flex-col items-center text-center w-[260px]"
-            >
+            <div key={index} className="col col-sm-2">
               <h3 className="fs-6 font-bold text-gray-800 mb-4">
                 {item.title}
               </h3>
