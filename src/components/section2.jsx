@@ -42,7 +42,7 @@ function Section2() {
         <h2 className="text-primary-02 fs-7 font-semibold mb-6">預約步驟</h2>
         <div className="row gap-8 px-4 mx-auto">
           {cardData.map((item, index) => (
-            <div key={index} className="col col-sm-2">
+            <div key={index} className="col-12 col-xl-2">
               <h3 className="fs-6 font-bold text-gray-800 mb-4">
                 {item.title}
               </h3>
