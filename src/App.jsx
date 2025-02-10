@@ -6,6 +6,7 @@ import Member from './pages/Member';
 import Admin from './pages/Admin';
 import Reservation from './pages/Reservation';
 import NotFound from './pages/Notfound';
+import Footer from './components/Footer';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
         <Route path='/reservation' element={<Reservation/>}></Route>
         <Route path='*' element={<NotFound/>}></Route>
       </Routes>
+      <Footer/>
     </>
   )
 }
