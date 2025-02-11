@@ -1,9 +1,11 @@
 import { Link, Outlet } from "react-router-dom";
 import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
 
 export default function HomeLayout() {
   return (
     <>
+    <Navbar />
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container-fluid">
           <div className="collapse navbar-collapse" id="navbarNav">
