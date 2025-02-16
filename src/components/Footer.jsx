@@ -15,7 +15,7 @@ export default function Footer() {
                 />
             </div>
           </div>
-          <div className="col-12 col-md-6 d-flex justify-content-center">
+          <div className="col-12 col-md-6">
             <div className="ms-5 text-white text-md-start text-center">
                 <p>店家地址：931 屏東縣佳冬鄉光明路16號</p>
                 <p className="py-5">連絡電話：0968386848</p>
