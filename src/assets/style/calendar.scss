@@ -1,0 +1,33 @@
+
+.fc-event {
+    border: none !important;  /* 強制移除所有事件的邊框 */
+  }
+  
+  .fc-daygrid-event {
+    display: inline-flex;
+    align-items: center;
+    width: 96%;
+  }
+  
+  
+  .fc-daygrid-event.custom-event:before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #9D7A3F; /* 根據事件的背景顏色設置 */
+    margin-right: 8px; /* 調整圓點和文字之間的間距 */
+    margin-left: 4px;
+  }
+  
+  .fc-daygrid-event.selected-event:before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #F7F0EA; /* 根據事件的背景顏色設置 */
+    margin-right: 8px; /* 調整圓點和文字之間的間距 */
+    margin-left: 4px;
+  }
