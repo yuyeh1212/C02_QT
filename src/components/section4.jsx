@@ -3,7 +3,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { Link } from 'react-router-dom';
+import CustomButton from './CustomButton';
 
 
 function Section4() {
@@ -74,8 +74,18 @@ function Section4() {
               )}
             </div>
             <div className='row justify-content-center pt-4'>
-              <button className='btn col-10 col-sm-4 btn-outline-primary mx-4 my-2'>瀏覽更多</button>
-              <Link className='btn col-10 col-sm-4 btn-primary mx-4 my-2 text-white' to='/reservation'>立即預約 <ArrowForwardIcon className='text-white' /></Link>
+            <CustomButton 
+                to="/member/reservation" 
+                className="col-10 col-sm-4 mx-4 my-2 btn-outline-primary"
+              >
+                瀏覽更多
+              </CustomButton>
+              <CustomButton 
+                to="/member/reservation" 
+                className="col-10 col-sm-4 mx-4 my-2 text-white btn-primary"
+              >
+                立即預約 <ArrowForwardIcon className="text-white" />
+              </CustomButton>
             </div>
           </section>
         </div>

@@ -57,6 +57,8 @@ const MyCalendar = forwardRef(({ onDateChange }, ref) => {
             initialView="dayGridMonth"
             events={events}
             eventClick={handleEventClick}
+            headerToolbar={false}
+            contentHeight="auto"
             eventClassNames="custom-event"
         />
     );

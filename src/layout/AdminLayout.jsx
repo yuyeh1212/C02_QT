@@ -1,28 +1,38 @@
-import { Link, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 
 export default function AdminLayout() {
   return (
-    <>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <div className="container-fluid">
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav">
-              <li className="nav-item">
-                <Link className="nav-link" to="/admin/reservation">
-                    預約管理
-                </Link>
-              </li>
-
-              <li className="nav-item">
-                <Link className="nav-link" to="/admin/orders">
-                    訂單明細
-                </Link>
-              </li>
-            </ul>
+    <div className="bg-neutral-100">
+      <div className="container">
+        <nav className="row nav justify-content-center pt-4 ">
+          <div className="nav-item col-2">
+            <NavLink 
+              to='/admin/reservation'
+              className={({ isActive }) => 
+                isActive 
+                  ? "nav-link text-center text-dark-grey border-bottom border-primary fw-bold" 
+                  : "nav-link text-center text-primary-02"
+              }
+            >
+              預約管理
+            </NavLink>
           </div>
-        </div>
-      </nav>
-      <Outlet></Outlet>
-    </>
+
+          <div className="nav-item col-2">
+            <NavLink 
+              to='/admin/orders'
+              className={({ isActive }) => 
+                isActive 
+                  ? "nav-link text-center text-dark-grey border-bottom border-primary fw-bold" 
+                  : "nav-link text-center text-primary-02"
+              }
+            >
+              訂單明細
+            </NavLink>
+          </div>
+        </nav>
+        <Outlet></Outlet>
+      </div>
+    </div>
   );
 }
