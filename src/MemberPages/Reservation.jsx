@@ -3,6 +3,7 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import MyCalendar from "../components/MyCalendar";
 import { useRef, useState } from "react";
+import CustomButton from "../components/CustomButton";
 
 export default function Reservation() {
     const calendarRef = useRef(null);
@@ -16,19 +17,22 @@ export default function Reservation() {
                     <div className="my-custom-header d-flex justify-content-between mb-6">
                         <span className="text-primary-02 fw-bold fs-5">{currentMonth}</span>
                         <div>
-                            <button
+                            <CustomButton
+                                type="button"  // 確保它是非提交按鈕
                                 className="btn btn-primary text-white py-2 px-3 me-4"
-                                onClick={() => calendarRef.current.getApi().today()}
+                                onClick={() => calendarRef.current.getApi().today()}  // 點擊時調用 API
                             >
                                 今天
-                            </button>
+                            </CustomButton>
                             <KeyboardArrowLeftIcon
                                 className="text-primary-02"
                                 onClick={() => calendarRef.current.getApi().prev()}
+                                style={{ cursor: 'pointer' }}
                             />
                             <KeyboardArrowRightIcon
                                 className="text-primary-02"
                                 onClick={() => calendarRef.current.getApi().next()}
+                                style={{ cursor: 'pointer' }}
                             />
                         </div>
                     </div>
@@ -78,13 +82,13 @@ export default function Reservation() {
                                     <option value="false">否</option>
                                 </select>
                             </div>
-                            <button
+                            <CustomButton
+                                type="submit"  // 這樣當按鈕被點擊時會提交表單
                                 className="btn btn-primary text-white fs-5 align-items-center justify-content-center d-flex w-100"
-                                type="submit"
                             >
                                 預約
                                 <ArrowForwardIcon className="text-white ms-2" />
-                            </button>
+                            </CustomButton>
                         </form>
                     </div>
                     <div className="col-9 bg-neutral-100 ps-4">

@@ -323,6 +323,7 @@ $success:  #E0B770 !default;
 $success-200:  #9D7A3F !default;
 $neutral-100: #FDFBF6!default;
 $neutral-200: #F7F0EA!default;
+$dark-grey: #484848!default;
 
 // scss-docs-end theme-color-variables
 
@@ -343,6 +344,7 @@ $theme-colors: (
   "danger":     $danger,
   "light":      $light,
   "dark":       $dark,
+  "dark-grey":  $dark-grey,
 ) !default;
 // scss-docs-end theme-colors-map
 
@@ -1229,7 +1231,7 @@ $zindex-levels: (
 // scss-docs-start nav-variables
 $nav-link-padding-y:                .5rem !default;
 $nav-link-padding-x:                1rem !default;
-$nav-link-font-size:                null !default;
+$nav-link-font-size:                1.5rem;//null !default;
 $nav-link-font-weight:              null !default;
 $nav-link-color:                    var(--#{$prefix}link-color) !default;
 $nav-link-hover-color:              var(--#{$prefix}link-hover-color) !default;
