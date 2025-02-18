@@ -19,7 +19,7 @@ const CustomButton = ({ to, type = 'button', className = 'btn btn-primary text-w
 };
 
 CustomButton.propTypes = {
-  to: PropTypes.string.isRequired,
+  to: PropTypes.string,
   type: PropTypes.string,
   className: PropTypes.string,
   children: PropTypes.node.isRequired,

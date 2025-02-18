@@ -15,14 +15,16 @@ const MyCalendar = forwardRef(({ onDateChange }, ref) => {
       { id: "5", title: "14:30~18:30", date:"2025-02-20", backgroundColor: "#F7F0EA", textColor: "#6E5E57",classNames: ['custom-event'] },
       { id: "6", title: "18:30~22:30", date:"2025-02-20", backgroundColor: "#F7F0EA", textColor: "#6E5E57",classNames: ['custom-event'] },
     ]);
+   
   
     // 將 FullCalendar API 傳遞出去，讓外層能控制
     useImperativeHandle(ref, () => ({
         getApi: () => calendarRef.current?.getApi(),
     }));
-
     const calendarRef = useRef(null);
-
+    const handleDatesSet = (info) => {
+        onDateChange(info.view.title);
+    };
     useEffect(() => {
         if (calendarRef.current) {
             const calendarApi = calendarRef.current.getApi();
@@ -60,6 +62,8 @@ const MyCalendar = forwardRef(({ onDateChange }, ref) => {
             headerToolbar={false}
             contentHeight="auto"
             eventClassNames="custom-event"
+            datesSet={handleDatesSet}
+            locale="zh-tw"
         />
     );
 });
