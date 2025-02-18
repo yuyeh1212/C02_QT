@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const CustomButton = ({ to, type = 'button', className = 'btn btn-primary text-white', children, onClick }) => {
+const CustomButton = ({ to, type = 'button', className = 'btn btn-primary text-white', children, onClick ,form}) => {
     // 如果有傳入 to，則渲染 Link，否則渲染 button
     if (to) {
       return (
@@ -12,7 +12,7 @@ const CustomButton = ({ to, type = 'button', className = 'btn btn-primary text-w
     }
   
     return (
-      <button type={type} className={`btn ${className}`} onClick={onClick}>
+      <button type={type} className={`btn ${className}`} onClick={onClick} form={form}>
         {children}
       </button>
     );
@@ -24,6 +24,7 @@ CustomButton.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node.isRequired,
   onClick: PropTypes.func,
+  form:PropTypes.string,
 };
 
 export default CustomButton;
