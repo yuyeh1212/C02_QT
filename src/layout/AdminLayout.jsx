@@ -4,7 +4,7 @@ export default function AdminLayout() {
   return (
     <div className="bg-neutral-100">
       <div className="container">
-        <nav className="row nav justify-content-center pt-4 ">
+        <nav className="row nav justify-content-center pt-4 mb-4">
           <div className="nav-item col-2">
             <NavLink 
               to='/admin/reservation'
