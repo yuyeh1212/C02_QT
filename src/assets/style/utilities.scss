@@ -15,13 +15,5 @@ $utilities: map-merge(
           responsive: true,
         )
       ),
-    "color":
-      map-merge(
-        map-get($utilities, "color"),
-        (
-          responsive: true,
-        )
-      ),
-      
   )
 );

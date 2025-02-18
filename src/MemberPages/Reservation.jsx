@@ -62,13 +62,13 @@ export default function Reservation() {
                                 <label htmlFor="date" className="form-label fw-bold">
                                     想預約的日期和時段：
                                 </label>
-                                <input type="text" className="form-control" id="date" placeholder="點擊日歷選擇預約時段" />
+                                <input type="text" className="form-control form-control-sm" id="date" placeholder="點擊日歷選擇預約時段" />
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="place" className="form-label fw-bold">
                                     手部＆足部：
                                 </label>
-                                <select className="form-select" id="place" defaultValue="">
+                                <select className="form-select form-select-sm" id="place" defaultValue="">
                                     <option value="" disabled>
                                         請選擇手部或足部
                                     </option>
@@ -80,7 +80,7 @@ export default function Reservation() {
                                 <label htmlFor="removeTheArmor" className="form-label fw-bold">
                                     是否需要卸甲：
                                 </label>
-                                <select className="form-select" id="removeTheArmor" defaultValue="">
+                                <select className="form-select form-select-sm" id="removeTheArmor" defaultValue="">
                                     <option value="" disabled>
                                         請選擇是否需要卸甲
                                     </option>
@@ -92,7 +92,7 @@ export default function Reservation() {
                                 <label htmlFor="extensionOfTheArmor" className="form-label fw-bold">
                                     是否需要延甲：
                                 </label>
-                                <select className="form-select" id="extensionOfTheArmor" defaultValue="">
+                                <select className="form-select form-select-sm" id="extensionOfTheArmor" defaultValue="">
                                     <option disabled value="">
                                         請選擇是否需要延甲
                                     </option>
@@ -113,7 +113,7 @@ export default function Reservation() {
                         <div className="bg-white d-none d-md-block">
                             <MyCalendar ref={calendarRef} onDateChange={setCurrentMonth} />
                         </div>
-                        <div className="row d-md-none">
+                        <div className="row gx-2 d-md-none">
                             <div className="col-4">
                             <CustomButton
                             type="button"
@@ -140,11 +140,11 @@ export default function Reservation() {
                             </div>
                         </div>
                         <hr className="border-secondary-50 d-md-none"/>
-                        <div className="row d-md-none">
+                        <div className="row gx-2 d-md-none">
                             <div className="col-4">
                             <CustomButton
                             type="button"
-                            className="btn btn-outline-success-200 px-2 py-1 w-100"
+                            className="btn btn-outline-success-200 px-2 py-1 w-100 "
                             >
                                 10:30-14:30
                             </CustomButton>
@@ -169,7 +169,7 @@ export default function Reservation() {
                         <div className="d-flex justify-content-center d-lg-none">
                         <CustomButton
                                 type="submit"  // 這樣當按鈕被點擊時會提交表單
-                                className="btn btn-primary text-white fs-3 fs-md-4 align-items-center justify-content-center d-flex w-25 mt-4 px-3 py-2"
+                                className="btn btn-primary text-white fs-3 fs-md-4 align-items-center justify-content-center d-flex w-50 mt-4 px-3 py-2"
                                 form='makeAnAppointment'
                             >
                                 預約
