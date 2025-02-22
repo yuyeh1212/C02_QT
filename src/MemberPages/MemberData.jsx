@@ -123,7 +123,7 @@ export default function MemberData() {
             className="btn mt-6 px-5 py-4 btn-primary text-white"
             onClick={() => setIsEditing((prev) => !prev)}
           >
-            {isEditing ? "儲存" : "編輯資料"}
+            {isEditing ? "儲存 →" : "編輯資料 →"}
           </button>
         </div>
       </form>
