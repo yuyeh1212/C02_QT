@@ -51,7 +51,7 @@ export default function MemberLayout() {
                 前往預約 →
               </Link>
 
-              <Link to="/member/center">
+              <Link to="/member/center/data">
                 <img
                   src="/profile.jpg" // 替換成會員頭像的圖片路徑
                   alt="會員頭像"
