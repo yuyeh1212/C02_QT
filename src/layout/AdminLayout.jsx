@@ -5,12 +5,12 @@ export default function AdminLayout() {
     <div className="bg-neutral-100">
       <div className="container">
         <nav className="row nav justify-content-center pt-4 mb-4">
-          <div className="nav-item col-2">
+          <div className="nav-item col-sm-6 col-md-4 col-lg-2">
             <NavLink 
               to='/admin/reservation'
               className={({ isActive }) => 
                 isActive 
-                  ? "nav-link text-center text-dark-grey border-bottom border-primary fw-bold" 
+                  ? "nav-link text-center text-dark-grey border-bottom border-2 border-primary fw-bold" 
                   : "nav-link text-center text-primary-02"
               }
             >
@@ -18,12 +18,12 @@ export default function AdminLayout() {
             </NavLink>
           </div>
 
-          <div className="nav-item col-2">
+          <div className="nav-item col-sm-6 col-md-4 col-lg-2">
             <NavLink 
               to='/admin/orders'
               className={({ isActive }) => 
                 isActive 
-                  ? "nav-link text-center text-dark-grey border-bottom border-primary fw-bold" 
+                  ? "nav-link text-center text-dark-grey border-bottom border-2 border-primary fw-bold" 
                   : "nav-link text-center text-primary-02"
               }
             >

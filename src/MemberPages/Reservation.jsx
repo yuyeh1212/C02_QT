@@ -7,7 +7,8 @@ import CustomButton from "../components/CustomButton";
 import axios from "axios";
 import Radio from "../components/Radio";
 
-const API_URL = import.meta.env.VITE_API_URL
+const API_URL = 'https://web-project-api-zo40.onrender.com';
+const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Impvay5qb2suODc1QGdtYWlsLmNvbSIsInVzZXIiOiJ1c2VyIn0._nSIpeAtPpj-jr1UqcnZpLb1v7QH5tCG884MMND5SzM';
 
 export default function Reservation() {
     const calendarRef = useRef(null);
@@ -16,8 +17,7 @@ export default function Reservation() {
     const [currentMonthEvent,setCurrentMonthEvent] = useState([])
     const [monthEventState,setMonthEventState] = useState([])
     const [currentTime,setCurrentTime] = useState([])
-    const [windowSize, setWindowSize] = useState(
-        window.innerWidth);
+    const [windowSize, setWindowSize] = useState(window.innerWidth);
     const [appointmentState,setAppointmentState] = useState({
         "id": "",
         "name": "",
@@ -31,6 +31,7 @@ export default function Reservation() {
         "nailExtension": ""
     })
     useEffect(() => {
+
         const handleResize = () => {
           setWindowSize(
             window.innerWidth
@@ -45,7 +46,9 @@ export default function Reservation() {
           window.removeEventListener('resize', handleResize);
         };
       }, []);
-
+    
+    //頁面載入讀取日歷資訊
+    
     const handleSubmit =async()=>{
         try {
             await axios.post(`${API_URL}appointment`,{appointmentState})
@@ -59,7 +62,7 @@ export default function Reservation() {
         const value = e.target.value
         setAppointmentState({...appointmentState,[id] : value})
     }
-    
+
     const handleCalendar = (info,mobileInfo,e)=>{
         if(info){
             const date = info.event.startStr
@@ -69,7 +72,7 @@ export default function Reservation() {
             return
         }
         const date = mobileInfo.date
-        const time = mobileInfo.timeSlot
+        const time = mobileInfo.title
         dateInputRef.current.value = `${date} 時: ${time}`
         setAppointmentState({...appointmentState,date : date,timeSlot:time})
     }
@@ -97,12 +100,13 @@ export default function Reservation() {
       };
     //篩選當日時段
     const filterEventTime  = (date)=>{
-        const currentTime = monthEventState.filter((item)=>item.date ===date)
-        setCurrentTime(currentTime)
+        console.log(date);
+        const newCurrentTime = monthEventState.filter((item)=>item.date ===date)
+        setCurrentTime(newCurrentTime)
     }
     //格式化日期>按鈕版本
     const formatDate = (dateStr) => {
-        currentMonthEvent.map
+        // currentMonthEvent.map
         const date = new Date(dateStr);  // 轉換為 Date 物件
         
         const day = date.getDate();  // 獲取日期
@@ -139,56 +143,66 @@ export default function Reservation() {
                         </div>
                     </div>
                 </div>
-                <div className="row flex-lg-md-reverse">
+                <div className="row flex-lg-row-reverse">
                     <div className={`col-lg-9 ps-lg-4 pb-4 pb-lg-0 ${windowSize<992 ?windowSize<768?"":'bg-white':"bg-neutral-100"}`}>
-                        <div className="bg-white d-none d-md-block">
-                            <MyCalendar ref={calendarRef} onDateChange={setCurrentMonth} handleCalendar={handleCalendar} windowSize={windowSize} getCalendarInfo={getCalendarInfo}/>
+                        <div className="bg-white d-none d-lg-block">
+                            <MyCalendar ref={calendarRef} onDateChange={setCurrentMonth} handleCalendar={handleCalendar} windowSize={windowSize} getCalendarInfo={getCalendarInfo} filterEventsByMonth={filterEventsByMonth}/>
                         </div>
-                        <div className="row g-2 d-md-none">
-                            {currentMonthEvent.length > 0 ?(
-                                currentMonthEvent.map((item)=>{
-                                    return(
-                                        <div className="col-4" key={`${item}`}>
-                                            <Radio 
-                                            className="btn btn-outline-success-200 px-2 py-1 w-100"
-                                            id={`radio-${item}`}
-                                            onClick={()=>filterEventTime(item)}
-                                            name="date"
-                                            >
-                                            {formatDate(item)}
-                                            </Radio>
-                                        </div>
-                                    )
-                                })
-                            ):(<p className="text-success-200 text-center">-本月份暫時沒有空檔-</p>)}
-                        </div>
-                        <hr className="border-secondary-50 d-md-none"/>
-                        <div className="row gy-4 d-md-none">
-                            {currentTime?.map((item,index)=>{
-                                return(
-                                    <div key={item.date+item.timeSlot}>
-                                    <Radio
-                                    className="btn btn-outline-success-200 px-2 py-1 w-100"
-                                    id={index}
-                                    onClick={(e)=>handleCalendar("",item)}
-                                    name="time"
-                                    
-                                    >
-                                        {item.timeSlot}
-                                    </Radio>
-                                    </div>
-                                )
-                            })}
-                        </div>
+                        
                         
                     </div>
                     <div className={`col-lg-3 ${windowSize<768?'':'bg-white'} p-4`} style={{ paddingBottom: 48 }}>
                         <form id='makeAnAppointment' onSubmit={handleSubmit}>
                             <div className="mb-4">
                                 <label htmlFor="date" className="form-label fw-bold">
-                                    想預約的日期和時段：
+                                    選擇預約時段：：
                                 </label>
                                 <input type="text" className="form-control form-control-sm" id="date" placeholder="點擊日歷選擇預約時段" ref={dateInputRef}/>
+                            </div>
+                            {/*平板日歷*/}
+                            <div className="mb-4 d-none d-md-block d-lg-none">
+                            <MyCalendar ref={calendarRef} onDateChange={setCurrentMonth} handleCalendar={handleCalendar} windowSize={windowSize} getCalendarInfo={getCalendarInfo} filterEventsByMonth={filterEventsByMonth}/>
+                            </div>
+                            {/*手機板按鈕*/}
+                            <div className={`${currentTime.length>0 ?'mb-4':'mb-6'}`}>
+                                <div className="row g-2 d-md-none">
+                                {currentMonthEvent.length > 0 ?(
+                                    currentMonthEvent.map((item)=>{
+                                        return(
+                                            
+                                            <div className="col-4" key={`${item}`}>
+                                                <Radio 
+                                                className="btn btn-outline-success-200 px-2 py-1 w-100"
+                                                id={`radio-${item}`}
+                                                onClick={()=>filterEventTime(item)}
+                                                name="date"
+                                                >
+                                                {formatDate(item)}
+                                                </Radio>
+                                            </div>
+                                        )
+                                    })
+                                ):(<p className="text-success-200 text-center">-本月份暫時沒有空檔-</p>)}
+                                    </div>
+                                    {currentTime.length > 0 &&<hr className="border-secondary-50 d-md-none"/>}
+                                <div className="row gy-4 d-md-none">
+                                        {currentTime?.map((item,index)=>{
+                                            return(
+                                        
+                                        <div key={item.date+item.title}>
+                                        <Radio
+                                        className="btn btn-outline-success-200 px-2 py-1 w-100"
+                                        id={index}
+                                        onClick={(e)=>handleCalendar("",item)}
+                                        name="time"
+                                        
+                                        >
+                                            {item.title}
+                                        </Radio>
+                                    </div>
+                                    )
+                                    })}
+                                </div>
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="bodyPart" className="form-label fw-bold">
