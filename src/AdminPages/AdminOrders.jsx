@@ -4,11 +4,16 @@ import { useEffect, useState } from "react";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
+const API_URL = 'https://web-project-api-zo40.onrender.com';
+const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInVzZXIiOiJhZG1pbiJ9.jxYxlyf8yETl-iO2wKZT2zrBCMCL3NYOsaDMEytW0c8';
 
 export default function AdminOrders(){
 
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 992); // 初始檢查視窗寬度
       
+    document.cookie = `token=${token};`;
+    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+
     // 監聽視窗大小變化
     useEffect(() => {
       const handleResize = () => {
@@ -22,57 +27,13 @@ export default function AdminOrders(){
       return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+
     const [pageInfo,setPageInfo] = useState({
-        page:1,
-        maxPage:10
+      page:1,
+      maxPage:0
     });
 
-    const [orders, setOrders] = useState([
-      {
-        id: "qt76475358173497",
-        name: "Talor Swift",
-        phone: "0912121212",
-        lineId: "ILoveTalor",
-        date: "2024/12/22",
-        time: "10:30",
-        part: "手部",
-        removeNail: true,
-        extendNail: true,
-      },
-      {
-        id: "qt98765432109876",
-        name: "Alice Wang",
-        phone: "0987654321",
-        lineId: "AliceLoveNails",
-        date: "2024/12/23",
-        time: "14:30",
-        part: "足部",
-        removeNail: false,
-        extendNail: true,
-      },
-      {
-        id: "qt12345678901234",
-        name: "Lisa Chen",
-        phone: "0911222333",
-        lineId: "LisaChen88",
-        date: "2024/12/25",
-        time: "16:00",
-        part: "手部",
-        removeNail: true,
-        extendNail: false,
-      },
-      {
-        id: "qt56789012345678",
-        name: "Emma Liu",
-        phone: "0988111222",
-        lineId: "EmmaLiuNails",
-        date: "2024/12/26",
-        time: "11:30",
-        part: "足部",
-        removeNail: false,
-        extendNail: false,
-      }
-    ]);
+    const [orders, setOrders] = useState([]);
     
 
     const [openOrder, setOpenOrder] = useState({});
@@ -83,21 +44,22 @@ export default function AdminOrders(){
       setOpenOrder(openOrder === orderId ? null : orderId);
     };
 
-    const getOrders = (page=1)=>{
-      setPageInfo({
-          page:page,
-          maxPage:10
-      })
-      // try {
-      //     const res = await axios.get(`api_url`);
-      //     setPageInfo({
-      //         page:page,
-      //         maxPage:10
-      //     })
-      // } catch (error) {
-      //     console.log(error);
-      // }
+    const getOrders = async(page=1)=>{
+      try {
+          const res = await axios.get(`${API_URL}/appointments?page=${page}&limit=10`);
+          setPageInfo({
+              page:res.data.pageInfo.currentPage,
+              maxPage:res.data.pageInfo.totalPages
+          })
+          setOrders(res.data.appointments)
+      } catch (error) {
+          console.log(error);
+      }
     }
+
+    useEffect(()=>{
+      getOrders();
+    },[])
 
     const handlePageChange = (page)=>{
         getOrders(page);
@@ -125,7 +87,7 @@ export default function AdminOrders(){
                                       >
                                         <p className="fw-bold text-primary mb-3">訂單編號：{order.id}</p>
                                         <p className="mb-3"><strong>姓名：</strong> {order.name}</p>
-                                        <p className="mb-3"><strong>預約時段：</strong> {order.date} {order.time}</p>
+                                        <p className="mb-3"><strong>預約時段：</strong> {order.date} {order.timeSlot}</p>
                                         <span className="small text-muted">
                                           查看詳細資訊 {openOrder === order.id ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/> }
                                           
@@ -140,7 +102,7 @@ export default function AdminOrders(){
                                             <tbody>
                                               <tr>
                                                 <td className="text-secondary-200" style={{ width: "120px" }}>LINE ID</td>
-                                                <td>{order.lineId}</td>
+                                                <td>{order.LineID}</td>
                                               </tr>
                                               <tr>
                                                 <td className="text-secondary-200">電話</td>
@@ -149,19 +111,19 @@ export default function AdminOrders(){
                                               <tr>
                                                 <td className="text-secondary-200">手部或足部</td>
                                                 <td>
-                                                  <span className='badge text-bg-neutral-200 text-primary-02'>{order.part}</span>
+                                                  <span className='badge text-bg-neutral-200 text-primary-02'>{order.bodyPart==='hand'?'手部':'足部'}</span>
                                                 </td>
                                               </tr>
                                               <tr>
                                                 <td className="text-secondary-200">是否卸甲</td>
                                                 <td>
-                                                  <span className='badge text-bg-neutral-200 text-primary-02'>{order.removeNail ? "是" : "否"}</span>
+                                                  <span className='badge text-bg-neutral-200 text-primary-02'>{order.nailRemoval ? "是" : "否"}</span>
                                                 </td>
                                               </tr>
                                               <tr>
                                                 <td className="text-secondary-200">是否延甲</td>
                                                 <td>
-                                                  <span className='badge text-bg-neutral-200 text-primary-02'>{order.extendNail ? "是" : "否"}</span>
+                                                  <span className='badge text-bg-neutral-200 text-primary-02'>{order.nailExtension ? "是" : "否"}</span>
                                                 </td>
                                               </tr>
                                             </tbody>
@@ -191,24 +153,24 @@ export default function AdminOrders(){
                                             <td>{order.id}</td>
                                             <td>{order.name}</td>
                                             <td>{order.phone}</td>
-                                            <td>{order.lineId}</td>
+                                            <td>{order.LineID}</td>
                                             <td>
                                               {order.date} <br /> 
                                               {order.time}
                                             </td>
                                             <td>
                                               <p className=" badge text-bg-neutral-200 text-primary-02">
-                                                {order.removeNail?'是':'否'}
+                                                {order.nailRemoval?'是':'否'}
                                                 </p>
                                             </td>
                                             <td>
                                               <p className=" badge text-bg-neutral-200 text-primary-02">
-                                                {order.extendNail?'是':'否'}
+                                                {order.nailExtension?'是':'否'}
                                               </p>
                                             </td>
                                             <td>
                                               <p className=" badge text-bg-neutral-200 text-primary-02">
-                                                {order.part}
+                                                {order.bodyPart==='hand'?'手部':'足部'}
                                               </p>
                                             </td>
                                         </tr>
