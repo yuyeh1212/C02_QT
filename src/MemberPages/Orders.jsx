@@ -32,9 +32,17 @@ export default function Orders() {
 
   // 將 openOrder 改為數組來追踪多個打開的訂單
   const [openOrder, setOpenOrder] = useState(null);
+  
+  // 追踪動畫狀態
+  const [animating, setAnimating] = useState(false);
 
   // 切換訂單開關狀態的函數
   const toggleOrder = (orderId) => {
+    setAnimating(true);
+    setTimeout(() => {
+      setAnimating(false);
+    }, 300); // 動畫持續時間
+    
     setOpenOrder((prev) => (prev === orderId ? null : orderId));
   };
 
@@ -93,73 +101,66 @@ export default function Orders() {
                           {order.timeSlot}
                         </p>
                         <span className="small text-muted">
-                          查看詳細資訊{" "}
-                          {openOrder === order.id ? (
-                            <KeyboardArrowUpIcon />
-                          ) : (
-                            <KeyboardArrowDownIcon />
-                          )}
+                          查看詳細資訊{openOrder === order.id ?<KeyboardArrowUpIcon/>:<KeyboardArrowDownIcon />}
                         </span>
                       </button>
                     </h2>
-                    {/* 手風琴內容 - 使用 React 條件渲染而不是 Bootstrap collapse */}
-                    {openOrder === order.id && (
-                      <div className="accordion-collapse">
-                        <div className="accordion-body">
-                          <div className="card border-0 p-3">
-                            <table className="table table-borderless mb-0">
-                              <tbody>
-                                <tr>
-                                  <td
-                                    className="text-secondary-200"
-                                    style={{ width: "120px" }}
-                                  >
-                                    LINE ID
-                                  </td>
-                                  <td>{order.LineID}</td>
-                                </tr>
-                                <tr>
-                                  <td className="text-secondary-200">電話</td>
-                                  <td>{order.phone}</td>
-                                </tr>
-                                <tr>
-                                  <td className="text-secondary-200">
-                                    手部或足部
-                                  </td>
-                                  <td>
-                                    <span className="badge text-bg-neutral-200 text-primary-02">
-                                      {order.bodyPart === "hand"
-                                        ? "手部"
-                                        : "足部"}
-                                    </span>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td className="text-secondary-200">
-                                    是否卸甲
-                                  </td>
-                                  <td>
-                                    <span className="badge text-bg-neutral-200 text-primary-02">
-                                      {order.nailRemoval ? "是" : "否"}
-                                    </span>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td className="text-secondary-200">
-                                    是否延甲
-                                  </td>
-                                  <td>
-                                    <span className="badge text-bg-neutral-200 text-primary-02">
-                                      {order.nailExtension ? "是" : "否"}
-                                    </span>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
+                    {/* 手風琴內容 - 使用 CSS 過渡效果 */}
+                    <div className={`accordion-body ${openOrder === order.id ? "open" : ""}`}>
+                      <div className="accordion-content p-3">
+                        <div className="card border-0 p-3">
+                          <table className="table table-borderless mb-0">
+                            <tbody>
+                              <tr>
+                                <td
+                                  className="text-secondary-200"
+                                  style={{ width: "120px" }}
+                                >
+                                  LINE ID
+                                </td>
+                                <td>{order.LineID}</td>
+                              </tr>
+                              <tr>
+                                <td className="text-secondary-200">電話</td>
+                                <td>{order.phone}</td>
+                              </tr>
+                              <tr>
+                                <td className="text-secondary-200">
+                                  手部或足部
+                                </td>
+                                <td>
+                                  <span className="badge text-bg-neutral-200 text-primary-02">
+                                    {order.bodyPart === "hand"
+                                      ? "手部"
+                                      : "足部"}
+                                  </span>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td className="text-secondary-200">
+                                  是否卸甲
+                                </td>
+                                <td>
+                                  <span className="badge text-bg-neutral-200 text-primary-02">
+                                    {order.nailRemoval ? "是" : "否"}
+                                  </span>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td className="text-secondary-200">
+                                  是否延甲
+                                </td>
+                                <td>
+                                  <span className="badge text-bg-neutral-200 text-primary-02">
+                                    {order.nailExtension ? "是" : "否"}
+                                  </span>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
                         </div>
                       </div>
-                    )}
+                    </div>
                   </div>
                 ))}
               </div>
