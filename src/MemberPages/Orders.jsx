@@ -31,17 +31,11 @@ export default function Orders() {
   const [orders, setOrders] = useState([]);
 
   // 將 openOrder 改為數組來追踪多個打開的訂單
-  const [openOrders, setOpenOrders] = useState([]);
+  const [openOrder, setOpenOrder] = useState(null);
 
   // 切換訂單開關狀態的函數
   const toggleOrder = (orderId) => {
-    setOpenOrders((prev) => {
-      if (prev.includes(orderId)) {
-        return prev.filter((id) => id !== orderId);
-      } else {
-        return [...prev, orderId];
-      }
-    });
+    setOpenOrder((prev) => (prev === orderId ? null : orderId));
   };
 
   const getOrders = async (page = 1) => {
@@ -83,7 +77,7 @@ export default function Orders() {
                     <h2 className="accordion-header">
                       <button
                         className={`accordion-button bg-secondary-25 d-flex flex-column align-items-start border-0 ${
-                          openOrders.includes(order.id) ? "" : "collapsed"
+                          openOrder === order.id ? "" : "collapsed"
                         }`}
                         type="button"
                         onClick={() => toggleOrder(order.id)}
@@ -100,7 +94,7 @@ export default function Orders() {
                         </p>
                         <span className="small text-muted">
                           查看詳細資訊{" "}
-                          {openOrders.includes(order.id) ? (
+                          {openOrder === order.id ? (
                             <KeyboardArrowUpIcon />
                           ) : (
                             <KeyboardArrowDownIcon />
@@ -109,7 +103,7 @@ export default function Orders() {
                       </button>
                     </h2>
                     {/* 手風琴內容 - 使用 React 條件渲染而不是 Bootstrap collapse */}
-                    {openOrders.includes(order.id) && (
+                    {openOrder === order.id && (
                       <div className="accordion-collapse">
                         <div className="accordion-body">
                           <div className="card border-0 p-3">
