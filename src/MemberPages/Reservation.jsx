@@ -7,7 +7,8 @@ import CustomButton from "../components/CustomButton";
 import axios from "axios";
 import Radio from "../components/Radio";
 
-const API_URL = import.meta.env.VITE_API_URL
+const API_URL = 'https://web-project-api-zo40.onrender.com';
+const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Impvay5qb2suODc1QGdtYWlsLmNvbSIsInVzZXIiOiJ1c2VyIn0._nSIpeAtPpj-jr1UqcnZpLb1v7QH5tCG884MMND5SzM';
 
 export default function Reservation() {
     const calendarRef = useRef(null);
@@ -16,8 +17,7 @@ export default function Reservation() {
     const [currentMonthEvent,setCurrentMonthEvent] = useState([])
     const [monthEventState,setMonthEventState] = useState([])
     const [currentTime,setCurrentTime] = useState([])
-    const [windowSize, setWindowSize] = useState(
-        window.innerWidth);
+    const [windowSize, setWindowSize] = useState(window.innerWidth);
     const [appointmentState,setAppointmentState] = useState({
         "id": "",
         "name": "",
@@ -31,6 +31,7 @@ export default function Reservation() {
         "nailExtension": ""
     })
     useEffect(() => {
+
         const handleResize = () => {
           setWindowSize(
             window.innerWidth
@@ -105,7 +106,7 @@ export default function Reservation() {
     }
     //格式化日期>按鈕版本
     const formatDate = (dateStr) => {
-        currentMonthEvent.map
+        // currentMonthEvent.map
         const date = new Date(dateStr);  // 轉換為 Date 物件
         
         const day = date.getDate();  // 獲取日期

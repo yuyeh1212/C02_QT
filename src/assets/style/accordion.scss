@@ -1,0 +1,4 @@
+// 移除手風琴按鈕的箭頭
+.accordion-button::after {
+    display: none;  // 隱藏箭頭
+}

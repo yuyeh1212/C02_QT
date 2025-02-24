@@ -6,11 +6,21 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import { info } from "sass";
 
-const API_URL = import.meta.env.VITE_API_URL
+const API_URL = 'https://web-project-api-zo40.onrender.com';
+const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Impvay5qb2suODc1QGdtYWlsLmNvbSIsInVzZXIiOiJ1c2VyIn0._nSIpeAtPpj-jr1UqcnZpLb1v7QH5tCG884MMND5SzM';
 
 const MyCalendar = forwardRef(({ onDateChange ,handleCalendar,windowSize,getCalendarInfo,filterEventsByMonth}, ref) => {
 
     const [selectedEventId, setSelectedEventId] = useState(null);
+<<<<<<< HEAD
+    const [calendarInfo,setCalendarInfo] = useState(null)
+    const [events, setEvents] = useState([]);
+
+
+    document.cookie = `token=${token};`;
+    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+    
+=======
     const [eventDate,setEventDate] = useState([])
     const [calendarInfo,setCalendarInfo] = useState(null)
     const [events, setEvents] = useState([
@@ -21,11 +31,15 @@ const MyCalendar = forwardRef(({ onDateChange ,handleCalendar,windowSize,getCale
     //   { id: "5", title: "14:30~18:30", date:"2025-02-20", backgroundColor: "#F7F0EA", textColor: "#6E5E57",classNames: ['custom-event'] },
     //   { id: "6", title: "18:30~22:30", date:"2025-02-20", backgroundColor: "#F7F0EA", textColor: "#6E5E57",classNames: ['custom-event'] },
     ]);
+>>>>>>> origin/main
     //在API中抓日期
     useEffect(()=>{
         (async()=>{
             try {
                 const res = await axios.get(`${API_URL}scheduleConfig`)
+<<<<<<< HEAD
+                
+=======
                 // const reservedTimeSlots = res.data[0].reservedTimeSlots
                 // const newEvents = reservedTimeSlots.map(({ date, timeSlot }) => ({
                 //     id: date + timeSlot,
@@ -37,6 +51,7 @@ const MyCalendar = forwardRef(({ onDateChange ,handleCalendar,windowSize,getCale
                 // //   }));
                 // setEvents(newEvents)
                 // setEventDate(reservedTimeSlots)
+>>>>>>> origin/main
                 const config = res.data[0]
                 const generateCalendarEvents = (config) => {
                     const fixedSlots = [

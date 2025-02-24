@@ -9,8 +9,8 @@ export default function Pagination ({pageInfo, handlePageChange}){
             <div className="d-flex justify-content-center align-items-center">
                 <nav>
                     <ul className="pagination ">
-                        <li className={`page-item ${ (pageInfo.page===1) && 'disabled'}`}>
-                            <button className="page-link text-primary-02" onClick={()=>handlePageChange(pageInfo.page-1)}>
+                        <li className='page-item'>
+                            <button className={`page-link ${ (pageInfo.page===1)? 'disabled text-secondary-50': 'text-primary-02'}`} onClick={()=>handlePageChange(pageInfo.page-1)}>
                                 <ArrowBackIosIcon />
                             </button>
                         </li>
@@ -23,8 +23,8 @@ export default function Pagination ({pageInfo, handlePageChange}){
                                 </li>
                             ))
                         }
-                        <li className={`page-item ${ (pageInfo.page===pageInfo.maxPage) && 'disabled'}  `}>
-                            <button className='page-link text-primary-02'  
+                        <li className='page-item'>
+                            <button className={`page-link ${ (pageInfo.page===pageInfo.maxPage)? 'disabled text-secondary-50': 'text-primary-02'}`}  
                                 onClick={()=>handlePageChange(pageInfo.page+1)}>
                                 <ArrowForwardIosIcon/>
                             </button>
