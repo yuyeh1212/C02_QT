@@ -73,11 +73,11 @@ export default function AdminOrders(){
                         isMobile? 
                             <div className="accordion" id="accordionExample">
                                 {orders.map((order) => (
-                                  <div className="accordion-item border-0 shadow-sm mb-3 rounded" key={order.id}>
+                                  <div className="accordion-item shadow-sm mb-3 rounded bg-secondary-25" key={order.id} >
                                     {/* 手風琴標題 */}
                                     <h2 className="accordion-header">
                                       <button
-                                        className={`accordion-button bg-white d-flex flex-column align-items-start ${openOrder === order.id ? "" : "collapsed"}`}
+                                        className={`accordion-button bg-secondary-25 d-flex flex-column align-items-start border-0 ${openOrder === order.id ? "" : "collapsed"}`}
                                         type="button"
                                         data-bs-toggle="collapse"
                                         data-bs-target={`#collapse-${order.id}`}
@@ -97,7 +97,7 @@ export default function AdminOrders(){
                                     {/* 手風琴內容 */}
                                     <div id={`collapse-${order.id}`} className="accordion-collapse collapse" data-bs-parent="#accordionExample">
                                       <div className="accordion-body">
-                                        <div className="card border-0 shadow-sm p-3 bg-light">
+                                        <div className="card border-0 p-3">
                                           <table className="table table-borderless mb-0">
                                             <tbody>
                                               <tr>

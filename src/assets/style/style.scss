@@ -16,6 +16,10 @@
 @import "./pagination.scss";
 //按鈕樣式
 @import './button.scss';
+//手風琴樣式
+@import './accordion.scss';
+//輪播樣式
+@import './slick-slider.scss';
 
 .linear{
     background: linear-gradient(90deg, #FFFFFF, #ECE6DC);
@@ -31,25 +35,4 @@
   width: 100%;  /* 讓圖片填滿容器 */
   object-fit: cover;
   border-radius: 0; /* 保持圖片比例，不拉伸，裁剪多餘部分 */
-}
-
-.slick-dots li button:before {
-  color: $secondary-50;
-  font-size: 16px;
-}
-
-.slick-dots li.slick-active button:before {
-  color: $primary-02;
-  font-size: 16px;
-}
-  
-  
-.slick-slider,
-.slick-slide {
-  -webkit-tap-highlight-color: transparent; /* 移除點擊時的高亮效果 */
-}
-
-// 移除手風琴按鈕的箭頭
-.accordion-button::after {
-  display: none;  // 隱藏箭頭
 }
