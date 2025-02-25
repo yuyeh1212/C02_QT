@@ -9,15 +9,16 @@ import CustomButton from "../components/CustomButton";
 import CloseIcon from '@mui/icons-material/Close';
 
 
-
 export default function AdminReservation(){
     const calendarRef = useRef(null);
     const [currentMonth, setCurrentMonth] = useState("");
     const [selectedDate, setSelectedDate] = useState(dayjs());
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768); // 初始檢查視窗寬度
-  
+
+
     // 監聽視窗大小變化
     useEffect(() => {
+
       const handleResize = () => {
         setIsMobile(window.innerWidth <= 768); // 每次resize都檢查視窗寬度
       };
@@ -25,8 +26,10 @@ export default function AdminReservation(){
       // 當視窗尺寸變動時，更新狀態
       window.addEventListener('resize', handleResize);
   
+      
       // 清理事件監聽
       return () => window.removeEventListener('resize', handleResize);
+
     }, []);
 
 
