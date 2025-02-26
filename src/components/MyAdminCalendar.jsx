@@ -47,7 +47,7 @@ const MyAdminCalendar = forwardRef(({ onDateChange,getCalendarInfo,unavailableDa
             ...reservedTimeSlots.map((slot) => ({
                 title: slot.timeSlot,
                 date: slot.date,
-                backgroundColor: "blue",
+                backgroundColor: "#9D7A3F",
                 allDay: true,
                 extendedProps: { type: "reserved" },
             })),
