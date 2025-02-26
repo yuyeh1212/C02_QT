@@ -160,7 +160,7 @@ export default function Reservation() {
                                 <input type="text" className="form-control form-control-sm" id="date" placeholder="點擊日歷選擇預約時段" ref={dateInputRef}/>
                             </div>
                             {/*平板日歷*/}
-                            <div className="mb-4 d-none d-md-block d-lg-none">
+                            <div className="mb-4 d-none d-md-block d-lg-none user-calendar" >
                             <MyCalendar ref={calendarRef} onDateChange={setCurrentMonth} handleCalendar={handleCalendar} windowSize={windowSize} getCalendarInfo={getCalendarInfo} filterEventsByMonth={filterEventsByMonth}/>
                             </div>
                             {/*手機板按鈕*/}

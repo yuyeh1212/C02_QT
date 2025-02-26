@@ -1,6 +1,23 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 
 export default function AdminLayout() {
+
+  const navigate = useNavigate();
+  
+  const user = useSelector((state)=>{
+    return state.user.user;
+  })
+
+  useEffect(()=>{
+    if(user!=='admin'){
+      console.log(user)
+      //跳轉回登入頁
+      // navigate('/login');
+    }
+  },[user])
+
   return (
     <div className="bg-neutral-100">
       <div className="container">
