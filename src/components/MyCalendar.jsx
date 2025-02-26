@@ -5,8 +5,10 @@ import { forwardRef, useEffect, useState, useImperativeHandle, useRef } from "re
 import PropTypes from "prop-types";
 import axios from "axios";
 import { info } from "sass";
+import { useDispatch } from "react-redux";
+import { setLoading } from "../slice/loadingSlice";
 
-const API_URL = 'https://web-project-api-zo40.onrender.com';
+const API_URL = 'http://localhost:3000/';
 const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Impvay5qb2suODc1QGdtYWlsLmNvbSIsInVzZXIiOiJ1c2VyIn0._nSIpeAtPpj-jr1UqcnZpLb1v7QH5tCG884MMND5SzM';
 
 const MyCalendar = forwardRef(({ onDateChange ,handleCalendar,windowSize,getCalendarInfo,filterEventsByMonth}, ref) => {
@@ -22,9 +24,13 @@ const MyCalendar = forwardRef(({ onDateChange ,handleCalendar,windowSize,getCale
     //   { id: "5", title: "14:30~18:30", date:"2025-02-20", backgroundColor: "#F7F0EA", textColor: "#6E5E57",classNames: ['custom-event'] },
     //   { id: "6", title: "18:30~22:30", date:"2025-02-20", backgroundColor: "#F7F0EA", textColor: "#6E5E57",classNames: ['custom-event'] },
     ]);
+    const dispatch = useDispatch();
+    
     //在API中抓日期
     useEffect(()=>{
+        
         (async()=>{
+            dispatch(setLoading(true))
             try {
                 const res = await axios.get(`${API_URL}scheduleConfig`)
                 // const reservedTimeSlots = res.data[0].reservedTimeSlots
@@ -88,6 +94,11 @@ const MyCalendar = forwardRef(({ onDateChange ,handleCalendar,windowSize,getCale
                 generateCalendarEvents(config);
             } catch (error) {
                 console.log(error);
+            }finally{
+                setTimeout(()=>{
+                    dispatch(setLoading(false))
+                },500
+                )
             }
         })()
     },[])
@@ -106,11 +117,15 @@ const MyCalendar = forwardRef(({ onDateChange ,handleCalendar,windowSize,getCale
     },[events])
 
     const handleDatesSet = (info) => {
+        dispatch(setLoading(true))
         onDateChange(info.view.title);
         setCalendarInfo(info)
         if( events.length !== 0){
             getCalendarInfo(info,events);
         }
+        setTimeout(()=>{
+            dispatch(setLoading(false))
+        },500)
     };
 
     const handleEventClick = (info) => {
