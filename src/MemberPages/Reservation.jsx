@@ -6,6 +6,10 @@ import { useRef, useState ,useEffect} from "react";
 import CustomButton from "../components/CustomButton";
 import axios from "axios";
 import Radio from "../components/Radio";
+import Loading from "../components/Loading";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading } from "../slice/loadingSlice";
+
 
 const API_URL = 'https://web-project-api-zo40.onrender.com';
 const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Impvay5qb2suODc1QGdtYWlsLmNvbSIsInVzZXIiOiJ1c2VyIn0._nSIpeAtPpj-jr1UqcnZpLb1v7QH5tCG884MMND5SzM';
@@ -30,6 +34,11 @@ export default function Reservation() {
         "nailRemoval": "",
         "nailExtension": ""
     })
+
+    //讀取狀態
+    
+    const isLoading = useSelector((state)=> state.loading.isLoading)
+
     useEffect(() => {
 
         const handleResize = () => {
@@ -100,7 +109,6 @@ export default function Reservation() {
       };
     //篩選當日時段
     const filterEventTime  = (date)=>{
-        console.log(date);
         const newCurrentTime = monthEventState.filter((item)=>item.date ===date)
         setCurrentTime(newCurrentTime)
     }
@@ -261,6 +269,7 @@ export default function Reservation() {
                     </div>
                 </div>
             </div>
+            {isLoading && <Loading></Loading>}
         </div>
     );
 }
