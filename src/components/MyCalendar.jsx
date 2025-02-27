@@ -79,7 +79,7 @@ const MyCalendar = forwardRef(({ onDateChange ,handleCalendar,windowSize,getCale
                                     date: dateStr,
                                     backgroundColor: "#F7F0EA",
                                     textColor: "#6E5E57",
-                                    classNames: ["custom-event"],
+                                    classNames: ["custom-events"],
                                     id: `${dateStr}-${slot.title}`
                                         .replace(/[:～]/g, "0")
                                         .replace(/-/g, "1"),
@@ -130,21 +130,21 @@ const MyCalendar = forwardRef(({ onDateChange ,handleCalendar,windowSize,getCale
 
     const handleEventClick = (info) => {
         handleCalendar(info)
-        // getCalendarInfo(info,events);
+        getCalendarInfo(info,events);
         // 取消先前選中的事件樣式
         if (selectedEventId) {
             const prevEvent = info.view.calendar.getEventById(selectedEventId);
             if (prevEvent) {
                 prevEvent.setProp("backgroundColor", "#F7F0EA"); // 恢復原始背景顏色
                 prevEvent.setProp("textColor", "#6E5E57"); // 恢復原始文字顏色
-                prevEvent.setProp("classNames", ['custom-event']); // 恢復原始樣式
+                prevEvent.setProp("classNames", ['custom-events']); // 恢復原始樣式
             }
         }
 
         // 設定當前點擊的事件為選中狀態
         info.event.setProp("backgroundColor", "#9D7A3F"); // 選中後的背景顏色
         info.event.setProp("textColor", "#FFFFFF"); // 選中後的文字顏色
-        info.event.setProp("classNames", ['custom-event', 'selected-event']); // 設置選中狀態的樣式
+        info.event.setProp("classNames", ['custom-events', 'selected-event']); // 設置選中狀態的樣式
 
         // 更新選中的事件 ID
         setSelectedEventId(info.event.id);
