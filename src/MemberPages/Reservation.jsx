@@ -13,7 +13,7 @@ import AlertModal from "../components/alertModal";
 import { Navigate, useNavigate } from "react-router-dom";
 
 
-// const API_URLL = 'https://web-project-api-zo40.onrender.com';
+const API_URLL = 'https://web-project-api-zo40.onrender.com';
 const API_URL = import.meta.env.VITE_API_URL;
 
 //後台
@@ -39,7 +39,8 @@ export default function Reservation() {
         "timeSlot": "",
         "bodyPart": "",
         "nailRemoval": "",
-        "nailExtension": ""
+        "nailExtension": "",
+        "LineID":""
     })
     const navigate = useNavigate()
     //讀取狀態
@@ -58,7 +59,8 @@ export default function Reservation() {
                     'name':userState.name,
                     'birthday': userState.birthday,
                     'email': userState.email,
-                    'phone': userState.phone,}
+                    'phone': userState.phone,
+                    'LineID': userState.LineID}
                 )
             } catch (error) {
                 alert('登入異常,為您跳轉到登入頁面')
@@ -92,11 +94,12 @@ export default function Reservation() {
     //頁面載入讀取日歷資訊
     
     const handleSubmit =async()=>{
+        console.log(appointmentState);
         try {
-            await axios.post(`${API_URL}appointment`,{appointmentState})
+            await axios.post(`${API_URLL}/appointments`,appointmentState)
             setShowModal(true)
         } catch (error) {
-            console.log(error.response);
+            console.log(error);
         }
     }
 

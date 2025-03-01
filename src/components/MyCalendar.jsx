@@ -32,7 +32,7 @@ const MyCalendar = forwardRef(({ onDateChange ,handleCalendar,windowSize,getCale
         (async()=>{
             dispatch(setLoading(true))
             try {
-                const res = await axios.get(`${API_URL}scheduleConfig`)
+                const res = await axios.get(`${API_URLL}scheduleConfig`)
                 // const reservedTimeSlots = res.data[0].reservedTimeSlots
                 // const newEvents = reservedTimeSlots.map(({ date, timeSlot }) => ({
                 //     id: date + timeSlot,
