@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setUserData } from "../slice/userSlice";
+import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css";
 import $ from "jquery";
@@ -9,14 +12,14 @@ const token =
   "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInVzZXIiOiJhZG1pbiJ9.jxYxlyf8yETl-iO2wKZT2zrBCMCL3NYOsaDMEytW0c8";
 
 export default function MemberData() {
+  const dispatch = useDispatch();
+
+  // 從 Redux 取得會員資料
+  const userData = useSelector((state) => state.userSlice);
+
+  // 用 Redux 會員資料初始化 formData
+  const [formData, setFormData] = useState(userData);
   const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    birthday: "",
-    email: "",
-    phone: "",
-    LineID: "",
-  });
 
   useEffect(() => {
     $("#datepicker")
@@ -31,17 +34,6 @@ export default function MemberData() {
           ...prev,
           birthday: $("#datepicker").val(),
         }));
-      });
-    // 取得會員資料
-    axios
-      .get(`${API_URL}/member`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => {
-        setFormData(res.data);
-      })
-      .catch((err) => {
-        console.error("取得會員資料失敗:", err);
       });
   }, []);
 
@@ -59,7 +51,10 @@ export default function MemberData() {
       )
       .then((res) => {
         console.log("更新成功:", res.data);
-        setIsEditing(false); // 儲存成功後關閉編輯模式
+        setIsEditing(false);
+
+        // 更新 Redux Store
+        dispatch(setUserData(formData));
       })
       .catch((err) => {
         console.error("更新失敗:", err);
@@ -136,7 +131,7 @@ export default function MemberData() {
                 value={formData.phone}
                 disabled={!isEditing}
                 onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
+                  setFormData({ ...formData, phone: e.target.value })
                 }
               />
             </div>
@@ -151,7 +146,7 @@ export default function MemberData() {
                 value={formData.lineID}
                 disabled={!isEditing}
                 onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
+                  setFormData({ ...formData, LineID: e.target.value })
                 }
               />
             </div>
