@@ -1,18 +1,32 @@
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setUserData } from "../slice/userSlice";
+import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css";
 import $ from "jquery";
 import "bootstrap-datepicker";
+import { useNavigate } from "react-router-dom";
+
+const API_URL = "https://web-project-api-zo40.onrender.com";
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InF0MTIzMjMyMyIsInVzZXIiOiJ1c2VyIiwiaWF0IjoxNzQxMDE4NzY5LCJleHAiOjE3NDEwMjIzNjl9.luCpcxxXMnZ23XO6rTZ2ZkQ0IUjOsVV1y_wJ5muJ9Ak';
 
 export default function MemberData() {
-  const [isEditing, setIsEditing] = useState(false);
+  const dispatch = useDispatch();
+
+
+  // 用 Redux 會員資料初始化 formData
   const [formData, setFormData] = useState({
+    id:"",
     name: "",
     birthday: "",
     email: "",
     phone: "",
-    lineID: "",
+    LineID: "",
   });
+  const [isEditing, setIsEditing] = useState(false);
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     $("#datepicker")
@@ -29,6 +43,55 @@ export default function MemberData() {
         }));
       });
   }, []);
+
+  useEffect(()=>{
+    document.cookie = `token=${token};`;
+    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+    (async()=>{
+        try {
+            const res = await axios.get(`${API_URL}/login/check`)
+            const userState = res.data.user
+            console.log(userState);
+            setFormData({...setFormData,
+                'id':userState.id,
+                'name':userState.name,
+                'birthday': userState.birthday,
+                'email': userState.email,
+                'phone': userState.phone,
+                'LineID': userState.LineID}
+            )
+        } catch (error) {
+            console.log(error)
+            alert('登入異常,為您跳轉到登入頁面')
+            setTimeout(()=>{
+                navigate('/login')
+            },2000)
+        }
+    })()
+},[])
+
+  const handleSave = () => {
+    axios
+      .patch(
+        `${API_URL}/members/update`,
+        {
+          id: formData.id,
+          email: formData.email,
+          phone: formData.phone,
+          LineID: formData.LineID,
+        }
+      )
+      .then((res) => {
+        console.log("更新成功:", res.data);
+        setIsEditing(false);
+
+        // 更新 Redux Store
+        dispatch(setUserData(formData));
+      })
+      .catch((err) => {
+        console.error("更新失敗:", err);
+      });
+  };
 
   return (
     <section className="container">
@@ -66,7 +129,7 @@ export default function MemberData() {
                     width="16"
                     height="16"
                     fill="currentColor"
-                    class="bi bi-calendar3"
+                    className="bi bi-calendar3"
                     viewBox="0 0 16 16"
                   >
                     <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2M1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857z" />
@@ -86,7 +149,7 @@ export default function MemberData() {
                 value={formData.email}
                 disabled={!isEditing}
                 onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, email: e.target.value }))
+                  setFormData({ ...formData, email: e.target.value })
                 }
               />
             </div>
@@ -100,7 +163,7 @@ export default function MemberData() {
                 value={formData.phone}
                 disabled={!isEditing}
                 onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, phone: e.target.value }))
+                  setFormData({ ...formData, phone: e.target.value })
                 }
               />
             </div>
@@ -112,26 +175,30 @@ export default function MemberData() {
                 type="text"
                 className="form-control"
                 id="inputLineID"
-                value={formData.lineID}
+                value={formData.LineID}
                 disabled={!isEditing}
                 onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, lineID: e.target.value }))
+                  setFormData({ ...formData, LineID: e.target.value })
                 }
               />
             </div>
-            <div className="col-12 d-flex justify-content-center">
-            
-            </div>
+            <div className="col-12 d-flex justify-content-center"></div>
           </form>
         </div>
         <div className="col-12 d-flex justify-content-center pt-6">
-            <button
-                type="button"
-                className="btn px-5 py-4 btn-primary text-white"
-                onClick={() => setIsEditing((prev) => !prev)}
-            >
-              {isEditing ? "儲存 →" : "編輯資料 →"}
-            </button>
+          <button
+            type="button"
+            className="btn px-5 py-4 btn-primary text-white"
+            onClick={() => {
+              if (isEditing) {
+                handleSave();
+              } else {
+                setIsEditing(true);
+              }
+            }}
+          >
+            {isEditing ? "儲存" : "編輯資料"}
+          </button>
         </div>
       </div>
     </section>
