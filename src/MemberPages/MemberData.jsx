@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setUserData } from "../slice/userSlice";
-import { setLoading } from "../slice/loadingSlice";
-import { showAlert } from "../slice/alertSlice";
+import AlertModal from "../components/AlertModal";
+import Loading from "../components/Loading";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css";
@@ -18,11 +18,12 @@ export default function MemberData() {
 
   // 從 Redux 取得會員資料
   const userData = useSelector((state) => state.userSlice);
-  const isLoading = useSelector((state) => state.loading.isLoading);
 
   // 用 Redux 會員資料初始化 formData
   const [formData, setFormData] = useState(userData);
   const [isEditing, setIsEditing] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [alert, setAlert] = useState({ show: false, message: "", type: "" });
 
   useEffect(() => {
     $("#datepicker")
@@ -40,8 +41,16 @@ export default function MemberData() {
       });
   }, []);
 
+  const showAlert = (message, type) => {
+    setAlert({ show: true, message, type });
+  };
+
+  const closeAlert = () => {
+    setAlert({ ...alert, show: false });
+  };
+
   const handleSave = async () => {
-    dispatch(setLoading(true));
+    setIsLoading(true);
 
     try {
       const res = await axios.patch(`${API_URL}/members/update`, {
@@ -54,17 +63,21 @@ export default function MemberData() {
       console.log("更新成功:", res.data);
       setIsEditing(false);
       dispatch(setUserData(formData)); // 更新 Redux Store
-      dispatch(showAlert({ message: "更新成功！", type: "success" }));
+      showAlert("更新成功！", "success");
     } catch (err) {
       console.error("更新失敗:", err);
-      dispatch(showAlert({ message: "更新失敗，請重試！", type: "error" }));
+      showAlert("更新失敗，請重試！", "error");
     } finally {
-      dispatch(setLoading(false));
+      setIsLoading(false);
     }
   };
 
   return (
     <section className="container">
+      {isLoading && <Loading />}
+      <AlertModal show={alert.show} onClose={closeAlert}>
+        {alert.message}
+      </AlertModal>
       <div className="row d-flex justify-content-center">
         <div className="col-9 col-lg-6">
           <form className="row  g-3 bg-white p-6 ">
