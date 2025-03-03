@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setUserData } from "../slice/userSlice";
+import { setLoading } from "../slice/loadingSlice";
+import { showAlert } from "../slice/alertSlice";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css";
@@ -16,6 +18,7 @@ export default function MemberData() {
 
   // 從 Redux 取得會員資料
   const userData = useSelector((state) => state.userSlice);
+  const isLoading = useSelector((state) => state.loading.isLoading);
 
   // 用 Redux 會員資料初始化 formData
   const [formData, setFormData] = useState(userData);
@@ -37,28 +40,27 @@ export default function MemberData() {
       });
   }, []);
 
-  const handleSave = () => {
-    axios
-      .patch(
-        `${API_URL}/member`,
-        {
-          id: formData.id,
-          email: formData.email,
-          phone: formData.phone,
-          LineID: formData.LineID,
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
-      )
-      .then((res) => {
-        console.log("更新成功:", res.data);
-        setIsEditing(false);
+  const handleSave = async () => {
+    dispatch(setLoading(true));
 
-        // 更新 Redux Store
-        dispatch(setUserData(formData));
-      })
-      .catch((err) => {
-        console.error("更新失敗:", err);
+    try {
+      const res = await axios.patch(`${API_URL}/members/update`, {
+        id: formData.id,
+        email: formData.email,
+        phone: formData.phone,
+        LineID: formData.LineID,
       });
+
+      console.log("更新成功:", res.data);
+      setIsEditing(false);
+      dispatch(setUserData(formData)); // 更新 Redux Store
+      dispatch(showAlert({ message: "更新成功！", type: "success" }));
+    } catch (err) {
+      console.error("更新失敗:", err);
+      dispatch(showAlert({ message: "更新失敗，請重試！", type: "error" }));
+    } finally {
+      dispatch(setLoading(false));
+    }
   };
 
   return (
@@ -157,15 +159,10 @@ export default function MemberData() {
           <button
             type="button"
             className="btn px-5 py-4 btn-primary text-white"
-            onClick={() => {
-              if (isEditing) {
-                handleSave();
-              } else {
-                setIsEditing(true);
-              }
-            }}
+            onClick={() => (isEditing ? handleSave() : setIsEditing(true))}
+            disabled={isLoading}
           >
-            {isEditing ? "儲存" : "編輯資料"}
+            {isLoading ? "處理中..." : isEditing ? "儲存" : "編輯資料"}
           </button>
         </div>
       </div>
