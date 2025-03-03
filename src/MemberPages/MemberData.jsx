@@ -4,6 +4,10 @@ import "bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css";
 import $ from "jquery";
 import "bootstrap-datepicker";
 
+const API_URL = "https://web-project-api-zo40.onrender.com";
+const token =
+  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInVzZXIiOiJhZG1pbiJ9.jxYxlyf8yETl-iO2wKZT2zrBCMCL3NYOsaDMEytW0c8";
+
 export default function MemberData() {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
@@ -11,7 +15,7 @@ export default function MemberData() {
     birthday: "",
     email: "",
     phone: "",
-    lineID: "",
+    LineID: "",
   });
 
   useEffect(() => {
@@ -28,7 +32,39 @@ export default function MemberData() {
           birthday: $("#datepicker").val(),
         }));
       });
+    // 取得會員資料
+    axios
+      .get(`${API_URL}/member`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        setFormData(res.data);
+      })
+      .catch((err) => {
+        console.error("取得會員資料失敗:", err);
+      });
   }, []);
+
+  const handleSave = () => {
+    axios
+      .patch(
+        `${API_URL}/member`,
+        {
+          id: formData.id,
+          email: formData.email,
+          phone: formData.phone,
+          LineID: formData.LineID,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+      .then((res) => {
+        console.log("更新成功:", res.data);
+        setIsEditing(false); // 儲存成功後關閉編輯模式
+      })
+      .catch((err) => {
+        console.error("更新失敗:", err);
+      });
+  };
 
   return (
     <section className="container">
@@ -86,7 +122,7 @@ export default function MemberData() {
                 value={formData.email}
                 disabled={!isEditing}
                 onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, email: e.target.value }))
+                  setFormData({ ...formData, email: e.target.value })
                 }
               />
             </div>
@@ -100,7 +136,7 @@ export default function MemberData() {
                 value={formData.phone}
                 disabled={!isEditing}
                 onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, phone: e.target.value }))
+                  setFormData({ ...formData, email: e.target.value })
                 }
               />
             </div>
@@ -115,23 +151,27 @@ export default function MemberData() {
                 value={formData.lineID}
                 disabled={!isEditing}
                 onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, lineID: e.target.value }))
+                  setFormData({ ...formData, email: e.target.value })
                 }
               />
             </div>
-            <div className="col-12 d-flex justify-content-center">
-            
-            </div>
+            <div className="col-12 d-flex justify-content-center"></div>
           </form>
         </div>
         <div className="col-12 d-flex justify-content-center pt-6">
-            <button
-                type="button"
-                className="btn px-5 py-4 btn-primary text-white"
-                onClick={() => setIsEditing((prev) => !prev)}
-            >
-              {isEditing ? "儲存 →" : "編輯資料 →"}
-            </button>
+          <button
+            type="button"
+            className="btn px-5 py-4 btn-primary text-white"
+            onClick={() => {
+              if (isEditing) {
+                handleSave();
+              } else {
+                setIsEditing(true);
+              }
+            }}
+          >
+            {isEditing ? "儲存" : "編輯資料"}
+          </button>
         </div>
       </div>
     </section>
