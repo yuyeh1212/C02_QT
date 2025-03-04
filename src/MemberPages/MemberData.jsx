@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setUserData } from "../slice/userSlice";
+import AlertModal from "../components/AlertModal";
+import Loading from "../components/Loading";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css";
@@ -9,11 +11,11 @@ import "bootstrap-datepicker";
 import { useNavigate } from "react-router-dom";
 
 const API_URL = "https://web-project-api-zo40.onrender.com";
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InF0MTIzMjMyMyIsInVzZXIiOiJ1c2VyIiwiaWF0IjoxNzQxMDE4NzY5LCJleHAiOjE3NDEwMjIzNjl9.luCpcxxXMnZ23XO6rTZ2ZkQ0IUjOsVV1y_wJ5muJ9Ak';
+const token =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InF0MTIzMjMyMyIsInVzZXIiOiJ1c2VyIiwiaWF0IjoxNzQxMDY3MTc3LCJleHAiOjE3NDEwNzA3Nzd9.VjcA_MSMZwb0fZKCBA-kB7uX0AmU_U7kNS4-OK71A14";
 
 export default function MemberData() {
   const dispatch = useDispatch();
-
 
   // 用 Redux 會員資料初始化 formData
   const [formData, setFormData] = useState({
@@ -25,8 +27,9 @@ export default function MemberData() {
     LineID: "",
   });
   const [isEditing, setIsEditing] = useState(false);
-
-  const navigate = useNavigate()
+  const [isLoading, setIsLoading] = useState(false);
+  const [alert, setAlert] = useState({ show: false, message: "", type: "" });
+  const navigate = useNavigate();
 
   useEffect(() => {
     $("#datepicker")
@@ -52,8 +55,7 @@ export default function MemberData() {
             const res = await axios.get(`${API_URL}/login/check`)
             const userState = res.data.user
             console.log(userState);
-            setFormData({...setFormData,
-                'id':userState.id,
+            setFormData({...formData,
                 'name':userState.name,
                 'birthday': userState.birthday,
                 'email': userState.email,
@@ -62,7 +64,6 @@ export default function MemberData() {
             )
         } catch (error) {
             console.log(error)
-            alert('登入異常,為您跳轉到登入頁面')
             setTimeout(()=>{
                 navigate('/login')
             },2000)
@@ -70,31 +71,43 @@ export default function MemberData() {
     })()
 },[])
 
-  const handleSave = () => {
-    axios
-      .patch(
-        `${API_URL}/members/update`,
-        {
-          id: formData.id,
-          email: formData.email,
-          phone: formData.phone,
-          LineID: formData.LineID,
-        }
-      )
-      .then((res) => {
-        console.log("更新成功:", res.data);
-        setIsEditing(false);
+  const showAlert = (message, type) => {
+    setAlert({ show: true, message, type });
+  };
 
-        // 更新 Redux Store
-        dispatch(setUserData(formData));
-      })
-      .catch((err) => {
-        console.error("更新失敗:", err);
+  const closeAlert = () => {
+    setAlert({ ...alert, show: false });
+  };
+
+  const handleSave = async () => {
+    setIsLoading(true);
+
+    try {
+      const res = await axios.patch(`${API_URL}/members/update`, {
+        id: formData.id,
+        email: formData.email,
+        phone: formData.phone,
+        LineID: formData.LineID,
       });
+
+      console.log("更新成功:", res.data);
+      setIsEditing(false);
+      dispatch(setUserData(formData)); // 更新 Redux Store
+      showAlert("更新成功！", "success");
+    } catch (err) {
+      console.error("更新失敗:", err);
+      showAlert("更新失敗，請重試！", "error");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <section className="container">
+      {isLoading && <Loading />}
+      <AlertModal show={alert.show} onClose={closeAlert}>
+        {alert.message}
+      </AlertModal>
       <div className="row d-flex justify-content-center">
         <div className="col-9 col-lg-6">
           <form className="row  g-3 bg-white p-6 ">
@@ -189,15 +202,10 @@ export default function MemberData() {
           <button
             type="button"
             className="btn px-5 py-4 btn-primary text-white"
-            onClick={() => {
-              if (isEditing) {
-                handleSave();
-              } else {
-                setIsEditing(true);
-              }
-            }}
+            onClick={() => (isEditing ? handleSave() : setIsEditing(true))}
+            disabled={isLoading}
           >
-            {isEditing ? "儲存" : "編輯資料"}
+            {isLoading ? "處理中..." : isEditing ? "儲存" : "編輯資料"}
           </button>
         </div>
       </div>
