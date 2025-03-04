@@ -1,8 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "./slice/authSlice.js"; // 正確的檔案名稱
+import userReducer from "./slice/userSlice";
+import loadingReducer from "./slice/loadingSlice";
+import authReducer from "./slice/authSlice";
+import alertReducer from "./slice/alertSlice"
 
 export const store = configureStore({
   reducer: {
-    auth: authReducer, // 與 slice 名稱保持一致
+    userData: userReducer,
+    loading: loadingReducer,
+    auth: authReducer,
+    alert: alertReducer,
   },
 });

@@ -1,0 +1,16 @@
+// 移除手風琴按鈕的箭頭
+.accordion-button::after {
+    display: none;  // 隱藏箭頭
+}
+
+.accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+.accordion-body.open {
+    max-height: 400px; /* 足夠大的最大高度 */
+    transition: max-height 0.3s ease-in;
+}

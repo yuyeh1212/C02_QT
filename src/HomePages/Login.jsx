@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import Swal from 'sweetalert2';
-import { useDispatch, useSelector } from "react-redux";
-import { login } from "../store/slice/authSlice";
+import { useDispatch } from "react-redux";
+import { login } from "../slice/authSlice";
+import { setUserData } from '../slice/userSlice';
+import CustomButton from "../components/CustomButton";
 // 自定義輸入元件
 const FormInput = ({ register, errors, id, labelText, type = "text", rules = {} }) => {
   return (
@@ -19,15 +20,7 @@ const FormInput = ({ register, errors, id, labelText, type = "text", rules = {} 
     </div>
   );
 };
-// const AuthStatus=()=>{
-//   const isAuthenticated = useSelector((state)=>state.auth.isAuthenticated);
-//   return (
-//     <div className="mt-3">
-//       <h2>使用者狀態：</h2>
-//       <p>{isAuthenticated ? "✅ 已登入" : "❌ 未登入"}</p>
-//     </div>
-//   );
-// };
+
 
 export default function Login() {
   const {
@@ -47,32 +40,18 @@ export default function Login() {
         email: data.email,
         password: data.password,
       });
-
       // 儲存 Token
       document.cookie = `token=${res.data.token}; path=/;`;
       axios.defaults.headers.common.Authorization = `Bearer ${res.data.token}`;
-      localStorage.setItem("user", JSON.stringify(res.data.user));
+      
+      dispatch(setUserData(res.data.user))
 
       // 更新 Redux 登入狀態
-dispatch(login());
-      // 登入成功，跳轉頁面
-      await Swal.fire({
-        title: "登入成功！",
-        text: `歡迎 ${res.data.user.name}！`,
-        icon: "success",
-        timer: 1500,
-        showConfirmButton: false,
-      });
+      dispatch(login());
 
-      navigate(res.data.user.user === "admin" ? "/admin" : "/orders");
+      navigate(res.data.user.user === "admin" ? "/admin/reservation" : "/member/center/data");
     } catch (error) {
       console.log(error)
-      Swal.fire({
-        title: "登入失敗",
-        text: error.response?.data?.message || "請稍後再試",
-        icon: "error",
-        confirmButtonText: "確定",
-      });
     }
   };
 
@@ -82,7 +61,7 @@ dispatch(login());
       <form className="d-flex flex-column gap-3" onSubmit={handleSubmit(handleLogin)}>
         <FormInput id="email" type="email" labelText="Email address" register={register} errors={errors} />
         <FormInput id="password" type="password" labelText="Password" register={register} errors={errors} />
-        <button type="submit" className="btn btn-primary">登入</button>
+        <CustomButton type="submit" className="btn btn-primary">登入</CustomButton>
       </form>
 
       {/* 顯示當前登入狀態 */}

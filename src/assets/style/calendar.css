@@ -1,5 +1,6 @@
+@charset "UTF-8";
 .fc-event {
-  border: none !important;  /* 強制移除所有事件的邊框 */
+  border: none !important; /* 強制移除所有事件的邊框 */
   cursor: pointer !important;
 }
 
@@ -7,16 +8,15 @@
   display: inline-flex;
   align-items: center;
   width: 96%;
-  padding-left:8px;
+  padding-left: 8px;
 }
 
-.fc-daygrid-event.custom-events{
+.fc-daygrid-event.custom-events {
   padding-left: 0;
 }
 
-
 .fc-daygrid-event.custom-events:before {
-  content: '';
+  content: "";
   display: inline-block;
   width: 8px;
   height: 8px;
@@ -26,11 +26,11 @@
 }
 
 .fc-daygrid-event.selected-event:before {
-  content: '';
+  content: "";
   display: inline-block;
   width: 8px;
   height: 8px;
   border-radius: 50%;
   background-color: #F7F0EA; /* 根據事件的背景顏色設置 */
   margin-left: 2px;
-}
+}/*# sourceMappingURL=calendar.css.map */

@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import axios from "axios";
-import Swal from "sweetalert2";
+
 
 const FormInput = ({ register, errors, id, labelText, type = "text", rules = {} }) => {
     return (
@@ -39,7 +39,6 @@ export default function Register() {
     const handleRegister = async (data) => {
         setIsLoading(true); // 開始 loading
         try {
-            console.log(data);
             const { confirmPassword, ...modifiedData } = data;
             const finalData = {
                 ...modifiedData,
@@ -55,25 +54,24 @@ export default function Register() {
             await new Promise((resolve) => setTimeout(resolve, randomDelay));
 
             const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/register`, finalData);
-            console.log("註冊成功", res);
 
-            Swal.fire({
-                title: "註冊成功！",
-                text: `歡迎 ${res.data.user.name}！請登入您的帳號`,
-                icon: "success",
-                timer: 1500,
-                showConfirmButton: false,
-            });
+            // Swal.fire({
+            //     title: "註冊成功！",
+            //     text: `歡迎 ${res.data.user.name}！請登入您的帳號`,
+            //     icon: "success",
+            //     timer: 1500,
+            //     showConfirmButton: false,
+            // });
 
             navigate("/login");
         } catch (error) {
             console.error("請求錯誤", error);
-            Swal.fire({
-                title: "註冊失敗",
-                text: error.response?.data?.message || "發生錯誤，請稍後再試",
-                icon: "error",
-                confirmButtonText: "確定",
-            });
+            // Swal.fire({
+            //     title: "註冊失敗",
+            //     text: error.response?.data?.message || "發生錯誤，請稍後再試",
+            //     icon: "error",
+            //     confirmButtonText: "確定",
+            // });
         } finally {
             setIsLoading(false); // 確保關閉 loading
         }
@@ -83,7 +81,7 @@ export default function Register() {
         email: {
             required: "信箱為必填",
             pattern: {
-                value: /^[a-zA-Z0-9_]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                value:/^[a-zA-Z0-9._]{5,}@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
                 message: "請輸入有效的電子郵件地址",
             },
         },
@@ -123,7 +121,7 @@ export default function Register() {
     return (
         <div className="d-flex flex-column min-vh-100">
             {/* Loading 畫面 */}
-            {isLoading && (
+            {/* {isLoading && (
                 <div className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
                     style={{ backdropFilter: "blur(8px)", backgroundColor: "rgba(0, 0, 0, 0.5)",zIndex: 1050  }}>
                     <div className="text-center">
@@ -133,7 +131,7 @@ export default function Register() {
                         <h3 className="mt-3 fw-bold text-dark">載入中，請稍候...</h3>
                     </div>
                 </div>
-            )}
+            )} */}
 
 
             <div className="flex-grow-1">
