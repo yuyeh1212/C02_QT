@@ -6,13 +6,10 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
 const API_URL = "https://web-project-api-zo40.onrender.com";
 const token =
-  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInVzZXIiOiJhZG1pbiJ9.jxYxlyf8yETl-iO2wKZT2zrBCMCL3NYOsaDMEytW0c8";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InF0MTIzMjMyMyIsInVzZXIiOiJ1c2VyIiwiaWF0IjoxNzQxMDY3MTc3LCJleHAiOjE3NDEwNzA3Nzd9.VjcA_MSMZwb0fZKCBA-kB7uX0AmU_U7kNS4-OK71A14";
 
 export default function Orders() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 992);
-
-  document.cookie = `token=${token};`;
-  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 
   useEffect(() => {
     const handleResize = () => {
@@ -55,6 +52,7 @@ export default function Orders() {
         page: res.data.pageInfo.currentPage,
         maxPage: res.data.pageInfo.totalPages,
       });
+      console.log(res);
       setOrders(res.data.appointments);
     } catch (error) {
       console.log(error);
@@ -62,6 +60,9 @@ export default function Orders() {
   };
 
   useEffect(() => {
+    document.cookie = `token=${token};`;
+    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+
     getOrders();
   }, []);
 

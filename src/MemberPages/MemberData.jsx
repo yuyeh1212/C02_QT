@@ -8,22 +8,28 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css";
 import $ from "jquery";
 import "bootstrap-datepicker";
+import { useNavigate } from "react-router-dom";
 
 const API_URL = "https://web-project-api-zo40.onrender.com";
 const token =
-  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInVzZXIiOiJhZG1pbiJ9.jxYxlyf8yETl-iO2wKZT2zrBCMCL3NYOsaDMEytW0c8";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InF0MTIzMjMyMyIsInVzZXIiOiJ1c2VyIiwiaWF0IjoxNzQxMDY3MTc3LCJleHAiOjE3NDEwNzA3Nzd9.VjcA_MSMZwb0fZKCBA-kB7uX0AmU_U7kNS4-OK71A14";
 
 export default function MemberData() {
   const dispatch = useDispatch();
 
-  // 從 Redux 取得會員資料
-  const userData = useSelector((state) => state.userSlice);
-
   // 用 Redux 會員資料初始化 formData
-  const [formData, setFormData] = useState(userData);
+  const [formData, setFormData] = useState({
+    id:"",
+    name: "",
+    birthday: "",
+    email: "",
+    phone: "",
+    LineID: "",
+  });
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [alert, setAlert] = useState({ show: false, message: "", type: "" });
+  const navigate = useNavigate();
 
   useEffect(() => {
     $("#datepicker")
@@ -40,6 +46,30 @@ export default function MemberData() {
         }));
       });
   }, []);
+
+  useEffect(()=>{
+    document.cookie = `token=${token};`;
+    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+    (async()=>{
+        try {
+            const res = await axios.get(`${API_URL}/login/check`)
+            const userState = res.data.user
+            console.log(userState);
+            setFormData({...formData,
+                'name':userState.name,
+                'birthday': userState.birthday,
+                'email': userState.email,
+                'phone': userState.phone,
+                'LineID': userState.LineID}
+            )
+        } catch (error) {
+            console.log(error)
+            setTimeout(()=>{
+                navigate('/login')
+            },2000)
+        }
+    })()
+},[])
 
   const showAlert = (message, type) => {
     setAlert({ show: true, message, type });
@@ -112,7 +142,7 @@ export default function MemberData() {
                     width="16"
                     height="16"
                     fill="currentColor"
-                    class="bi bi-calendar3"
+                    className="bi bi-calendar3"
                     viewBox="0 0 16 16"
                   >
                     <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2M1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857z" />
@@ -158,7 +188,7 @@ export default function MemberData() {
                 type="text"
                 className="form-control"
                 id="inputLineID"
-                value={formData.lineID}
+                value={formData.LineID}
                 disabled={!isEditing}
                 onChange={(e) =>
                   setFormData({ ...formData, LineID: e.target.value })

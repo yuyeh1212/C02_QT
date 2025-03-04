@@ -9,7 +9,7 @@ import Radio from "../components/Radio";
 import Loading from "../components/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "../slice/loadingSlice";
-import AlertModal from "../components/alertModal";
+import AlertModal from "../components/AlertModal";
 import { Navigate, useNavigate } from "react-router-dom";
 
 
