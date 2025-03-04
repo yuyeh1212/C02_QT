@@ -10,8 +10,8 @@ import Loading from "../components/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "../slice/loadingSlice";
 import AlertModal from "../components/alertModal";
-import { Navigate, useNavigate } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 const API_URLL = 'https://web-project-api-zo40.onrender.com';
 const API_URL = import.meta.env.VITE_API_URL;
@@ -42,11 +42,28 @@ export default function Reservation() {
         "nailExtension": "",
         "LineID":""
     })
+
+    //hookForm
+    const {
+        register,
+        handleSubmit,
+        formState:{errors},
+    } = useForm(
+        {
+            defaultValues:appointmentState,
+        }
+    )
+    console.log('errors',errors);
+
+    const onSubmit = (data)=>{
+        console.log(data)
+    }
+    //指定頁面
     const navigate = useNavigate()
     //讀取狀態
     const dispatch = useDispatch()
     const isLoading = useSelector((state)=> state.loading.isLoading)
-    //會員資料讀取
+    // 會員資料讀取
     useEffect(()=>{
         document.cookie = `token=${token};`;
         axios.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -63,6 +80,7 @@ export default function Reservation() {
                     'LineID': userState.LineID}
                 )
             } catch (error) {
+                console.log(error.response.data);
                 alert('登入異常,為您跳轉到登入頁面')
                 setTimeout(()=>{
                     navigate('/login')
@@ -93,13 +111,12 @@ export default function Reservation() {
 
     //頁面載入讀取日歷資訊
     
-    const handleSubmit =async()=>{
-        console.log(appointmentState);
+    const pushHandleSubmit =async()=>{
         try {
-            await axios.post(`${API_URLL}/appointments`,appointmentState)
+            await axios.post(`${API_URL}appointment`,{appointmentState})
             setShowModal(true)
         } catch (error) {
-            console.log(error);
+            console.log(error.response);
         }
     }
 
@@ -197,19 +214,31 @@ export default function Reservation() {
                         
                     </div>
                     <div className={`col-lg-3 ${windowSize<768?'':'bg-white'} p-4`} style={{ paddingBottom: 48 }}>
-                        <form id='makeAnAppointment' onSubmit={handleSubmit}>
+                        <form id='makeAnAppointment' onSubmit={handleSubmit(onSubmit)}>
                             <div className="mb-4">
                                 <label htmlFor="date" className="form-label fw-bold">
                                     選擇預約時段：：
                                 </label>
-                                <input type="text" className="form-control form-control-sm" id="date" placeholder="點擊日歷選擇預約時段" ref={dateInputRef}/>
+                                <input type="text" 
+                                className="form-control form-control-sm" 
+                                id="date"  placeholder="點擊日歷選擇預約時段" 
+                                ref={dateInputRef}
+                                {...register('date',{
+                                    required:{value:true,
+                                        message:"必填 : 請確認預約時段"
+                                    }
+                                })}
+                                />
+                                {errors.date && <div className="text-danger text-center mt-2 fs-2" >
+                                    {errors.date.message}
+                                </div>}
                             </div>
                             {/*平板日歷*/}
                             <div className="mb-4 d-none d-md-block d-lg-none user-calendar" >
                             <MyCalendar ref={calendarRef} onDateChange={setCurrentMonth} handleCalendar={handleCalendar} windowSize={windowSize} getCalendarInfo={getCalendarInfo} filterEventsByMonth={filterEventsByMonth}/>
                             </div>
                             {/*手機板按鈕*/}
-                            <div className={`${currentTime.length>0 ?'mb-4':'mb-6'}`}>
+                            <div className={`d-block d-md-none ${currentTime.length>0 ?'mb-4':'mb-6'}`}>
                                 <div className="row g-2 d-md-none">
                                 {currentMonthEvent.length > 0 ?(
                                     currentMonthEvent.map((item)=>{
@@ -253,37 +282,73 @@ export default function Reservation() {
                                 <label htmlFor="bodyPart" className="form-label fw-bold">
                                     手部＆足部：
                                 </label>
-                                <select className="form-select form-select-sm" id="bodyPart" defaultValue="" onChange={handleInputChange} >
+                                <select className="form-select form-select-sm" 
+                                id="bodyPart"
+                                defaultValue=""
+                                onChange={handleInputChange} 
+                                {...register('bodyPart',{
+                                    required:{value:true,
+                                        message:"必填 : 請選擇施作部位"
+                                    }
+                                })}
+                                >
                                     <option value="" disabled>
                                         請選擇手部或足部
                                     </option>
                                     <option value="手部">手部</option>
                                     <option value="足部">足部</option>
                                 </select>
+                                {errors.bodyPart && <div className="text-danger text-center mt-2 fs-2" >
+                                    {errors.bodyPart.message}
+                                </div>}
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="nailRemoval" className="form-label fw-bold">
                                     是否需要卸甲：
                                 </label>
-                                <select className="form-select form-select-sm" id="nailRemoval" defaultValue="" onChange={handleInputChange}>
+                                <select className="form-select form-select-sm" 
+                                id="nailRemoval" 
+                                defaultValue=""
+                                onChange={handleInputChange}
+                                {...register('nailRemoval',{
+                                    required:{value:true,
+                                        message:"必填 : 請選擇是否需要卸甲"
+                                    }
+                                })}
+                                >
                                     <option value="" disabled>
                                         請選擇是否需要卸甲
                                     </option>
                                     <option value="true">是</option>
                                     <option value="false">否</option>
                                 </select>
+                                {errors.nailRemoval && <div className="text-danger text-center mt-2 fs-2" >
+                                    {errors.nailRemoval.message}
+                                </div>}
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="nailExtension" className="form-label fw-bold">
                                     是否需要延甲：
                                 </label>
-                                <select className="form-select form-select-sm" id="nailExtension" defaultValue="" onChange={handleInputChange}>
+                                <select className="form-select form-select-sm"
+                                id="nailExtension"
+                                defaultValue=""
+                                onChange={handleInputChange}
+                                {...register('nailExtension',{
+                                    required:{value:true,
+                                        message:"必填 : 請選擇是否需要延甲"
+                                    }
+                                })}
+                                >
                                     <option disabled value="">
                                         請選擇是否需要延甲
                                     </option>
                                     <option value="true">是</option>
                                     <option value="false">否</option>
                                 </select>
+                                {errors.nailExtension && <div className="text-danger text-center mt-2 fs-2" >
+                                    {errors.nailExtension.message}
+                                </div>}
                             </div>
                             <CustomButton
                                 type="submit"  // 這樣當按鈕被點擊時會提交表單
