@@ -19,11 +19,10 @@ const API_URL = import.meta.env.VITE_API_URL;
 //後台
 // const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Impvay5qb2suODc1QGdtYWlsLmNvbSIsInVzZXIiOiJ1c2VyIn0._nSIpeAtPpj-jr1UqcnZpLb1v7QH5tCG884MMND5SzM';
 //會員
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InF0MTIzMjMyMyIsInVzZXIiOiJ1c2VyIiwiaWF0IjoxNzQxMTU5MjcxLCJleHAiOjE3NDExNjI4NzF9.RhnatlEYDnbjK4XjB4nZrDiU_yeVBZnN8Ta5JbLWARY';
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InF0MTIzMjMyMyIsInVzZXIiOiJ1c2VyIiwiaWF0IjoxNzQxMTc3MjI2LCJleHAiOjE3NDExODA4MjZ9.y1RNzfBE7-SGeUNLuXnyv0NcXfA9NAXt4nSigwVmV6k';
 
 export default function Reservation() {
     const calendarRef = useRef(null);
-    const [showModal, setShowModal] = useState(false);
     const [currentMonth, setCurrentMonth] = useState("");
     const [currentMonthEvent,setCurrentMonthEvent] = useState([])
     const [monthEventState,setMonthEventState] = useState([])
@@ -31,6 +30,7 @@ export default function Reservation() {
     const [windowSize, setWindowSize] = useState(window.innerWidth);
     const [reservedTimeSlots,setReservedTimeSlots] = useState([])
     const [submitTimeSlots,setSubmitTimeSlots] = useState([])
+    const [alertState,setAlertState] = useState({show:false,message:"",success:true})
 
     //hookForm
     const {
@@ -55,7 +55,10 @@ export default function Reservation() {
                         },
         }
     )
-
+    //開啟提示訊息框
+    const showAlert = (message,success)=>{
+        setAlertState({show:true,"message":message,"success":success})
+    }
     const onSubmit = (data)=>{
         pushHandleSubmit(data)
     }
@@ -149,14 +152,15 @@ export default function Reservation() {
                             "LineID":data.LineID
         }
         try {
+            await axios.post(`${API_URLL}/appointments`,appointmentStat)
             setSubmitTimeSlots([...reservedTimeSlots,{
                 date:data.date,
                 timeSlot:data.timeSlot
             }])
-            await axios.post(`${API_URL}appointment`,{appointmentState})
-            setShowModal(true)
+            showAlert("恭喜預約成功",true)
         } catch (error) {
             console.log(error?.response);
+            showAlert("預約失敗請重新嘗試",false)
         }
     }
 
@@ -413,7 +417,7 @@ export default function Reservation() {
                 </div>
             </div>
             {isLoading && <Loading></Loading>}
-            {<AlertModal show={showModal} onClose={() => setShowModal(false)} >恭喜預約成功！</AlertModal>}
+            {<AlertModal show={alertState.show} onClose={() => setAlertState({...alertState,show:false})} success={alertState.success}>{alertState.message}</AlertModal>}
         </div>
     );
 }
