@@ -3,7 +3,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
-const AlertModal = ({ show, onClose ,children}) => {
+const AlertModal = ({ show, onClose ,children,success}) => {
   return (
     <div
       className={`modal fade ${show ? 'show d-block' : ''}`}
@@ -14,7 +14,12 @@ const AlertModal = ({ show, onClose ,children}) => {
       <div className="modal-dialog modal-dialog-centered" role="document">
         <div className="modal-content text-center" style={{ border: '2px solid #BF9958' }}>
           <div className="modal-body py-5">
+            {success ? 
             <i className="bi bi-check-circle-fill" style={{ color: '#BF9958', fontSize: '60px' }}></i>
+            :
+            <i className="bi bi-x-circle-fill" style={{ color: '#D9534F', fontSize: '60px' }}></i>
+            }
+            
             <h4 className="mt-3 fs-5" style={{ color: '#6E5E57' }}>{children}</h4>
           </div>
           <div className="modal-footer justify-content-center border-0">
