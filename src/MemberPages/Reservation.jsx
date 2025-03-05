@@ -9,7 +9,7 @@ import Radio from "../components/Radio";
 import Loading from "../components/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "../slice/loadingSlice";
-import AlertModal from "../components/alertModal";
+import AlertModal from "../components/AlertModal";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
@@ -19,7 +19,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 //後台
 // const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Impvay5qb2suODc1QGdtYWlsLmNvbSIsInVzZXIiOiJ1c2VyIn0._nSIpeAtPpj-jr1UqcnZpLb1v7QH5tCG884MMND5SzM';
 //會員
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InF0MTIzMjMyMyIsInVzZXIiOiJ1c2VyIiwiaWF0IjoxNzQxMTc4ODg4LCJleHAiOjE3NDExODI0ODh9.Rs-SzVDcfcedqCUAFzVjAQxHZciWc83N-mYth9HXXTI';
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InF0MTIzMjMyMyIsInVzZXIiOiJ1c2VyIiwiaWF0IjoxNzQxMTgyOTIzLCJleHAiOjE3NDExODY1MjN9.n8bumQYusQTE8RRZdaKIbQIRSGLIvHOsCD4nQjZdxmQ';
 
 export default function Reservation() {
     const calendarRef = useRef(null);
@@ -154,7 +154,7 @@ export default function Reservation() {
         dispatch(setLoading(true))
         try {
             await axios.post(`${API_URLL}/appointments`,appointmentState)
-            setSubmitTimeSlots([...reservedTimeSlots,{
+            setSubmitTimeSlots((prev)=>[...prev,{
                 date:data.date,
                 timeSlot:data.timeSlot
             }])

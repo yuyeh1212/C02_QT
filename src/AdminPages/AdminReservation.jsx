@@ -8,6 +8,10 @@ import CustomButton from "../components/CustomButton";
 import CloseIcon from '@mui/icons-material/Close';
 import axios from "axios";
 import MyAdminCalendar from "../components/MyAdminCalendar";
+import AlertModal from "../components/AlertModal";
+import Loading from "../components/Loading";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading } from "../slice/loadingSlice";
 
 const API_URL = "https://web-project-api-zo40.onrender.com";
 const token =
@@ -21,10 +25,18 @@ export default function AdminReservation(){
     const [unavailableDates, setUnavailableDates] = useState([]);
     const [reservedTimeSlots, setReservedTimeSlots] = useState([]);
     const [lastBookableDate, setLastBookableDate] = useState('');
-    const [selectLastDate, setSelectLastDate] = useState(dayjs())
-    const [currentMonthEvent,setCurrentMonthEvent] = useState([])
-    const [monthEventState,setMonthEventState] = useState([])
-    const [currentTime,setCurrentTime] = useState([])
+    const [selectLastDate, setSelectLastDate] = useState(dayjs());
+    const [currentMonthEvent,setCurrentMonthEvent] = useState([]);
+    const [monthEventState,setMonthEventState] = useState([]);
+    const [currentTime,setCurrentTime] = useState([]);
+    const [alertState,setAlertState] = useState({show:false,message:"",success:true});
+    const showAlert = (message,success)=>{
+        setAlertState({show:true,"message":message,"success":success})
+    }
+    const isLoading = useSelector((state)=> state.loading.isLoading);
+    const dispatch = useDispatch();
+    
+
 
 
     // 監聽視窗大小變化
@@ -58,7 +70,8 @@ export default function AdminReservation(){
             setSelectLastDate(dayjs(res.data[0].lastBookableDate||getLastDayOfMonth()));
             setReservedTimeSlots(res.data[0].reservedTimeSlots|| []);
         } catch (error) {
-            console.log(error)
+            console.log(error.response.data.message);
+            showAlert(`${error.response.data.message}`,false);
         }
     }
 
@@ -101,24 +114,32 @@ export default function AdminReservation(){
     };
 
     const handleUpdateRest = async()=>{
+        dispatch(setLoading(true));
         try {
             const res = await axios.patch(`${API_URL}/scheduleConfig`,{
                 unavailableTimeSlots: unavailableDates
             })
             getCalendar();
+            showAlert("躺平日新增成功",true);
         } catch (error) {
-            console.log(error);
+            showAlert("躺平日新增失敗，請稍後再試",false);
+        }finally{
+            dispatch(setLoading(false));
         }
     }
 
     const handleUpdateLast = async()=>{
+        dispatch(setLoading(true));
         try {
             const res = await axios.patch(`${API_URL}/scheduleConfig`,{
                 lastBookableDate: selectLastDate.format("YYYY-MM-DD")
             })
             getCalendar();
+            showAlert("開放預約日更新成功",true);
         } catch (error) {
-            console.log(error)
+            showAlert("開放預約日更新失敗，請稍後再試",false);
+        }finally{
+            dispatch(setLoading(false));
         }
     }
       
@@ -146,6 +167,10 @@ export default function AdminReservation(){
     };
 
     return (<div>
+                {isLoading && <Loading />}
+                {<AlertModal show={alertState.show} onClose={() => setAlertState({...alertState,show:false})} success={alertState.success}>
+                    {alertState.message}
+                </AlertModal>}
                 <div className="my-custom-header d-flex justify-content-between mb-6">
                     <span className="text-primary-02 fw-bold fs-5">{currentMonth}</span>
                     <div>

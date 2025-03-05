@@ -10,7 +10,7 @@ import { setLoading } from "../slice/loadingSlice";
 
 const API_URLL = 'https://web-project-api-zo40.onrender.com';
 const API_URL = 'http://localhost:3000/';
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InF0MTIzMjMyMyIsInVzZXIiOiJ1c2VyIiwiaWF0IjoxNzQxMTc3MjI2LCJleHAiOjE3NDExODA4MjZ9.y1RNzfBE7-SGeUNLuXnyv0NcXfA9NAXt4nSigwVmV6k';
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InF0MTIzMjMyMyIsInVzZXIiOiJ1c2VyIiwiaWF0IjoxNzQxMTgyOTIzLCJleHAiOjE3NDExODY1MjN9.n8bumQYusQTE8RRZdaKIbQIRSGLIvHOsCD4nQjZdxmQ';
 const MyCalendar = forwardRef(({ onDateChange ,handleCalendar,getCalendarInfo}, ref) => {
 
     const [selectedEventId, setSelectedEventId] = useState(null);
