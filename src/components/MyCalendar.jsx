@@ -79,8 +79,8 @@ const MyCalendar = forwardRef(({ onDateChange ,handleCalendar,getCalendarInfo}, 
         }
     }
     useEffect(()=>{
-        // document.cookie = `token=${token};`;
-        // axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+        document.cookie = `token=${token};`;
+        axios.defaults.headers.common.Authorization = `Bearer ${token}`;
         fetchCalendarData()
     },[])
 

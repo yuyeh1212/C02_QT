@@ -19,7 +19,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 //後台
 // const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Impvay5qb2suODc1QGdtYWlsLmNvbSIsInVzZXIiOiJ1c2VyIn0._nSIpeAtPpj-jr1UqcnZpLb1v7QH5tCG884MMND5SzM';
 //會員
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InF0MTIzMjMyMyIsInVzZXIiOiJ1c2VyIiwiaWF0IjoxNzQxMTc3MjI2LCJleHAiOjE3NDExODA4MjZ9.y1RNzfBE7-SGeUNLuXnyv0NcXfA9NAXt4nSigwVmV6k';
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InF0MTIzMjMyMyIsInVzZXIiOiJ1c2VyIiwiaWF0IjoxNzQxMTc4ODg4LCJleHAiOjE3NDExODI0ODh9.Rs-SzVDcfcedqCUAFzVjAQxHZciWc83N-mYth9HXXTI';
 
 export default function Reservation() {
     const calendarRef = useRef(null);
@@ -151,8 +151,9 @@ export default function Reservation() {
                             "nailExtension": data.nailExtension,
                             "LineID":data.LineID
         }
+        dispatch(setLoading(true))
         try {
-            await axios.post(`${API_URLL}/appointments`,appointmentStat)
+            await axios.post(`${API_URLL}/appointments`,appointmentState)
             setSubmitTimeSlots([...reservedTimeSlots,{
                 date:data.date,
                 timeSlot:data.timeSlot
@@ -161,6 +162,8 @@ export default function Reservation() {
         } catch (error) {
             console.log(error?.response);
             showAlert("預約失敗請重新嘗試",false)
+        }finally{
+            dispatch(setLoading(false))
         }
     }
 
