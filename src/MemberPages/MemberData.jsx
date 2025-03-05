@@ -6,8 +6,6 @@ import Loading from "../components/Loading";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css";
-import $ from "jquery";
-import "bootstrap-datepicker";
 import { useNavigate } from "react-router-dom";
 
 const API_URL = "https://web-project-api-zo40.onrender.com";
@@ -30,22 +28,6 @@ export default function MemberData() {
   const [isLoading, setIsLoading] = useState(false);
   const [alert, setAlert] = useState({ show: false, message: "", type: "" });
   const navigate = useNavigate();
-
-  useEffect(() => {
-    $("#datepicker")
-      .datepicker({
-        format: "yyyy/mm/dd", // 設定日期格式
-        autoclose: true, // 選擇日期後自動關閉
-        todayHighlight: true, // 突出顯示今天
-        language: "zh-TW", // 可選，設定語言
-      })
-      .on("changeDate", (e) => {
-        setFormData((prev) => ({
-          ...prev,
-          birthday: $("#datepicker").val(),
-        }));
-      });
-  }, []);
 
   useEffect(()=>{
     document.cookie = `token=${token};`;
@@ -125,14 +107,14 @@ export default function MemberData() {
               />
             </div>
             <div className="col-12 col-md-6">
-              <label htmlFor="datepicker" className="form-label">
+              <label htmlFor="birthday" className="form-label">
                 生日
               </label>
               <div className="input-group">
                 <input
                   type="text"
                   className="form-control"
-                  id="datepicker"
+                  id="birthday"
                   value={formData.birthday}
                   disabled
                 />
