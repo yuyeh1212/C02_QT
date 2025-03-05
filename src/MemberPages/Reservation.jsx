@@ -9,9 +9,9 @@ import Radio from "../components/Radio";
 import Loading from "../components/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "../slice/loadingSlice";
-import AlertModal from "../components/AlertModal";
-import { Navigate, useNavigate } from "react-router-dom";
-
+import AlertModal from "../components/alertModal";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 const API_URLL = 'https://web-project-api-zo40.onrender.com';
 const API_URL = import.meta.env.VITE_API_URL;
@@ -19,44 +19,48 @@ const API_URL = import.meta.env.VITE_API_URL;
 //後台
 // const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Impvay5qb2suODc1QGdtYWlsLmNvbSIsInVzZXIiOiJ1c2VyIn0._nSIpeAtPpj-jr1UqcnZpLb1v7QH5tCG884MMND5SzM';
 //會員
-const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Impvay5qb2suODc1QGdtYWlsLmNvbSIsInVzZXIiOiJ1c2VyIn0._nSIpeAtPpj-jr1UqcnZpLb1v7QH5tCG884MMND5SzM';
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InF0MTIzMjMyMyIsInVzZXIiOiJ1c2VyIiwiaWF0IjoxNzQxMTc4ODg4LCJleHAiOjE3NDExODI0ODh9.Rs-SzVDcfcedqCUAFzVjAQxHZciWc83N-mYth9HXXTI';
 
 export default function Reservation() {
     const calendarRef = useRef(null);
-    const dateInputRef = useRef(null)
-    const [showModal, setShowModal] = useState(false);
     const [currentMonth, setCurrentMonth] = useState("");
     const [currentMonthEvent,setCurrentMonthEvent] = useState([])
     const [monthEventState,setMonthEventState] = useState([])
     const [currentTime,setCurrentTime] = useState([])
     const [windowSize, setWindowSize] = useState(window.innerWidth);
-    const [appointmentState,setAppointmentState] = useState({
-        "name": "",
-        "birthday": "",
-        "email": "",
-        "phone": "",
-        "date": "",
-        "timeSlot": "",
-        "bodyPart": "",
-        "nailRemoval": "",
-        "nailExtension": "",
-        "LineID":""
-    })
+    const [reservedTimeSlots,setReservedTimeSlots] = useState([])
+    const [submitTimeSlots,setSubmitTimeSlots] = useState([])
+    const [alertState,setAlertState] = useState({show:false,message:"",success:true})
 
     //hookForm
     const {
         register,
         handleSubmit,
         formState:{errors},
+        setValue,
+        reset
     } = useForm(
         {
-            defaultValues:appointmentState,
+            defaultValues:{
+                            "name": "",
+                            "birthday": "",
+                            "email": "",
+                            "phone": "",
+                            "date": "",
+                            "timeSlot": "",
+                            "bodyPart": "",
+                            "nailRemoval": "",
+                            "nailExtension": "",
+                            "LineID":""
+                        },
         }
     )
-    console.log('errors',errors);
-
+    //開啟提示訊息框
+    const showAlert = (message,success)=>{
+        setAlertState({show:true,"message":message,"success":success})
+    }
     const onSubmit = (data)=>{
-        console.log(data)
+        pushHandleSubmit(data)
     }
     //指定頁面
     const navigate = useNavigate()
@@ -71,8 +75,7 @@ export default function Reservation() {
             try {
                 const res = await axios.get(`${API_URLL}/login/check`)
                 const userState = res.data.user
-                console.log(userState);
-                setAppointmentState({...appointmentState,
+                reset({
                     'name':userState.name,
                     'birthday': userState.birthday,
                     'email': userState.email,
@@ -80,7 +83,7 @@ export default function Reservation() {
                     'LineID': userState.LineID}
                 )
             } catch (error) {
-                console.log(error.response.data);
+                // console.log(error?.response?.data);
                 alert('登入異常,為您跳轉到登入頁面')
                 setTimeout(()=>{
                     navigate('/login')
@@ -89,8 +92,32 @@ export default function Reservation() {
         })()
     },[])
 
+    //提交資訊後更新已預約日期
+    useEffect(()=>{
+        (async ()=>{
+            try {
+                const res = await axios.get(`${API_URLL}/scheduleConfig`)
+                setReservedTimeSlots(res.data[0].reservedTimeSlots)
+            } catch (error) {
+                console.log(error?.response);
+            }
+        })()
+    },[submitTimeSlots])
+    
+    const handleUpdateReservedTimeSlots = async()=>{
+        if(submitTimeSlots.length > 0){
+            try {
+                const res = await axios.patch(`${API_URLL}/scheduleConfig`,{reservedTimeSlots: submitTimeSlots})
+                calendarRef.current?.refreshCalendar()
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }
 
-
+    useEffect(() => {
+            handleUpdateReservedTimeSlots();
+    }, [submitTimeSlots]); 
     //監聽視窗大小
     useEffect(() => {
         const handleResize = () => {
@@ -108,36 +135,54 @@ export default function Reservation() {
         };
       }, []);
     
-
+    
     //頁面載入讀取日歷資訊
     
-    const pushHandleSubmit =async()=>{
+    const pushHandleSubmit =async(data)=>{
+        const appointmentState = {
+                            "name": data.name,
+                            "birthday": data.birthday,
+                            "email": data.email,
+                            "phone": data.phone,
+                            "date": data.date,
+                            "timeSlot": data.timeSlot,
+                            "bodyPart": data.bodyPart,
+                            "nailRemoval": data.nailRemoval,
+                            "nailExtension": data.nailExtension,
+                            "LineID":data.LineID
+        }
+        dispatch(setLoading(true))
         try {
-            await axios.post(`${API_URL}appointment`,{appointmentState})
-            setShowModal(true)
+            await axios.post(`${API_URLL}/appointments`,appointmentState)
+            setSubmitTimeSlots([...reservedTimeSlots,{
+                date:data.date,
+                timeSlot:data.timeSlot
+            }])
+            showAlert("恭喜預約成功",true)
         } catch (error) {
-            console.log(error.response);
+            console.log(error?.response);
+            showAlert("預約失敗請重新嘗試",false)
+        }finally{
+            dispatch(setLoading(false))
         }
     }
 
-    const handleInputChange =(e)=>{
-        const id = e.target.id
-        const value = e.target.value
-        setAppointmentState({...appointmentState,[id] : value})
-    }
+    //更新日歷已預約資訊
 
     const handleCalendar = (info,mobileInfo,e)=>{
         if(info){
             const date = info.event.startStr
             const time = info.event.title
-            dateInputRef.current.value = `${date} 時: ${time}`
-            setAppointmentState({...appointmentState,date : date,timeSlot:time})
+            setValue("renderDate",`${date} 時: ${time}`)
+            setValue("date",date)
+            setValue("timeSlot",time)
             return
         }
         const date = mobileInfo.date
         const time = mobileInfo.title
-        dateInputRef.current.value = `${date} 時: ${time}`
-        setAppointmentState({...appointmentState,date : date,timeSlot:time})
+        setValue("renderDate",`${date} 時: ${time}`)
+        setValue("date",date)
+        setValue("timeSlot",time)
     }
     //取得日歷的狀態以及活動資料
     const getCalendarInfo = (info,eventDate)=>{
@@ -207,11 +252,13 @@ export default function Reservation() {
                 </div>
                 <div className="row flex-lg-row-reverse">
                     <div className={`col-lg-9 ps-lg-4 pb-4 pb-lg-0 ${windowSize<992 ?windowSize<768?"":'bg-white':"bg-neutral-100"}`}>
-                        <div className="bg-white d-none d-lg-block">
-                            <MyCalendar ref={calendarRef} onDateChange={setCurrentMonth} handleCalendar={handleCalendar} windowSize={windowSize} getCalendarInfo={getCalendarInfo} filterEventsByMonth={filterEventsByMonth}/>
+                        {windowSize>991 ?
+                        <div className="bg-white">
+                        <MyCalendar ref={calendarRef} onDateChange={setCurrentMonth} handleCalendar={handleCalendar} windowSize={windowSize} getCalendarInfo={getCalendarInfo} filterEventsByMonth={filterEventsByMonth} />
                         </div>
+                        :""
                         
-                        
+                        }
                     </div>
                     <div className={`col-lg-3 ${windowSize<768?'':'bg-white'} p-4`} style={{ paddingBottom: 48 }}>
                         <form id='makeAnAppointment' onSubmit={handleSubmit(onSubmit)}>
@@ -221,9 +268,8 @@ export default function Reservation() {
                                 </label>
                                 <input type="text" 
                                 className="form-control form-control-sm" 
-                                id="date"  placeholder="點擊日歷選擇預約時段" 
-                                ref={dateInputRef}
-                                {...register('date',{
+                                id="renderDate"  placeholder="點擊日歷選擇預約時段" 
+                                {...register('renderDate',{
                                     required:{value:true,
                                         message:"必填 : 請確認預約時段"
                                     }
@@ -234,9 +280,14 @@ export default function Reservation() {
                                 </div>}
                             </div>
                             {/*平板日歷*/}
-                            <div className="mb-4 d-none d-md-block d-lg-none user-calendar" >
-                            <MyCalendar ref={calendarRef} onDateChange={setCurrentMonth} handleCalendar={handleCalendar} windowSize={windowSize} getCalendarInfo={getCalendarInfo} filterEventsByMonth={filterEventsByMonth}/>
+                            {windowSize>767 && windowSize<992?
+                            <div className="mb-4 user-calendar" >
+                            <MyCalendar ref={calendarRef} onDateChange={setCurrentMonth} handleCalendar={handleCalendar} getCalendarInfo={getCalendarInfo} filterEventsByMonth={filterEventsByMonth}/>
                             </div>
+                            :
+                            ""
+                            }
+                            
                             {/*手機板按鈕*/}
                             <div className={`d-block d-md-none ${currentTime.length>0 ?'mb-4':'mb-6'}`}>
                                 <div className="row g-2 d-md-none">
@@ -285,7 +336,6 @@ export default function Reservation() {
                                 <select className="form-select form-select-sm" 
                                 id="bodyPart"
                                 defaultValue=""
-                                onChange={handleInputChange} 
                                 {...register('bodyPart',{
                                     required:{value:true,
                                         message:"必填 : 請選擇施作部位"
@@ -309,7 +359,6 @@ export default function Reservation() {
                                 <select className="form-select form-select-sm" 
                                 id="nailRemoval" 
                                 defaultValue=""
-                                onChange={handleInputChange}
                                 {...register('nailRemoval',{
                                     required:{value:true,
                                         message:"必填 : 請選擇是否需要卸甲"
@@ -333,7 +382,6 @@ export default function Reservation() {
                                 <select className="form-select form-select-sm"
                                 id="nailExtension"
                                 defaultValue=""
-                                onChange={handleInputChange}
                                 {...register('nailExtension',{
                                     required:{value:true,
                                         message:"必填 : 請選擇是否需要延甲"
@@ -372,7 +420,7 @@ export default function Reservation() {
                 </div>
             </div>
             {isLoading && <Loading></Loading>}
-            {<AlertModal show={showModal} onClose={() => setShowModal(false)} >恭喜預約成功！</AlertModal>}
+            {<AlertModal show={alertState.show} onClose={() => setAlertState({...alertState,show:false})} success={alertState.success}>{alertState.message}</AlertModal>}
         </div>
     );
 }
