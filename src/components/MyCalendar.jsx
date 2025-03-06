@@ -10,7 +10,7 @@ import { setLoading } from "../slice/loadingSlice";
 
 const API_URLL = 'https://web-project-api-zo40.onrender.com';
 const API_URL = 'http://localhost:3000/';
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InF0MTIzMjMyMyIsInVzZXIiOiJ1c2VyIiwiaWF0IjoxNzQxMTgyOTIzLCJleHAiOjE3NDExODY1MjN9.n8bumQYusQTE8RRZdaKIbQIRSGLIvHOsCD4nQjZdxmQ';
+
 const MyCalendar = forwardRef(({ onDateChange ,handleCalendar,getCalendarInfo}, ref) => {
 
     const [selectedEventId, setSelectedEventId] = useState(null);
@@ -79,8 +79,6 @@ const MyCalendar = forwardRef(({ onDateChange ,handleCalendar,getCalendarInfo}, 
         }
     }
     useEffect(()=>{
-        document.cookie = `token=${token};`;
-        axios.defaults.headers.common.Authorization = `Bearer ${token}`;
         fetchCalendarData()
     },[])
 

@@ -7,7 +7,7 @@ export default function AdminLayout() {
   const navigate = useNavigate();
   
   const user = useSelector((state)=>{
-    return state.user.user;
+    return state.userData.user;
   })
 
   useEffect(()=>{

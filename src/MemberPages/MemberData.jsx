@@ -29,30 +29,23 @@ export default function MemberData() {
   const [alert, setAlert] = useState({ show: false, message: "", success:true });
   const navigate = useNavigate();
 
+  const userData = useSelector(state => state.userData);
+
   useEffect(()=>{
-    document.cookie = `token=${token};`;
-    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-    (async()=>{
-        try {
-            const res = await axios.get(`${API_URL}/login/check`)
-            const userState = res.data.user
-            console.log(userState);
-            setFormData({...formData,
-                'id':userState.id,
-                'name':userState.name,
-                'birthday': userState.birthday,
-                'email': userState.email,
-                'phone': userState.phone,
-                'LineID': userState.LineID}
-            )
-        } catch (error) {
-            console.log(error)
-            setTimeout(()=>{
-                navigate('/login')
-            },2000)
-        }
-    })()
-},[])
+    console.log(userData)
+    if(userData){
+        setFormData({...formData,
+          'id':userData.id,
+          'name':userData.name,
+          'birthday': userData.birthday,
+          'email': userData.email,
+          'phone': userData.phone,
+          'LineID': userData.LineID}
+      )
+    }else{
+        console.log('123')
+    }
+  },[userData])
 
   const showAlert = (message, success) => {
     setAlert({ show: true, message, success });

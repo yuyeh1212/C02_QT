@@ -6,7 +6,7 @@ import alertReducer from "./slice/alertSlice"
 
 export const store = configureStore({
   reducer: {
-    user: userReducer,
+    userData: userReducer,
     loading: loadingReducer,
     auth: authReducer,
     alert: alertReducer,

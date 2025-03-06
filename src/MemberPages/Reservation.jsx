@@ -19,7 +19,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 //後台
 // const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Impvay5qb2suODc1QGdtYWlsLmNvbSIsInVzZXIiOiJ1c2VyIn0._nSIpeAtPpj-jr1UqcnZpLb1v7QH5tCG884MMND5SzM';
 //會員
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InF0MTIzMjMyMyIsInVzZXIiOiJ1c2VyIiwiaWF0IjoxNzQxMTgyOTIzLCJleHAiOjE3NDExODY1MjN9.n8bumQYusQTE8RRZdaKIbQIRSGLIvHOsCD4nQjZdxmQ';
+
 
 export default function Reservation() {
     const calendarRef = useRef(null);
@@ -51,7 +51,8 @@ export default function Reservation() {
                             "bodyPart": "",
                             "nailRemoval": "",
                             "nailExtension": "",
-                            "LineID":""
+                            "LineID":"",
+                        
                         },
         }
     )
@@ -67,37 +68,41 @@ export default function Reservation() {
     //讀取狀態
     const dispatch = useDispatch()
     const isLoading = useSelector((state)=> state.loading.isLoading)
+    const userData = useSelector(state => state.userData);
+    const isLogin = useSelector(state => state.isLoggedIn);
+
+    useEffect(()=>{
+        console.log(userData)
+    if(userData){
+        reset({
+            'name':userData.name,
+            'birthday': userData.birthday,
+            'email': userData.email,
+            'phone': userData.phone,
+            'LineID': userData.LineID}
+        ) 
+    }else{
+        console.log('123')
+    }
+    },[userData])
+    // 會員資料讀取
+
     // 會員資料讀取
     useEffect(()=>{
-        document.cookie = `token=${token};`;
-        axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-        (async()=>{
-            try {
-                const res = await axios.get(`${API_URLL}/login/check`)
-                const userState = res.data.user
-                reset({
-                    'name':userState.name,
-                    'birthday': userState.birthday,
-                    'email': userState.email,
-                    'phone': userState.phone,
-                    'LineID': userState.LineID}
-                )
-            } catch (error) {
-                // console.log(error?.response?.data);
-                alert('登入異常,為您跳轉到登入頁面')
-                setTimeout(()=>{
-                    navigate('/login')
-                },2000)
-            }
-        })()
-    },[])
+        if(isLogin==false){
+            alert('登入異常,為您跳轉到登入頁面')
+            setTimeout(()=>{
+                navigate('/login')
+            },2000)
+        }
+    },[isLogin])
 
     //提交資訊後更新已預約日期
     useEffect(()=>{
         (async ()=>{
             try {
                 const res = await axios.get(`${API_URLL}/scheduleConfig`)
-                setReservedTimeSlots(res.data[0].reservedTimeSlots)
+                setSubmitTimeSlots(res.data[0].reservedTimeSlots)
             } catch (error) {
                 console.log(error?.response);
             }
@@ -151,6 +156,7 @@ export default function Reservation() {
                             "nailExtension": data.nailExtension,
                             "LineID":data.LineID
         }
+        console.log(appointmentState);
         dispatch(setLoading(true))
         try {
             await axios.post(`${API_URLL}/appointments`,appointmentState)
