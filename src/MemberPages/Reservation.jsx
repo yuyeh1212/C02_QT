@@ -98,6 +98,7 @@ export default function Reservation() {
     },[isLogin])
 
     //提交資訊後更新已預約日期
+    
     useEffect(()=>{
         (async ()=>{
             try {
@@ -107,7 +108,7 @@ export default function Reservation() {
                 console.log(error?.response);
             }
         })()
-    },[submitTimeSlots])
+    },[])
     
     const handleUpdateReservedTimeSlots = async()=>{
         if(submitTimeSlots.length > 0){
