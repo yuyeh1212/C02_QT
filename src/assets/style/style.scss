@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @import "bootstrap/scss/functions";
 @import "./variables";
 @import "/node_modules/bootstrap";
@@ -35,4 +36,43 @@
   width: 100%;  /* 讓圖片填滿容器 */
   object-fit: cover;
   border-radius: 0; /* 保持圖片比例，不拉伸，裁剪多餘部分 */
+=======
+@import "bootstrap/scss/functions";
+@import "./variables";
+@import "/node_modules/bootstrap";
+@import "bootstrap/scss/utilities/api";
+@import "./utilities.scss";
+@import "bootstrap/scss/bootstrap.scss";
+//字體
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@200..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
+//基礎設置
+@import"./base.scss";
+//表格
+@import "./table.scss";
+//月曆事件設置
+@import "./calendar.scss";
+@import "./pagination.scss";
+//按鈕樣式
+@import './button.scss';
+//手風琴樣式
+@import './accordion.scss';
+//輪播樣式
+@import './slick-slider.scss';
+
+.linear{
+    background: linear-gradient(90deg, #FFFFFF, #ECE6DC);
+}
+
+.img-over{
+    width: auto;
+    min-width: 100%;
+    height: auto;
+}
+
+.card-img {
+  width: 100%;  /* 讓圖片填滿容器 */
+  object-fit: cover;
+  border-radius: 0; /* 保持圖片比例，不拉伸，裁剪多餘部分 */
+>>>>>>> a17bd27d49c2ea5358f68536588772b5a7f17036
 }
