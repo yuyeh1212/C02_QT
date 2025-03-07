@@ -1,25 +1,67 @@
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import AlertModal from "../components/AlertModal";
+import axios from "axios";
+import { setUserData } from "../slice/userSlice";
+import { login } from "../slice/authSlice";
+
+const API_URL = "https://web-project-api-zo40.onrender.com";
 
 export default function AdminLayout() {
 
-  const navigate = useNavigate();
-  
-  const user = useSelector((state)=>{
-    return state.userData.user;
-  })
+  //指定頁面
+  const navigate = useNavigate()
+  //讀取狀態
+  const dispatch = useDispatch()
+  const isLogin = useSelector(state => state.auth.isLoggedIn);
+  const [alertState,setAlertState] = useState({show:false,message:"",success:true})
+
+  //開啟提示訊息框
+  const showAlert = (message,success)=>{
+    setAlertState({show:true,"message":message,"success":success})
+  }
+
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(";").shift();
+    return null;
+  };
+
+  const loginCheck = async ()=>{
+    try {
+      const res = await axios.get(`${API_URL}/login/check`);
+      // 更新 Redux 登入狀態
+      dispatch(login());
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
 
   useEffect(()=>{
-    if(user!=='admin'){
-      console.log(user)
-      //跳轉回登入頁
-      // navigate('/login');
+    const token = getCookie("token");
+    if (token) {
+      axios.defaults.headers.common.Authorization = `Bearer ${token}`;
     }
-  },[user])
+    loginCheck()
+    if(isLogin==false&& !token){
+        setTimeout(()=>{
+            showAlert('登入異常,即將為您跳轉到登入頁面',false)
+        },1000)
+        // alert('登入異常,為您跳轉到登入頁面')
+        setTimeout(()=>{
+            navigate('/login')
+        },3000)
+    }
+  },[isLogin])
 
   return (
     <div className="bg-neutral-100">
+      {<AlertModal show={alertState.show} onClose={() => setAlertState({...alertState,show:false})} success={alertState.success}>
+        {alertState.message}
+      </AlertModal>}
       <div className="container">
         <nav className="d-flex nav justify-content-center pt-4 mb-4 gap-md-7 gap-4">
           <div className="nav-item ">

@@ -10,8 +10,6 @@ import "bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css";
 import { useNavigate } from "react-router-dom";
 
 const API_URL = "https://web-project-api-zo40.onrender.com";
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InF0MTIzMjMyMyIsInVzZXIiOiJ1c2VyIiwiaWF0IjoxNzQxMTgyOTIzLCJleHAiOjE3NDExODY1MjN9.n8bumQYusQTE8RRZdaKIbQIRSGLIvHOsCD4nQjZdxmQ";
 
 export default function MemberData() {
   const dispatch = useDispatch();
@@ -27,12 +25,11 @@ export default function MemberData() {
   });
   const [isEditing, setIsEditing] = useState(false);
   const [alert, setAlert] = useState({ show: false, message: "", success:true });
-  const navigate = useNavigate();
 
   const userData = useSelector(state => state.userData);
 
+
   useEffect(()=>{
-    console.log(userData)
     if(userData){
         setFormData({...formData,
           'id':userData.id,
@@ -42,8 +39,6 @@ export default function MemberData() {
           'phone': userData.phone,
           'LineID': userData.LineID}
       )
-    }else{
-        console.log('123')
     }
   },[userData])
 
@@ -51,22 +46,15 @@ export default function MemberData() {
     setAlert({ show: true, message, success });
   };
 
-  const closeAlert = () => {
-    setAlert({ ...alert, show: false });
-  };
 
   const handleSave = async () => {
     dispatch(setLoading(true))
-
     try {
       const res = await axios.patch(`${API_URL}/members/update`, formData);
-
-      console.log("更新成功:", res.data);
       setIsEditing(false);
       dispatch(setUserData(formData)); // 更新 Redux Store
       showAlert("更新成功！", true);
     } catch (err) {
-      console.error("更新失敗:", err);
       showAlert("更新失敗，請重試！", false);
     } finally {
       dispatch(setLoading(false))
