@@ -69,8 +69,7 @@ export default function Reservation() {
     const dispatch = useDispatch()
     const isLoading = useSelector((state)=> state.loading.isLoading)
     const userData = useSelector(state => state.userData);
-    const isLogin = useSelector(state => state.isLoggedIn);
-
+    const isLogin = useSelector(state => state.auth.isLoggedIn);
     useEffect(()=>{
         console.log(userData)
     if(userData){
@@ -90,10 +89,13 @@ export default function Reservation() {
     // 會員資料讀取
     useEffect(()=>{
         if(isLogin==false){
-            alert('登入異常,為您跳轉到登入頁面')
+            setTimeout(()=>{
+                showAlert('登入異常,即將為您跳轉到登入頁面',false)
+            },1000)
+            // alert('登入異常,為您跳轉到登入頁面')
             setTimeout(()=>{
                 navigate('/login')
-            },2000)
+            },3000)
         }
     },[isLogin])
 
