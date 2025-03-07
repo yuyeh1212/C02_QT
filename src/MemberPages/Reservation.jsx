@@ -16,10 +16,6 @@ import { useForm } from "react-hook-form";
 const API_URLL = 'https://web-project-api-zo40.onrender.com';
 const API_URL = import.meta.env.VITE_API_URL;
 
-//後台
-// const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Impvay5qb2suODc1QGdtYWlsLmNvbSIsInVzZXIiOiJ1c2VyIn0._nSIpeAtPpj-jr1UqcnZpLb1v7QH5tCG884MMND5SzM';
-//會員
-
 
 export default function Reservation() {
     const calendarRef = useRef(null);
@@ -28,7 +24,6 @@ export default function Reservation() {
     const [monthEventState,setMonthEventState] = useState([])
     const [currentTime,setCurrentTime] = useState([])
     const [windowSize, setWindowSize] = useState(window.innerWidth);
-    const [reservedTimeSlots,setReservedTimeSlots] = useState([])
     const [submitTimeSlots,setSubmitTimeSlots] = useState([])
     const [alertState,setAlertState] = useState({show:false,message:"",success:true})
     const isFirstRender = useRef(true);
@@ -57,6 +52,13 @@ export default function Reservation() {
                         },
         }
     )
+    const getCookie = (name) => {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(";").shift();
+        return null;
+    };
+
     //開啟提示訊息框
     const showAlert = (message,success)=>{
         setAlertState({show:true,"message":message,"success":success})
@@ -71,38 +73,27 @@ export default function Reservation() {
     const isLoading = useSelector((state)=> state.loading.isLoading)
     const userData = useSelector(state => state.userData);
     const isLogin = useSelector(state => state.auth.isLoggedIn);
+
     useEffect(()=>{
-        console.log(userData)
-    if(userData){
-        reset({
-            'name':userData.name,
-            'birthday': userData.birthday,
-            'email': userData.email,
-            'phone': userData.phone,
-            'LineID': userData.LineID}
-        ) 
-    }else{
-        console.log('123')
-    }
+        if(userData){
+            reset({
+                'name':userData.name,
+                'birthday': userData.birthday,
+                'email': userData.email,
+                'phone': userData.phone,
+                'LineID': userData.LineID}
+            ) 
+        }
     },[userData])
     // 會員資料讀取
 
-    // 會員資料讀取
-    useEffect(()=>{
-        if(isLogin==false){
-            setTimeout(()=>{
-                showAlert('登入異常,即將為您跳轉到登入頁面',false)
-            },1000)
-            // alert('登入異常,為您跳轉到登入頁面')
-            setTimeout(()=>{
-                navigate('/login')
-            },3000)
-        }
-    },[isLogin])
-
     //提交資訊後更新已預約日期
-    
     useEffect(()=>{
+            // 取得 Token
+        const token = getCookie("token");
+        if (token) {
+            axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+        }
         (async ()=>{
             try {
                 const res = await axios.get(`${API_URLL}/scheduleConfig`)

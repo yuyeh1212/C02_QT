@@ -2,19 +2,41 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import axios from "axios";
+// Import AlertModal component
+import AlertModal from "../components/AlertModal";
+import Loading from "../components/Loading";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading } from "../slice/loadingSlice";
+// Adjust path as needed
 const API_URL = "https://web-project-api-zo40.onrender.com";
 
-const FormInput = ({ register, errors, id, labelText, type = "text", rules = {} }) => {
+const FormInput = ({ register, errors, id, labelText, type = "text", rules = {}, LabelHolder }) => {
+    const [showPassword, setShowPassword] = useState(false);
     return (
-        <div className="form-floating mb-3">
-            <input
-                type={type}
-                {...register(id, rules)}
-                className={`form-control ${errors[id] ? "is-invalid" : ""}`}
-                placeholder={labelText}
-            />
-            <label>{labelText}</label>
-            {errors[id] && <div className="invalid-feedback">{errors[id].message}</div>}
+        <div >
+            <label htmlFor="basic-url" className="form-label">{labelText}</label>
+            <div className="input-group mb-0">
+                <input
+                    type={type === "password" ? (showPassword ? "text" : "password") : type}
+                    {...register(id, rules)}
+                    className={`form-control 
+             ${errors[id] ? "is-invalid" : ""}`}
+                    placeholder={LabelHolder}
+                    aria-label="Recipient's username"
+                    aria-describedby="basic-addon2" />
+                {errors[id] && <div className="invalid-feedback">{errors[id].message}</div>}
+                 {/* 眼睛按鈕 */}
+            {type === "password" && (
+                <button
+                    type="button"
+                    className="btn position-absolute end-0 top-50 translate-middle-y me-2"
+                    onClick={() => setShowPassword(!showPassword)}
+                    style={{ background: "none", border: "none" }}
+                >
+                    <i className={`bi ${showPassword ? "bi-eye-slash-fill" : "bi-eye-fill"}`}></i>
+                </button>
+            )}
+            </div>
         </div>
     );
 };
@@ -27,23 +49,26 @@ export default function Register() {
         formState: { errors },
     } = useForm({
         mode: "onTouched",
-        defaultValues: {
-            LineID: "" // 設置默認值
-        }
     });
 
     const navigate = useNavigate();
     const password = watch("password");
-    const [isLoading, setIsLoading] = useState(false);
+    const dispatch = useDispatch()
+    const [alertState,setAlertState] = useState({show:false,message:"",success:true});
+    const isLoading = useSelector((state)=> state.loading.isLoading)
+
+    const showAlert = (message,success)=>{
+        setAlertState({show:true,"message":message,"success":success})
+    }
 
     const handleRegister = async (data) => {
-        setIsLoading(true); // 開始 loading
+        dispatch(setLoading(true)); // 開始 loading
         try {
             const { confirmPassword, ...modifiedData } = data;
             const finalData = {
                 ...modifiedData,
                 user: "user",
-                LineID: data.LineID || "沒有填"
+                LineID: data.LineID
             };
 
             // 設定隨機延遲時間
@@ -55,25 +80,22 @@ export default function Register() {
 
             const res = await axios.post(`${API_URL}/register`, finalData);
 
-            // Swal.fire({
-            //     title: "註冊成功！",
-            //     text: `歡迎 ${res.data.user.name}！請登入您的帳號`,
-            //     icon: "success",
-            //     timer: 1500,
-            //     showConfirmButton: false,
-            // });
+            // Replace SweetAlert with AlertModal
+           
+            showAlert(`註冊成功！歡迎 ${res.data.user.name}！請登入您的帳號`,true);
+            
 
-            navigate("/login");
+            // Navigate after user confirms
+            setTimeout(() => {
+                navigate("/login");
+            }, 1500);
+
         } catch (error) {
             console.error("請求錯誤", error);
-            // Swal.fire({
-            //     title: "註冊失敗",
-            //     text: error.response?.data?.message || "發生錯誤，請稍後再試",
-            //     icon: "error",
-            //     confirmButtonText: "確定",
-            // });
-        } finally {
-            setIsLoading(false); // 確保關閉 loading
+            // Replace SweetAlert with AlertModal for error
+            showAlert(error.response?.data?.message||"註冊失敗，發生錯誤，請稍後再試",false);
+        } finally{
+            dispatch(setLoading(false))
         }
     };
 
@@ -81,7 +103,7 @@ export default function Register() {
         email: {
             required: "信箱為必填",
             pattern: {
-                value:/^[a-zA-Z0-9._]{5,}@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                value: /^[a-zA-Z0-9._]{5,}@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
                 message: "請輸入有效的電子郵件地址",
             },
         },
@@ -119,34 +141,25 @@ export default function Register() {
     };
 
     return (
-        <div className="d-flex flex-column min-vh-100">
+        <div className="d-flex flex-column min-vh-100 mb-10">
             {/* Loading 畫面 */}
-            {/* {isLoading && (
-                <div className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
-                    style={{ backdropFilter: "blur(8px)", backgroundColor: "rgba(0, 0, 0, 0.5)",zIndex: 1050  }}>
-                    <div className="text-center">
-                        <div className="spinner-grow text-light" style={{ width: "4rem", height: "4rem" }} role="status">
-                            <span className="visually-hidden">Loading...</span>
-                        </div>
-                        <h3 className="mt-3 fw-bold text-dark">載入中，請稍候...</h3>
-                    </div>
-                </div>
-            )} */}
-
+            {isLoading && <Loading></Loading>}
+            {/* Add AlertModal component */}
+            {<AlertModal show={alertState.show} onClose={() => setAlertState({...alertState,show:false})} success={alertState.success}>{alertState.message}</AlertModal>}
 
             <div className="flex-grow-1">
                 <div className="container py-5">
                     <div className="row justify-content-center">
                         <div className="col-md-6">
-                            <h1 className="text-center mb-4">會員註冊</h1>
-                            <form className="d-flex flex-column gap-3" onSubmit={handleSubmit(handleRegister)}>
-                                <FormInput id="email" type="email" labelText="Email" register={register} errors={errors} rules={validationRules.email} />
-                                <FormInput id="password" type="password" labelText="密碼" register={register} errors={errors} rules={validationRules.password} />
-                                <FormInput id="confirmPassword" type="password" labelText="確認密碼" register={register} errors={errors} rules={validationRules.confirmPassword} />
-                                <FormInput id="name" type="text" labelText="姓名" register={register} errors={errors} rules={validationRules.name} />
-                                <FormInput id="phone" type="tel" labelText="電話" register={register} errors={errors} rules={validationRules.phone} />
-                                <FormInput id="birthday" type="date" labelText="生日" register={register} errors={errors} rules={validationRules.birthday} />
-                                <FormInput id="LineID" type="text" labelText="LINE ID（選填）" register={register} errors={errors} rules={{ required: false }} />
+                            <h5 className="text-center mb-4">會員註冊</h5>
+                            <form className="d-flex flex-column gap-3 " onSubmit={handleSubmit(handleRegister)}>
+                                <FormInput id="email" type="email" labelText="Email" LabelHolder="請輸入信箱作為註冊帳號" register={register} errors={errors} rules={validationRules.email} />
+                                <FormInput id="password" type="password" labelText="密碼" LabelHolder="請輸入註冊密碼" register={register} errors={errors} rules={validationRules.password} />
+                                <FormInput id="confirmPassword" type="password" labelText="確認密碼" LabelHolder="請確認註冊密碼" register={register} errors={errors} rules={validationRules.confirmPassword} />
+                                <FormInput id="name" type="text" labelText="姓名" LabelHolder="請輸入姓名" register={register} errors={errors} rules={validationRules.name} />
+                                <FormInput id="phone" type="tel" labelText="電話" LabelHolder="請輸入註冊電話" register={register} errors={errors} rules={validationRules.phone} />
+                                <FormInput id="birthday" type="date" labelText="生日" LabelHolder="請輸入生日" register={register} errors={errors} rules={validationRules.birthday} />
+                                <FormInput id="LineID" type="text" labelText="LINE ID" LabelHolder="請輸入LineID,僅供聯繫使用" register={register} errors={errors} rules={validationRules.LineID} />
 
                                 <button type="submit" className="btn btn-primary" disabled={isLoading}>
                                     {isLoading ? "註冊中..." : "註冊"}

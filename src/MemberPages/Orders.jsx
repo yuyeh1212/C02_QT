@@ -57,7 +57,18 @@ export default function Orders() {
     }
   };
 
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(";").shift();
+    return null;
+  };
+
   useEffect(() => {
+    const token = getCookie("token");
+    if (token) {
+        axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+    }
     getOrders();
   }, []);
 

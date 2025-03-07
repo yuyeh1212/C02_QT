@@ -19,6 +19,7 @@ const MyCalendar = forwardRef(({ onDateChange ,handleCalendar,getCalendarInfo}, 
     const dispatch = useDispatch();
     //在API中抓日期
     const fetchCalendarData = async()=>{
+        
         try {
             const res = await axios.get(`${API_URLL}/scheduleConfig`)
             const config = res.data[0]
@@ -78,7 +79,20 @@ const MyCalendar = forwardRef(({ onDateChange ,handleCalendar,getCalendarInfo}, 
             )
         }
     }
+    
+    const getCookie = (name) => {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(";").shift();
+        return null;
+    };    
+
+
     useEffect(()=>{
+        const token = getCookie("token");
+        if (token) {
+            axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+        }
         fetchCalendarData()
     },[])
 
