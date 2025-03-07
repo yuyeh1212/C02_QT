@@ -1,0 +1,16 @@
+:root {
+    --custom-table-padding: .25rem;
+}
+
+.table-spacing-sm > :not(caption) > * > * {
+    padding: var(--custom-table-padding);
+    --bs-table-color: $primary-02;
+    --bs-table-bg: #F7F0EA;
+    --bs-table-border-color: rgb(197.6, 192, 187.2);
+    --bs-table-striped-bg: rgb(234.65, 228, 222.3);
+    --bs-table-striped-color: $primary-02;
+    --bs-table-active-bg: rgb(222.3, 216, 210.6);
+    --bs-table-active-color: $primary-02;
+    --bs-table-hover-bg: rgb(228.475, 222, 216.45);
+    --bs-table-hover-color: $primary-02;
+}
