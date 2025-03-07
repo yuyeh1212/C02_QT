@@ -14,8 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "../slice/loadingSlice";
 
 const API_URL = "https://web-project-api-zo40.onrender.com";
-const token =
-  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInVzZXIiOiJhZG1pbiJ9.jxYxlyf8yETl-iO2wKZT2zrBCMCL3NYOsaDMEytW0c8";
+
 
 
 export default function AdminReservation(){
@@ -57,8 +56,7 @@ export default function AdminReservation(){
 
 
     useEffect(()=>{
-        document.cookie = `token=${token};`;
-        axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+
         getCalendar();
     },[])
 

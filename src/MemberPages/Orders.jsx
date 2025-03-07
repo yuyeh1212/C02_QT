@@ -5,8 +5,6 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
 const API_URL = "https://web-project-api-zo40.onrender.com";
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InF0MTIzMjMyMyIsInVzZXIiOiJ1c2VyIiwiaWF0IjoxNzQxMTgyOTIzLCJleHAiOjE3NDExODY1MjN9.n8bumQYusQTE8RRZdaKIbQIRSGLIvHOsCD4nQjZdxmQ";
 
 export default function Orders() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 992);
@@ -60,9 +58,6 @@ export default function Orders() {
   };
 
   useEffect(() => {
-    document.cookie = `token=${token};`;
-    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-
     getOrders();
   }, []);
 
