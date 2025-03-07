@@ -31,6 +31,7 @@ export default function Reservation() {
     const [reservedTimeSlots,setReservedTimeSlots] = useState([])
     const [submitTimeSlots,setSubmitTimeSlots] = useState([])
     const [alertState,setAlertState] = useState({show:false,message:"",success:true})
+    const isFirstRender = useRef(true);
 
     //hookForm
     const {
@@ -124,7 +125,11 @@ export default function Reservation() {
     }
 
     useEffect(() => {
-            handleUpdateReservedTimeSlots();
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+            return; // 跳過初次渲染時的更新動作
+        }
+        handleUpdateReservedTimeSlots();
     }, [submitTimeSlots]); 
     //監聽視窗大小
     useEffect(() => {
