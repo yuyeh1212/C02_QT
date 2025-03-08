@@ -54,13 +54,24 @@ export default function AdminReservation(){
 
     }, []);
 
+    const getCookie = (name) => {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(";").shift();
+        return null;
+    };
+
 
     useEffect(()=>{
-
+        const token = getCookie("token");
+        if (token) {
+            axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+        }
         getCalendar();
     },[])
 
     const getCalendar = async()=>{
+        dispatch(setLoading(true));
         try {
             const res = await axios.get(`${API_URL}/scheduleConfig`);
             setUnavailableDates(res.data[0].unavailableTimeSlots|| []);
@@ -70,6 +81,8 @@ export default function AdminReservation(){
         } catch (error) {
             console.log(error.response.data.message);
             showAlert(`${error.response.data.message}`,false);
+        }finally{
+            dispatch(setLoading(false));
         }
     }
 
@@ -253,7 +266,7 @@ export default function AdminReservation(){
                     </div>
                 </div>
                 {isMobile?<></>:
-                    <div className="pb-8">
+                    <div className="pb-8 mb-8">
                          <MyAdminCalendar 
                             ref={calendarRef} 
                             onDateChange={setCurrentMonth}  

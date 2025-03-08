@@ -1,0 +1,28 @@
+/* 修改箭頭顏色 */
+.swiper-button-next,
+.swiper-button-prev {
+  color: white; /* 你想要的顏色 */
+}
+
+/* 修改頁籤顏色 */
+.swiper-pagination-bullet {
+    background-color: #FFFFFF45; /* 你想要的顏色 */
+    opacity: 0.5; /* 預設透明度 */
+}
+  
+/* 修改選中的頁籤顏色 */
+.swiper-pagination-bullet-active {
+    background-color: white; /* 變成紅色 */
+    opacity: 1; /* 讓選中的更顯眼 */
+}
+
+/* 調整頁籤大小 */
+.swiper-pagination-bullet {
+    width: 16px;
+    height: 16px;
+}
+
+.swiper-pagination {
+    padding-bottom: 60px; /* 原本是 0px，數值越大，頁籤往上移 */
+  }
+  

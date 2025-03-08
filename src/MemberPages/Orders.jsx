@@ -3,11 +3,16 @@ import Pagination from "../components/Pagination";
 import { useEffect, useState } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading } from "../slice/loadingSlice";
+import Loading from "../components/Loading";
 
 const API_URL = "https://web-project-api-zo40.onrender.com";
 
 export default function Orders() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 992);
+  const isLoading = useSelector((state)=> state.loading.isLoading);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const handleResize = () => {
@@ -42,6 +47,7 @@ export default function Orders() {
   };
 
   const getOrders = async (page = 1) => {
+    dispatch(setLoading(true));
     try {
       const res = await axios.get(
         `${API_URL}/appointments?page=${page}&limit=10`
@@ -54,6 +60,8 @@ export default function Orders() {
       setOrders(res.data.appointments);
     } catch (error) {
       console.log(error);
+    }finally{
+      dispatch(setLoading(false));
     }
   };
 
@@ -78,8 +86,9 @@ export default function Orders() {
 
   return (
     <>
+     {isLoading && <Loading />}
       <div>
-        <div className="bg-white h-75 p-6">
+        <div className="bg-white p-6">
           {orders.length > 0 ? (
             isMobile ? (
               <div className="accordion" id="accordionExample">
@@ -247,7 +256,7 @@ export default function Orders() {
             </>
           )}
         </div>
-        <div className="pt-4">
+        <div className="pt-6">
           <Pagination
             pageInfo={pageInfo}
             handlePageChange={handlePageChange}

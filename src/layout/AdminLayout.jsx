@@ -35,6 +35,7 @@ export default function AdminLayout() {
     try {
       const res = await axios.get(`${API_URL}/login/check`);
       // 更新 Redux 登入狀態
+      dispatch(setUserData(res.data.user))
       dispatch(login());
     } catch (error) {
       console.log(error);
@@ -72,8 +73,8 @@ export default function AdminLayout() {
               to='/admin/reservation'
               className={({ isActive }) => 
                 isActive 
-                  ? "nav-link text-center text-dark-grey border-bottom border-2 border-primary fw-bold fs-3 fs-md-5 px-md-4 py-3 px-8" 
-                  : "nav-link text-center text-primary-02 fw-bold fs-3 fs-md-5 px-md-4 py-3 px-8"
+                  ? "nav-link text-center text-dark-grey border-bottom border-2 border-primary fw-bold fs-5 px-md-4 py-3 px-8" 
+                  : "nav-link text-center text-primary-02 fw-bold fs-5 px-md-4 py-3 px-8"
               }
             >
               預約管理
@@ -85,8 +86,8 @@ export default function AdminLayout() {
               to='/admin/orders'
               className={({ isActive }) => 
                 isActive 
-                  ? "nav-link text-center text-dark-grey border-bottom border-2 border-primary fw-bold fs-3 fs-md-5 px-md-4 py-3 px-8" 
-                  : "nav-link text-center text-primary-02 fw-bold fs-3 fs-md-5 px-md-4 py-3 px-8"
+                  ? "nav-link text-center text-dark-grey border-bottom border-2 border-primary fw-bold fs-5 px-md-4 py-3 px-8" 
+                  : "nav-link text-center text-primary-02 fw-bold fs-5 px-md-4 py-3 px-8"
               }
             >
               訂單明細
