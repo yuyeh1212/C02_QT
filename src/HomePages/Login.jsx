@@ -95,18 +95,27 @@ export default function Login() {
   };
 
   return (<>
-      <div className="d-flex flex-column justify-content-center align-items-center min-vh-100 mb-10">
-        <h5 className="mb-5">請先登入</h5>
-        <form className="d-flex flex-column gap-3" onSubmit={handleSubmit(handleLogin)}>
-          <FormInput id="email" type="email" labelText="Email address" register={register} errors={errors} />
-          <FormInput id="password" type="password" labelText="Password" register={register} errors={errors} />
-          <CustomButton type="submit" className="btn btn-primary">登入</CustomButton>
-        </form>
-        {/* Loading 畫面 */}
-        {isLoading && <Loading></Loading>}
-        {/* Add AlertModal component */}
-        {<AlertModal show={alertState.show} onClose={() => setAlertState({...alertState,show:false})} success={alertState.success}>{alertState.message}</AlertModal>}
-        
+      <div className="bg-neutral-100 pt-6 pb-10 ">
+        <div className="row justify-content-center">
+          <div className="col-6 bg-white py-10">
+            <h5 className="mb-5 text-center">會員登入</h5>
+            <form className="row bg-white gy-4 p-6" onSubmit={handleSubmit(handleLogin)}>
+              <div className="col-12">
+                <FormInput id="email" type="email" labelText="Email address" register={register} errors={errors} />
+              </div>
+              <div className="col-12">
+                <FormInput id="password" type="password" labelText="Password" register={register} errors={errors} />
+              </div>
+              <div className="col-12 d-flex justify-content-center pt-6">
+                <CustomButton type="submit" className="btn btn-primary text-white w-50 fs-4">登入</CustomButton>
+              </div>
+            </form>
+            {/* Loading 畫面 */}
+            {isLoading && <Loading></Loading>}
+            {/* Add AlertModal component */}
+            {<AlertModal show={alertState.show} onClose={() => setAlertState({...alertState,show:false})} success={alertState.success}>{alertState.message}</AlertModal>}    
+          </div>
+        </div>
       </div>
     </>
   );
