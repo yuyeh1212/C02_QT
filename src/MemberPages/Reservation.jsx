@@ -411,7 +411,7 @@ export default function Reservation() {
                                 <ArrowForwardIcon className="text-white ms-2" />
                             </CustomButton>
                             <div className="d-flex justify-content-center d-lg-none">
-                            <CustomButton
+                                <CustomButton
                                     type="submit"  // 這樣當按鈕被點擊時會提交表單
                                     className="btn btn-primary text-white fs-3 fs-md-4 align-items-center justify-content-center d-flex w-50 mt-4 px-3 py-2"
                                     form='makeAnAppointment'

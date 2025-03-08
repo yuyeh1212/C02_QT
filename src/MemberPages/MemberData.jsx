@@ -7,6 +7,7 @@ import Loading from "../components/Loading";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css";
+import CustomButton from "../components/CustomButton";
 import { useNavigate } from "react-router-dom";
 
 const API_URL = "https://web-project-api-zo40.onrender.com";
@@ -25,6 +26,7 @@ export default function MemberData() {
   });
   const [isEditing, setIsEditing] = useState(false);
   const [alert, setAlert] = useState({ show: false, message: "", success:true });
+  const [errors, setErrors] = useState({ email: "", phone: "", LineID: "" });
 
   const userData = useSelector(state => state.userData);
 
@@ -46,8 +48,35 @@ export default function MemberData() {
     setAlert({ show: true, message, success });
   };
 
+  // 驗證函式
+  const validateForm = () => {
+    let newErrors = {};
+
+    if (!formData.email) {
+      newErrors.email = "Email 為必填";
+    } else if (!/^[a-zA-Z0-9._]{5,}@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(formData.email)) {
+      newErrors.email = "Email 格式不正確";
+    }
+
+    if (!formData.phone) {
+      newErrors.phone = "電話號碼為必填";
+    } else if (!/^\d{10}$/.test(formData.phone)) {
+      newErrors.phone = "電話號碼需為 10 碼數字";
+    }
+
+    if (!formData.LineID) {
+      newErrors.LineID = "LINE ID 為必填";
+    } else if (!/^[a-zA-Z0-9_-]+$/.test(formData.LineID)) {
+      newErrors.LineID = "LINE ID 只能包含英文字母、數字、底線 (_) 或連字號 (-)";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0; // 回傳是否驗證成功
+  };
 
   const handleSave = async () => {
+    if (!validateForm()) return; // 若驗證失敗則不繼續
+    
     dispatch(setLoading(true))
     try {
       const res = await axios.patch(`${API_URL}/members/update`, formData);
@@ -109,6 +138,7 @@ export default function MemberData() {
                   setFormData({ ...formData, email: e.target.value })
                 }
               />
+              {errors.email && <p className="error-text">{errors.email}</p>}
             </div>
             <div className="col-12 col-md-6">
               <label htmlFor="inputPhone" className="form-label">
@@ -123,6 +153,7 @@ export default function MemberData() {
                   setFormData({ ...formData, phone: e.target.value })
                 }
               />
+              {errors.phone && <p className="error-text">{errors.phone}</p>}
             </div>
             <div className="col-12 col-md-6">
               <label htmlFor="inputLineID" className="form-label">
@@ -138,19 +169,20 @@ export default function MemberData() {
                   setFormData({ ...formData, LineID: e.target.value })
                 }
               />
+              {errors.LineID && <p className="error-text">{errors.LineID}</p>}
             </div>
             <div className="col-12 d-flex justify-content-center"></div>
           </form>
         </div>
         <div className="col-12 d-flex justify-content-center pt-6">
-          <button
-            type="button"
+          <CustomButton
+            type="submit"  // 這樣當按鈕被點擊時會提交表單
             className="btn px-5 py-4 btn-primary text-white"
             onClick={() => (isEditing ? handleSave() : setIsEditing(true))}
             disabled={isLoading}
           >
-            {isLoading ? "處理中..." : isEditing ? "儲存" : "編輯資料"}
-          </button>
+          {isLoading ? "處理中..." : isEditing ? "儲存" : "編輯資料"}
+          </CustomButton>
         </div>
       </div>
     </section>
