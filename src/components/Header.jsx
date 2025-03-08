@@ -32,7 +32,7 @@ function Header (){
         }
       };
     return(<>
-        <nav className="navbar navbar-expand-lg bg-light py-2 px-lg-12 px-3">
+        <nav className="navbar navbar-expand-md py-2 px-md-12 px-3">
             <div className="container-fluid d-flex align-items-center justify-content-between">
             {/* 左側 Logo */}
                 <h1>
@@ -50,7 +50,7 @@ function Header (){
 
             {/* 漢堡選單按鈕（平板以下顯示） */}
             <button
-                className="navbar-toggler"
+                className="navbar-toggler border-0"
                 type="button"
                 data-bs-toggle="offcanvas"
                 data-bs-target="#offcanvasNavbar"
@@ -90,35 +90,30 @@ function Header (){
 
                     <div className="offcanvas-body flex-row-reverse ">
                     <div
-                    className="d-flex align-items-lg-center fw-medium fs-4 flex-column h-100 flex-lg-row"
+                    className="d-flex align-items-md-center fw-medium flex-column h-100 flex-md-row"
                     style={{ gap: "24px" }}
                     >
-                    <span className="me-3" style={{ color: "#BF9958" }}>
+                    <span className="me-3 fs-3 fs-lg-4" style={{ color: "#BF9958" }}>
                         您好，{userData?.name} 會員
                     </span>
-                    <div className="d-flex flex-column-reverse h-100 flex-lg-row">
+                    <div className="d-flex flex-column-reverse h-100 flex-md-row align-items-md-center">
                         {userData.user === 'admin' ?'':
                         <button
                             onClick={()=>{handleNavigate("/member/reservation")}}
-                            className="mt-auto btn btn-sm text-light fw-medium fs-4 me-lg-15"
-                            style={{ backgroundColor: "#BF9958"}}
+                            className="mt-auto mt-md-0 btn btn-sm btn-primary text-light fw-medium fs-3 fs-lg-4 me-lg-15 me-md-3"
+                            // style={{ backgroundColor: "#BF9958"}}
                         >
                             前往預約 →
                         </button>}
                         
                         
                         <button
-                        className="p-0 border-0 d-flex"
+                        className="p-0 border-0 d-flex bg-white align-items-center icon"
                         type="button"
                         onClick={()=>{handleNavigate("/member/center/data")}}
                         >
-                            <img
-                            src="Frame.png" // 替換成會員頭像的圖片路徑
-                            alt={userData?.name}
-                            className="me-3 mx-lg-3 rounded-circle"
-                            style={{ width: "36px", height: "36px", objectFit: "cover" }}
-                            />
-                            <span className="text-primary-02 fw-medium fs-4">
+                            <i className="bi bi-person-circle me-3 mx-md-3 text-primary-02 " style={{fontSize:36}}></i>
+                            <span className="text-primary-02 fw-medium fs-3 fs-lg-4">
                             會員中心
                             </span>
                         </button>
@@ -144,7 +139,7 @@ function Header (){
                     </div>
                     <div className="offcanvas-body flex-row-reverse">
                     <div
-                        className="d-flex align-items-lg-center fw-medium fs-4 flex-column flex-lg-row"
+                        className="d-flex align-items-md-center fw-medium fs-4 flex-column flex-md-row"
                         style={{ gap: "24px" }}
                         >
                         <button 
