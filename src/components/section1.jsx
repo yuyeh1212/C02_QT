@@ -67,12 +67,12 @@ function Section1() {
               backgroundRepeat: "no-repeat"
               }}
             >
-            <div className="bg-black bg-opacity-25 w-50 p-4 ">
+            <div className="bg-black bg-opacity-25 p-6 ">
               <h1 className="fs-10 fw-bold leading-lg pb-8">{item.title}</h1>
               <h2 className="fs-7 fw-medium leading-lg pb-8">{item.subTitle}</h2>
               <p className="fs-5 fw-medium leading-lg">{item.description1}</p>
               <p className="fs-5 fw-medium leading-lg py-3">{item.description2}</p>
-              <p className="fs-5 fw-medium leading-lg">{item.description3}</p>
+              <p className="fs-5 fw-medium leading-lg pb-6">{item.description3}</p>
             </div>
               <CustomButton 
                 to="/member/reservation" 
