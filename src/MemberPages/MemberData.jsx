@@ -25,6 +25,7 @@ export default function MemberData() {
   });
   const [isEditing, setIsEditing] = useState(false);
   const [alert, setAlert] = useState({ show: false, message: "", success:true });
+  const [errors, setErrors] = useState({ email: "", phone: "", LineID: "" });
 
   const userData = useSelector(state => state.userData);
 
@@ -46,8 +47,35 @@ export default function MemberData() {
     setAlert({ show: true, message, success });
   };
 
+  // 驗證函式
+  const validateForm = () => {
+    let newErrors = {};
+
+    if (!formData.email) {
+      newErrors.email = "Email 為必填";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Email 格式不正確";
+    }
+
+    if (!formData.phone) {
+      newErrors.phone = "電話號碼為必填";
+    } else if (!/^\d{10}$/.test(formData.phone)) {
+      newErrors.phone = "電話號碼需為 10 碼數字";
+    }
+
+    if (!formData.LineID) {
+      newErrors.LineID = "LINE ID 為必填";
+    } else if (!/^[a-zA-Z0-9_-]+$/.test(formData.LineID)) {
+      newErrors.LineID = "LINE ID 只能包含英文字母、數字、底線 (_) 或連字號 (-)";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0; // 回傳是否驗證成功
+  };
 
   const handleSave = async () => {
+    if (!validateForm()) return; // 若驗證失敗則不繼續
+    
     dispatch(setLoading(true))
     try {
       const res = await axios.patch(`${API_URL}/members/update`, formData);
