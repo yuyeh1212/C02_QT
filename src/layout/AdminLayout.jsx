@@ -5,6 +5,8 @@ import AlertModal from "../components/AlertModal";
 import axios from "axios";
 import { setUserData } from "../slice/userSlice";
 import { login } from "../slice/authSlice";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 const API_URL = "https://web-project-api-zo40.onrender.com";
 
@@ -62,6 +64,7 @@ export default function AdminLayout() {
       {<AlertModal show={alertState.show} onClose={() => setAlertState({...alertState,show:false})} success={alertState.success}>
         {alertState.message}
       </AlertModal>}
+      <Header></Header>
       <div className="container">
         <nav className="d-flex nav justify-content-center pt-4 mb-4 gap-md-7 gap-4">
           <div className="nav-item ">
@@ -92,6 +95,7 @@ export default function AdminLayout() {
         </nav>
         <Outlet></Outlet>
       </div>
+      <Footer></Footer>
     </div>
   );
 }
