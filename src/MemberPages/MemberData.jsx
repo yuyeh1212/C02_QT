@@ -7,6 +7,7 @@ import Loading from "../components/Loading";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css";
+import CustomButton from "../components/CustomButton";
 import { useNavigate } from "react-router-dom";
 
 const API_URL = "https://web-project-api-zo40.onrender.com";
@@ -53,7 +54,7 @@ export default function MemberData() {
 
     if (!formData.email) {
       newErrors.email = "Email 為必填";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+    } else if (!/^[a-zA-Z0-9._]{5,}@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(formData.email)) {
       newErrors.email = "Email 格式不正確";
     }
 
@@ -137,6 +138,7 @@ export default function MemberData() {
                   setFormData({ ...formData, email: e.target.value })
                 }
               />
+              {errors.email && <p className="error-text">{errors.email}</p>}
             </div>
             <div className="col-12 col-md-6">
               <label htmlFor="inputPhone" className="form-label">
@@ -151,6 +153,7 @@ export default function MemberData() {
                   setFormData({ ...formData, phone: e.target.value })
                 }
               />
+              {errors.phone && <p className="error-text">{errors.phone}</p>}
             </div>
             <div className="col-12 col-md-6">
               <label htmlFor="inputLineID" className="form-label">
@@ -166,19 +169,20 @@ export default function MemberData() {
                   setFormData({ ...formData, LineID: e.target.value })
                 }
               />
+              {errors.LineID && <p className="error-text">{errors.LineID}</p>}
             </div>
             <div className="col-12 d-flex justify-content-center"></div>
           </form>
         </div>
         <div className="col-12 d-flex justify-content-center pt-6">
-          <button
-            type="button"
+          <CustomButton
+            type="submit"  // 這樣當按鈕被點擊時會提交表單
             className="btn px-5 py-4 btn-primary text-white"
             onClick={() => (isEditing ? handleSave() : setIsEditing(true))}
             disabled={isLoading}
           >
-            {isLoading ? "處理中..." : isEditing ? "儲存" : "編輯資料"}
-          </button>
+          {isLoading ? "處理中..." : isEditing ? "儲存" : "編輯資料"}
+          </CustomButton>
         </div>
       </div>
     </section>

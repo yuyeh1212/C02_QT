@@ -7,6 +7,7 @@ import AlertModal from '../components/AlertModal';
 import Loading from '../components/Loading';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoading } from '../slice/loadingSlice';
+import CustomButton from '../components/CustomButton';
 // Adjust path as needed
 const API_URL = 'https://web-project-api-zo40.onrender.com';
 
@@ -146,7 +147,7 @@ export default function Register() {
 	};
 
 	return (
-		<div className="d-flex flex-column min-vh-100 mb-10">
+		<div className="d-flex flex-column pt-6 pb-10 bg-neutral-100">
 			{/* Loading 畫面 */}
 			{isLoading && <Loading></Loading>}
 			{/* Add AlertModal component */}
@@ -161,12 +162,12 @@ export default function Register() {
 			}
 
 			<div className="flex-grow-1">
-				<div className="container py-5">
+				<div className="container">
 					<div className="row justify-content-center">
 						<div className="col-md-6">
-							<h5 className="text-center mb-4">會員註冊</h5>
-							<form className="row g-3" onSubmit={handleSubmit(handleRegister)}>
-								<div className="col-12">
+							<h5 className="text-center mb-8">會員註冊</h5>
+							<form id='registerForm' className="row gy-3 bg-white p-6" onSubmit={handleSubmit(handleRegister)}>
+								<div className="col-12 ">
 									<FormInput
 										id="email"
 										type="email"
@@ -212,17 +213,6 @@ export default function Register() {
 								</div>
 								<div className="col-12 col-md-6">
 									<FormInput
-										id="phone"
-										type="tel"
-										labelText="電話"
-										LabelHolder="請輸入註冊電話"
-										register={register}
-										errors={errors}
-										rules={validationRules.phone}
-									/>
-								</div>
-								<div className="col-12 col-md-6">
-									<FormInput
 										id="birthday"
 										type="date"
 										labelText="生日"
@@ -232,7 +222,18 @@ export default function Register() {
 										rules={validationRules.birthday}
 									/>
 								</div>
-								<div className="col-12 col-md-6">
+								<div className="col-12">
+									<FormInput
+										id="phone"
+										type="tel"
+										labelText="電話"
+										LabelHolder="請輸入註冊電話"
+										register={register}
+										errors={errors}
+										rules={validationRules.phone}
+									/>
+								</div>
+								<div className="col-12">
 									<FormInput
 										id="LineID"
 										type="text"
@@ -244,9 +245,14 @@ export default function Register() {
 									/>
 								</div>
 								<div className="col-12 d-flex justify-content-center pt-6">
-									<button type="submit" className="btn btn-primary" disabled={isLoading}>
-										{isLoading ? '註冊中...' : '註冊'}
-									</button>
+									<CustomButton
+										type="submit"  // 這樣當按鈕被點擊時會提交表單
+										className="btn px-5 py-4 btn-primary text-white w-50 fs-4"
+										disabled={isLoading}
+										form='registerForm'
+									>
+									{isLoading ? '註冊中...' : '註冊'}
+									</CustomButton>
 								</div>
 							</form>
 						</div>
