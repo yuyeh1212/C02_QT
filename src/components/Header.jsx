@@ -1,15 +1,28 @@
 
-import { useRef ,useEffect} from "react";
-import { useSelector } from "react-redux";
+import { useRef ,useEffect, useState} from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import * as bootstrap from 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import axios from "axios";
+import { setLoading } from "../slice/loadingSlice";
+import { logout } from "../slice/authSlice";
+import { clearUserData } from "../slice/userSlice";
+import Loading from "./Loading";
+import AlertModal from "./AlertModal";
+
+
+const API_URL = "https://web-project-api-zo40.onrender.com";
 
 function Header (){
     const isLogin = useSelector(state => state.auth.isLoggedIn);
+    const isLoading = useSelector(state=> state.loading.isLoading);
     const userData = useSelector(state => state.userData);
     const offcanvasRef = useRef(null);
     const offcanvasInstanceRef = useRef(null);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [alertState,setAlertState] = useState({show:false,message:"",success:true});
+
     useEffect(() => {
     if (offcanvasRef.current && bootstrap) {
         // Store the instance in a ref for later use
@@ -24,14 +37,60 @@ function Header (){
     
     const handleNavigate = (route) => {
         if (offcanvasInstanceRef.current) {
-          offcanvasInstanceRef.current.hide();  // 關閉 offcanvas
-          // 使用 setTimeout 延遲導航，確保動畫完成
-          setTimeout(() => {
+            offcanvasInstanceRef.current.hide();  // 關閉 offcanvas
+            // 使用 setTimeout 延遲導航，確保動畫完成
+            setTimeout(() => {
             navigate(route);
-          }, 500);  // 假設 500ms 是關閉動畫的時間
+            }, 500);  // 假設 500ms 是關閉動畫的時間
         }
-      };
+    };
+
+    const getCookie = (name) => {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(";").shift();
+        return null;
+    };
+
+    const token = getCookie("token");
+
+    if (token) {
+        axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+    }
+
+    const clearCookie = (name) => {
+        document.cookie = `${name}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
+    };
+
+    const showAlert = (message,success)=>{
+        setAlertState({show:true,"message":message,"success":success})
+    }
+
+    const handleLogout = async()=>{
+        dispatch(setLoading(true));
+        try {
+            const res = await axios.post(`${API_URL}/logout`)
+            showAlert('登出成功！',true);
+            clearCookie("token"); 
+            delete axios.defaults.headers.common.Authorization; 
+            dispatch(logout());
+            dispatch(clearUserData());
+            setTimeout(()=>{
+                navigate("/login");
+            },2000)
+        } catch (error) {
+            showAlert('登出失敗，請稍後再試',false);
+            console.log(error);
+        } finally {
+            dispatch(setLoading(false));
+        }
+    }
+
     return(<>
+            {/* Loading 畫面 */}
+            {isLoading && <Loading></Loading>}
+            {/* Add AlertModal component */}
+            {<AlertModal show={alertState.show} onClose={() => setAlertState({...alertState,show:false})} success={alertState.success}>{alertState.message}</AlertModal>}
         <nav className="navbar navbar-expand-md py-2 px-md-12 px-3 bg-white">
             <div className="container-fluid d-flex align-items-center justify-content-between">
             {/* 左側 Logo */}
@@ -100,9 +159,9 @@ function Header (){
                             className="d-flex align-items-md-center fw-medium flex-column h-100 flex-md-row"
                             style={{ gap: "24px" }}
                             >
-                            <span className="me-3 fs-5 fs-md-3 fs-lg-4 text-center text-primary">
+                            {/* <span className="me-3 fs-5 fs-md-3 fs-lg-4 text-center text-primary">
                                 您好，{userData?.name} 會員
-                            </span>
+                            </span> */}
                             <div className="d-flex flex-column-reverse h-100 flex-md-row align-items-md-center justify-content-md-center">
                                 {userData.user === 'admin' ?'':
                                 <button
@@ -115,13 +174,22 @@ function Header (){
                                 
                                 
                                 <button
-                                className="p-0 border-0 d-flex bg-white justify-content-center align-items-center icon"
+                                className="p-0 border-0 d-flex bg-white justify-content-center align-items-center icon me-lg-15 me-md-3"
                                 type="button"
                                 onClick={()=>{handleNavigate("/member/center/data")}}
                                 >
                                     <i className="bi bi-person-circle me-3 mx-md-3 text-primary-02 " style={{fontSize:36}}></i>
                                     <span className="text-primary-02 fw-medium fs-3 fs-lg-4">
                                     會員中心
+                                    </span>
+                                </button>
+                                <button
+                                className="p-0 border-0 bg-white icon"
+                                type="button"
+                                onClick={handleLogout}
+                                >
+                                    <span className="text-primary-02 fw-medium fs-3 fs-lg-4">
+                                    登出
                                     </span>
                                 </button>
                             </div>
