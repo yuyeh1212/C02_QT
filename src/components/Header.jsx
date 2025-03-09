@@ -132,7 +132,7 @@ function Header (){
                         <div className="offcanvas-header">
                             <h5 className="offcanvas-title" id="offcanvasNavbarLabel">
                                 <img
-                                src="/logo.png"
+                                src="logo.png"
                                 alt="Logo"
                                 className="me-2"
                                 style={{ height: "40px" }}
@@ -183,7 +183,7 @@ function Header (){
                             <div className="offcanvas-header">
                                 <h5 className="offcanvas-title" id="offcanvasNavbarLabel">
                                     <img
-                                    src="/logo.png"
+                                    src="logo.png"
                                     alt="Logo"
                                     className="me-2"
                                     style={{ height: "40px" }}
@@ -243,7 +243,7 @@ function Header (){
                             <div className="offcanvas-header">
                                 <h5 className="offcanvas-title" id="offcanvasNavbarLabel">
                                     <img
-                                        src="/logo.png"
+                                        src="logo.png"
                                         alt="Logo"
                                         style={{ height: "40px" }}
                                         />

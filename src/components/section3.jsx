@@ -237,7 +237,7 @@ function Section3(){
                 :
                 <div className="col-lg-6 position-relative">
                 <div className=" overflow-hidden position-absolute h-100" style={{borderTopLeftRadius:64,width:908,left:100}}>
-                    <img className='h-100 w-100' src="/2149171334.jpg" alt="" />
+                    <img className='h-100 w-100' src="2149171334.jpg" alt="" />
                 </div>
                 </div>
                 }
