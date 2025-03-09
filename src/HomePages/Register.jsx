@@ -164,7 +164,7 @@ export default function Register() {
 			<div className="flex-grow-1">
 				<div className="container">
 					<div className="row justify-content-center">
-						<div className="col-md-6">
+						<div className="col-md-6 col-10">
 							<h5 className="text-center mb-8">會員註冊</h5>
 							<form id='registerForm' className="row gy-3 bg-white p-6" onSubmit={handleSubmit(handleRegister)}>
 								<div className="col-12 ">
@@ -178,7 +178,7 @@ export default function Register() {
 										rules={validationRules.email}
 									/>
 								</div>
-								<div className="col-12 col-md-6">
+								<div className="col-12 col-xl-6">
 									<FormInput
 										id="password"
 										type="password"
@@ -189,7 +189,7 @@ export default function Register() {
 										rules={validationRules.password}
 									/>
 								</div>
-								<div className="col-12 col-md-6">
+								<div className="col-12 col-xl-6">
 									<FormInput
 										id="confirmPassword"
 										type="password"
@@ -200,7 +200,7 @@ export default function Register() {
 										rules={validationRules.confirmPassword}
 									/>
 								</div>
-								<div className="col-12 col-md-6">
+								<div className="col-12 col-xl-6">
 									<FormInput
 										id="name"
 										type="text"
@@ -211,7 +211,7 @@ export default function Register() {
 										rules={validationRules.name}
 									/>
 								</div>
-								<div className="col-12 col-md-6">
+								<div className="col-12 col-xl-6">
 									<FormInput
 										id="birthday"
 										type="date"
