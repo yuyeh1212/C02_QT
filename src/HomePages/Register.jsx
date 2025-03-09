@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setLoading } from '../slice/loadingSlice';
 import CustomButton from '../components/CustomButton';
 // Adjust path as needed
-const API_URL = 'https://web-project-api-zo40.onrender.com';
+const API_URL = import.meta.env.VITE_BASE_URL;
 
 const FormInput = ({ register, errors, id, labelText, type = 'text', rules = {}, LabelHolder }) => {
 	const [showPassword, setShowPassword] = useState(false);

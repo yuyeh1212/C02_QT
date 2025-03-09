@@ -4,12 +4,10 @@ import interactionPlugin from "@fullcalendar/interaction";
 import { forwardRef, useEffect, useState, useImperativeHandle, useRef } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
-import { info } from "sass";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../slice/loadingSlice";
 
-const API_URLL = 'https://web-project-api-zo40.onrender.com';
-const API_URL = 'http://localhost:3000/';
+const API_URL = import.meta.env.VITE_BASE_URL;
 
 const MyCalendar = forwardRef(({ onDateChange ,handleCalendar,getCalendarInfo}, ref) => {
 
@@ -21,7 +19,7 @@ const MyCalendar = forwardRef(({ onDateChange ,handleCalendar,getCalendarInfo}, 
     const fetchCalendarData = async()=>{
         
         try {
-            const res = await axios.get(`${API_URLL}/scheduleConfig`)
+            const res = await axios.get(`${API_URL}/scheduleConfig`)
             const config = res.data[0]
             const generateCalendarEvents = (config) => {
                 const fixedSlots = [

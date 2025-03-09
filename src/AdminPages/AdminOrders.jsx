@@ -8,7 +8,7 @@ import { setLoading } from "../slice/loadingSlice";
 import Loading from "../components/Loading";
 
 
-const API_URL = "https://web-project-api-zo40.onrender.com";
+const API_URL = import.meta.env.VITE_BASE_URL;
 
 export default function Orders() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 992);

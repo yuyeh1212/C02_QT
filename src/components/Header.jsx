@@ -11,7 +11,7 @@ import Loading from "./Loading";
 import AlertModal from "./AlertModal";
 
 
-const API_URL = "https://web-project-api-zo40.onrender.com";
+const API_URL = import.meta.env.VITE_BASE_URL;
 
 function Header (){
     const isLogin = useSelector(state => state.auth.isLoggedIn);
@@ -122,11 +122,54 @@ function Header (){
                  {/* 右側內容（平板以下可摺疊） */}
                 {
                     userData?.user !== 'user' ? 
-                    <Link to="/admin/reservation">
-                        <span className="me-3 fs-5 fs-md-3 fs-lg-4 text-center text-primary" >
-                            後台
-                        </span>
-                    </Link>
+                    <div
+                        className="offcanvas offcanvas-end vw-100"
+                        tabIndex="-1"
+                        id="offcanvasNavbar"
+                        aria-labelledby="offcanvasNavbarLabel"
+                        ref={offcanvasRef}
+                    >
+                        <div className="offcanvas-header">
+                            <h5 className="offcanvas-title" id="offcanvasNavbarLabel">
+                                <img
+                                src="/logo.png"
+                                alt="Logo"
+                                className="me-2"
+                                style={{ height: "40px" }}
+                                />
+                            </h5>
+                            <button
+                                type="button"
+                                className="btn-close"
+                                data-bs-dismiss="offcanvas"
+                                aria-label="Close"
+                            ></button>
+                        </div>
+                        <div className="offcanvas-body flex-row-reverse ">
+                            <div
+                                className="d-flex align-items-md-center fw-medium flex-column h-100 flex-md-row"
+                                style={{ gap: "24px" }}
+                            >
+                                <div className="d-flex flex-column-reverse h-100 flex-md-row align-items-md-center justify-content-md-center">
+                                    <button
+                                        onClick={()=>{handleNavigate("/admin/reservation")}}
+                                        className="mt-auto mt-md-0 btn btn-sm btn-primary text-light fw-medium fs-3 fs-lg-4 me-lg-15 me-md-3"
+                                    >
+                                        後台
+                                    </button>
+                                    <button
+                                        className="p-0 border-0 bg-white icon"
+                                        type="button"
+                                        onClick={handleLogout}
+                                    >
+                                        <span className="text-primary-02 fw-medium fs-3 fs-lg-4">
+                                        登出
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     : 
                     <div
                         className="offcanvas offcanvas-end vw-100"

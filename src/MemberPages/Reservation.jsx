@@ -13,8 +13,7 @@ import AlertModal from "../components/AlertModal";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-const API_URLL = 'https://web-project-api-zo40.onrender.com';
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_BASE_URL;
 
 
 export default function Reservation() {
@@ -96,7 +95,7 @@ export default function Reservation() {
         }
         (async ()=>{
             try {
-                const res = await axios.get(`${API_URLL}/scheduleConfig`)
+                const res = await axios.get(`${API_URL}/scheduleConfig`)
                 setSubmitTimeSlots(res.data[0].reservedTimeSlots)
             } catch (error) {
                 console.log(error?.response);
@@ -107,7 +106,7 @@ export default function Reservation() {
     const handleUpdateReservedTimeSlots = async()=>{
         if(submitTimeSlots.length > 0){
             try {
-                const res = await axios.patch(`${API_URLL}/scheduleConfig`,{reservedTimeSlots: submitTimeSlots})
+                const res = await axios.patch(`${API_URL}/scheduleConfig`,{reservedTimeSlots: submitTimeSlots})
                 calendarRef.current?.refreshCalendar()
             } catch (error) {
                 console.log(error);
@@ -157,7 +156,7 @@ export default function Reservation() {
         }
         dispatch(setLoading(true))
         try {
-            await axios.post(`${API_URLL}/appointments`,appointmentState)
+            await axios.post(`${API_URL}/appointments`,appointmentState)
             setSubmitTimeSlots((prev)=>[...prev,{
                 date:data.date,
                 timeSlot:data.timeSlot

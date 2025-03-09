@@ -12,7 +12,7 @@ function Section1() {
   const [manicureData] = useState([
     {
       id: 1,
-      image: "/3270.jpg",
+      image: "3270.jpg",
       title: "精心時刻",
       subTitle: "為您提供專業的手足部美甲",
       description1: "享受舒適獨立的居家工作室服務",
@@ -22,7 +22,7 @@ function Section1() {
     },
     {
       id: 2,
-      image: "/2149171335.png",
+      image: "2149171335.png",
       title: "精心時刻",
       subTitle: "為您提供專業的手足部美甲",
       description1: "享受舒適獨立的居家工作室服務",
@@ -32,7 +32,7 @@ function Section1() {
     },
     {
       id: 3,
-      image: "/3785.jpg",
+      image: "3785.jpg",
       title: "精心時刻",
       subTitle: "為您提供專業的手足部美甲",
       description1: "享受舒適獨立的居家工作室服務",

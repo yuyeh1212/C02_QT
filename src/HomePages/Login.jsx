@@ -9,7 +9,7 @@ import { setLoading } from "../slice/loadingSlice";
 import CustomButton from "../components/CustomButton";
 import AlertModal from "../components/AlertModal";
 import Loading from "../components/Loading";
-const API_URL = "https://web-project-api-zo40.onrender.com";
+const API_URL = import.meta.env.VITE_BASE_URL;
 // 自定義輸入元件
 const FormInput = ({ register, errors, id, labelText, type = "text", rules = {} }) => {
   const [showPassword, setShowPassword] = useState(false);

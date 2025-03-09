@@ -13,7 +13,7 @@ import Loading from "../components/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "../slice/loadingSlice";
 
-const API_URL = "https://web-project-api-zo40.onrender.com";
+const API_URL = import.meta.env.VITE_BASE_URL;
 
 
 

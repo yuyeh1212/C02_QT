@@ -8,9 +8,8 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css";
 import CustomButton from "../components/CustomButton";
-import { useNavigate } from "react-router-dom";
 
-const API_URL = "https://web-project-api-zo40.onrender.com";
+const API_URL = import.meta.env.VITE_BASE_URL;
 
 export default function MemberData() {
   const dispatch = useDispatch();

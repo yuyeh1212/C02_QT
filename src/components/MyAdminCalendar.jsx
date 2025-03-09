@@ -3,7 +3,6 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { forwardRef, useEffect, useState, useImperativeHandle, useRef } from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
 
 
 const MyAdminCalendar = forwardRef(({ onDateChange,getCalendarInfo,unavailableDates,reservedTimeSlots,lastBookableDate,setUnavailableDates}, ref) => {

@@ -233,7 +233,7 @@ function Section3(){
               </table>
             </div>
               {windowWidth < 992 ?
-                <img className='w-100' style={{borderTopLeftRadius:64,objectFit:"cover",maxHeight:windowWidth < 576? 248: windowWidth< 768 ? 344 : 464}} src="/2149171334.jpg" alt="" />
+                <img className='w-100' style={{borderTopLeftRadius:64,objectFit:"cover",maxHeight:windowWidth < 576? 248: windowWidth< 768 ? 344 : 464}} src="2149171334.jpg" alt="" />
                 :
                 <div className="col-lg-6 position-relative">
                 <div className=" overflow-hidden position-absolute h-100" style={{borderTopLeftRadius:64,width:908,left:100}}>
@@ -252,12 +252,12 @@ function Section3(){
           <div className="row align-items-center mb-6 mb-md-11">
               {windowWidth < 992 ?
                   <div className='mb-5' >
-                  <img className='h-100 w-100' src="/2149975490.jpg" alt="" style={{borderTopRightRadius:64,objectFit:"cover",maxHeight:windowWidth < 576? 248: windowWidth< 768 ? 344 : 464}}/>
+                  <img className='h-100 w-100' src="2149975490.jpg" alt="" style={{borderTopRightRadius:64,objectFit:"cover",maxHeight:windowWidth < 576? 248: windowWidth< 768 ? 344 : 464}}/>
                 </div>
                   :
                   <div className="col-lg-6 position-relative" style={{minHeight:574}}>
                   <div className=" overflow-hidden position-absolute h-100" style={{borderTopRightRadius:64,width:956,minHeight:574,right:100}}>
-                      <img className='h-100 w-100' src="/2149975490.jpg" alt="" />
+                      <img className='h-100 w-100' src="2149975490.jpg" alt="" />
                   </div>
                   </div>
                   }

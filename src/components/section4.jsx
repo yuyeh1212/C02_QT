@@ -24,15 +24,15 @@ function Section4() {
     }, []);
     
     const artWorksCollection = [
-      { title:'img1',img:'/workImg1.png'},
-      { title:'img2',img:'/workImg2.png'},
-      { title:'img3',img:'/workImg3.png'},
-      { title:'img4',img:'/workImg4.png'},
-      { title:'img5',img:'/workImg5.png'},
-      { title:'img6',img:'/workImg6.png'},
-      { title:'img7',img:'/workImg7.png'},
-      { title:'img8',img:'/workImg8.png'},
-      { title:'img9',img:'/workImg9.png'}
+      { title:'img1',img:'workImg1.png'},
+      { title:'img2',img:'workImg2.png'},
+      { title:'img3',img:'workImg3.png'},
+      { title:'img4',img:'workImg4.png'},
+      { title:'img5',img:'workImg5.png'},
+      { title:'img6',img:'workImg6.png'},
+      { title:'img7',img:'workImg7.png'},
+      { title:'img8',img:'workImg8.png'},
+      { title:'img9',img:'workImg9.png'}
     ];
   
     const collectionSettings = {
