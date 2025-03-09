@@ -24,13 +24,13 @@ export default function Footer() {
           <div className="col-12 col-md-3 col-lg-4">
             {/* 右側社群連結 */}
             <div className=" d-flex gap-lg-7 gap-4 justify-content-center">
-              <a to="#" >
+              <a href="https://www.facebook.com/Quality.Time.Studio.Nails?locale=zh_TW" >
                 <Icon icon="ic:baseline-facebook" className="fs-lg-9 fs-5 fs-md-8"  style={{color: "#fff",maxWidth:"54px"}} />
               </a>
-              <a to="#" >
+              <a href="https://www.instagram.com/quality_time_studio?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" >
                 <Icon icon="icon-park-outline:instagram"  className="fs-lg-9 fs-5 fs-md-8"  style={{color: "#fff" ,maxWidth:"54px"}} />
               </a>
-              <a to="#" >
+              <a href="https://line.me/R/ti/p/@893ukbbx" >
                 <Icon icon="mage:line" className="fs-lg-9 fs-5 fs-md-8"   style={{color: "#fff" ,maxWidth:"54px"}} />
               </a>
             </div>

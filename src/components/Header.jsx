@@ -98,7 +98,7 @@ function Header (){
                     <Link to="/">
                         <div className="d-flex align-items-center">
                             <img
-                            src="/logo.png"
+                            src="logo.png"
                             alt="Logo"
                             className="me-2"
                             style={{ height: "40px" }}

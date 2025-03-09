@@ -92,12 +92,12 @@ function Section3(){
             <div className="row justify-content-end mb-6 mb-md-11 ">
               {windowWidth < 992 ?
               <div className='mb-5' >
-              <img className='h-100 w-100' src="/26544.jpg" alt="" style={{borderTopRightRadius:64,objectFit:"cover",maxHeight:windowWidth < 576? 248: windowWidth< 768 ? 344 : 464}}/>
+              <img className='h-100 w-100' src="26544.jpg" alt="" style={{borderTopRightRadius:64,objectFit:"cover",maxHeight:windowWidth < 576? 248: windowWidth< 768 ? 344 : 464}}/>
             </div>
               :
               <div className="col-lg-6 position-relative">
               <div className=" overflow-hidden position-absolute h-100" style={{borderTopRightRadius:64,width:868,right:100}}>
-                  <img className='h-100 w-100' src="/26544.jpg" alt="" />
+                  <img className='h-100 w-100' src="26544.jpg" alt="" />
               </div>
               </div>
               }
