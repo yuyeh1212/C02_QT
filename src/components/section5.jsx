@@ -69,7 +69,7 @@ function Section5() {
       function SampleNextArrow(props) {
         const { className, onClick ,style} = props;
         return (
-            <ArrowForwardIosIcon className={className} onClick={onClick} style={{ ...style,fontSize: "2rem", color: "black" ,cursor: "pointer" }} />
+            <ArrowForwardIosIcon className={className} onClick={onClick} style={{ ...style,fontSize: "2rem", color: "black" ,cursor: "pointer" ,width:"20"}} />
         );
       }
       
@@ -82,17 +82,17 @@ function Section5() {
       function SamplePrevArrow(props) {
         const { className, onClick ,style} = props;
         return (
-          <ArrowBackIosIcon className={className} onClick={onClick} style={{ ...style,fontSize: "2rem", color: "black" ,cursor: "pointer" }} />
+          <ArrowBackIosIcon className={className} onClick={onClick} style={{ ...style,fontSize: "2rem", color: "black" ,cursor: "pointer" ,width:"20"}} />
         );
       }
 
 
     return (
         <>
-            <div className='linear py-13'>
+            <div className='linear py-13 '>
             <section className='container'>
             <h2 className="text-center fs-6 fs-sm-7 text-primary-02 pb-11">顧客反饋</h2>
-                <Slider {...feedBackSettings} className='pb-11' >
+                <Slider {...feedBackSettings} className='pb-11 ' >
                     {allCards.map((card,index) => (
                         <div key={index}>
                             <Card className='mx-2'sx={{ 

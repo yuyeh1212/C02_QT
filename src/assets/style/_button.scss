@@ -14,3 +14,7 @@
     transform: scale(1.03); /* 放大 1% */
     transition: transform 0.3s ,color 0.3s;
 }
+a.btn-outline-primary {
+    --bs-btn-hover-color: white;
+    --bs-btn-active-color: white;
+  }

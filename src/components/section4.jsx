@@ -75,7 +75,8 @@ function Section4() {
             </div>
             <div className='row justify-content-center pt-4'>
             <CustomButton 
-                to="/member/reservation" 
+                target="blank"
+                href="https://www.instagram.com/quality_time_studio?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
                 className="col-10 col-sm-4 mx-4 my-2 btn-outline-primary"
               >
                 瀏覽更多

@@ -7,11 +7,12 @@ export default function Footer() {
     <footer className="bg-primary-02">
       <div className="container">
         <div className="row py-12 d-flex align-items-center g-4 ">
-          <div className="col-12 col-md-8 col-lg-9">
-            <div className="d-flex flex-column flex-md-row align-items-center">
-              <img className="mb-4 mb-md-0"
+          <div className="col-12 col-md-9 col-lg-8">
+            <div className="d-flex flex-column flex-md-row align-items-center fs-2 fs-lg-3">
+              <img className="mb-4 mb-md-0 w-25 w-md-75"
                   src="logo1.png"
                   alt="Quality Time Logo"
+                  style={{maxWidth:"217px"}}
                 />
                 <div className="ms-8 text-white text-md-start text-center">
                 <p>店家地址：931 屏東縣佳冬鄉光明路16號</p>
@@ -20,17 +21,17 @@ export default function Footer() {
                 </div>
             </div>
           </div>
-          <div className="col-12 col-md-4 col-lg-3">
+          <div className="col-12 col-md-3 col-lg-4">
             {/* 右側社群連結 */}
-            <div className=" d-flex align-items-center justify-content-center ">
+            <div className=" d-flex gap-lg-7 gap-4 justify-content-center">
               <a to="#" >
-                <Icon icon="ic:baseline-facebook" width="64" height="64"  style={{color: "#fff"}} />
-              </a>
-              <a to="#" className="mx-7">
-                <Icon icon="icon-park-outline:instagram" width="64" height="64"  style={{color: "#fff"}} />
+                <Icon icon="ic:baseline-facebook" className="fs-lg-9 fs-5 fs-md-8"  style={{color: "#fff",maxWidth:"54px"}} />
               </a>
               <a to="#" >
-                <Icon icon="mage:line" width="64" height="64"  style={{color: "#fff"}} />
+                <Icon icon="icon-park-outline:instagram"  className="fs-lg-9 fs-5 fs-md-8"  style={{color: "#fff" ,maxWidth:"54px"}} />
+              </a>
+              <a to="#" >
+                <Icon icon="mage:line" className="fs-lg-9 fs-5 fs-md-8"   style={{color: "#fff" ,maxWidth:"54px"}} />
               </a>
             </div>
           </div>

@@ -155,7 +155,6 @@ export default function Reservation() {
                             "nailExtension": data.nailExtension,
                             "LineID":data.LineID
         }
-        console.log(appointmentState);
         dispatch(setLoading(true))
         try {
             await axios.post(`${API_URLL}/appointments`,appointmentState)
