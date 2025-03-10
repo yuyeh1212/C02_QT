@@ -91,17 +91,16 @@ function Header (){
             {isLoading && <Loading></Loading>}
             {/* Add AlertModal component */}
             {<AlertModal show={alertState.show} onClose={() => setAlertState({...alertState,show:false})} success={alertState.success}>{alertState.message}</AlertModal>}
-        <nav className="navbar navbar-expand-md py-2 px-md-12 px-3 bg-white">
+        <nav className="navbar navbar-expand-md py-4 px-md-2 px-3 bg-white">
             <div className="container-fluid d-flex align-items-center justify-content-between">
             {/* 左側 Logo */}
                 <h1>
                     <Link to="/">
                         <div className="d-flex align-items-center">
                             <img
-                            src="logo.png"
+                            src="headerLogo.svg"
                             alt="Logo"
-                            className="me-2"
-                            style={{ height: "40px" }}
+                            className="me-2 logo-img"
                             />
                         </div>
                     </Link>
@@ -132,7 +131,7 @@ function Header (){
                         <div className="offcanvas-header">
                             <h5 className="offcanvas-title" id="offcanvasNavbarLabel">
                                 <img
-                                src="logo.png"
+                                src="headerLogo.svg"
                                 alt="Logo"
                                 className="me-2"
                                 style={{ height: "40px" }}
@@ -183,10 +182,9 @@ function Header (){
                             <div className="offcanvas-header">
                                 <h5 className="offcanvas-title" id="offcanvasNavbarLabel">
                                     <img
-                                    src="logo.png"
+                                    src="headerLogo.svg"
                                     alt="Logo"
                                     className="me-2"
-                                    style={{ height: "40px" }}
                                     />
                                 </h5>
                                 <button
@@ -243,7 +241,7 @@ function Header (){
                             <div className="offcanvas-header">
                                 <h5 className="offcanvas-title" id="offcanvasNavbarLabel">
                                     <img
-                                        src="logo.png"
+                                        src="headerLogo.svg"
                                         alt="Logo"
                                         style={{ height: "40px" }}
                                         />
