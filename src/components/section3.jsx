@@ -92,12 +92,12 @@ function Section3(){
             <div className="row justify-content-end mb-6 mb-md-11 ">
               {windowWidth < 992 ?
               <div className='mb-5' >
-              <img className='h-100 w-100' src="26544.jpg" alt="" style={{borderTopRightRadius:64,objectFit:"cover",maxHeight:windowWidth < 576? 248: windowWidth< 768 ? 344 : 464}}/>
+              <img className='h-100 w-100' src="/26544.jpg" alt="" style={{borderTopRightRadius:64,objectFit:"cover",maxHeight:windowWidth < 576? 248: windowWidth< 768 ? 344 : 464}}/>
             </div>
               :
               <div className="col-lg-6 position-relative">
               <div className=" overflow-hidden position-absolute h-100" style={{borderTopRightRadius:64,width:868,right:100}}>
-                  <img className='h-100 w-100' src="26544.jpg" alt="" />
+                  <img className='h-100 w-100' src="/26544.jpg" alt="" />
               </div>
               </div>
               }
@@ -132,10 +132,10 @@ function Section3(){
         <div className="py-6 py-md-13 mx-auto">
           <h2 className='fs-6 fs-md-7 text-primary-02 text-center mb-4 fw-semibold fw-md-bold mb-6 mb-md-11'>價目表 Price</h2>
           <div className="row">
-            <div className="col-lg-6 ">
-              <table className="table table-spacing-sm table-borderless table-neutral-200 mb-2 " style={{marginLeft:-4}}>
+            <div className="col-lg-6">
+            <table className="table table-spacing-sm table-borderless table-neutral-200 mb-2 text-primary-02" style={{marginLeft:-4}}>
                 <thead >
-                  <tr className='text-primary-02 fs-md-5 fw-bold' >
+                  <tr className='fs-md-5 fw-bold' >
                     <th  scope="col" style={{minWidth:180,maxWidth:324}}>凝膠項目</th>
                     <th  scope="col">手部</th>
                     <th scope="col">足部</th>
@@ -143,101 +143,107 @@ function Section3(){
                 </thead>
                 <tbody className='fs-md-4 fw-md-medium'>
                   <tr>
-                    <th className='fw-nomal fw-md-medium' scope="row" >單色</th>
+                    <th className='fw-normal fw-md-medium' scope="row" >單色</th>
                     <td>800</td>
                     <td>1000</td>
                   </tr>
                   <tr>
-                    <th className='fw-nomal fw-md-medium' scope="row" >特殊色</th>
+                    <th className='fw-normal fw-md-medium' scope="row" >特殊色</th>
                     <td>900</td>
                     <td>1100</td>
                   </tr>
                   <tr>
-                    <th className='fw-nomal fw-md-medium' scope="row" >鏡面</th>
+                    <th className='fw-normal fw-md-medium' scope="row" >鏡面</th>
                     <td>1000</td>
                   </tr>
                   <tr>
-                    <th className='fw-nomal fw-md-medium' scope="row" >法式</th>
+                    <th className='fw-normal fw-md-medium' scope="row" >法式</th>
                     <td>1200</td>
                   </tr>
                   <tr>
-                    <th className='fw-nomal fw-md-medium' scope="row" >手繪款</th>
+                    <th className='fw-normal fw-md-medium' scope="row" >手繪款</th>
                     <td>1300up</td>
                   </tr>
-                </tbody>
-              </table>
-              <small className='text-primary-02'>(花磚、Q 版小手繪、等...)</small>
-              <hr className='border-secondary-200'/>
-              <table className="table table-spacing-sm table-borderless table-neutral-200 mb-2 " style={{marginLeft:-4}}>
-                <tbody className='fs-md-4 fw-md-medium'>
                   <tr>
-                    <th className='fw-nomal fw-md-medium' scope="row" >當月款式</th>
+                    <td colSpan={3} >
+                      <small>(花磚、Q 版小手繪、等...)</small>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colSpan={3} className='py-4 px-0'>
+                      <div style={{ backgroundColor: 'var(--bs-secondary-200)',height:'1px'}}></div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th className='fw-normal fw-md-medium' scope="row" >當月款式</th>
                     <td>1000</td>
                   </tr>
                   <tr>
-                    <th className='fw-nomal fw-md-medium' scope="row" >指定款式</th>
+                    <th className='fw-normal fw-md-medium' scope="row" >指定款式</th>
                     <td>1000up</td>
                   </tr>
-                </tbody>
-              </table>
-              <small className='text-primary-02'>(可攜圖、可依預算討論設計)</small>
-              <hr />
-              <table className="table table-spacing-sm table-borderless table-neutral-200 mb-0 " style={{marginLeft:-4}}>
-                <tbody >
                   <tr>
-                    <th className='fs-md-5'>延甲</th>
-                    <td className='fw-nomal fw-md-medium fs-md-4'>150/指</td>
-                    <td className='fw-nomal fw-md-medium fs-md-4'>150/指</td>
+                    <td>
+                    <small>(可攜圖、可依預算討論設計)</small>
+                    </td>
                   </tr>
-                </tbody>
-              </table>
-              <hr />
-              <table className="table table-spacing-sm table-borderless table-neutral-200 mb-0 " style={{marginLeft:-4}}>
-                <tbody >
                   <tr>
-                    <th className='fs-md-5'>基礎保養</th>
-                    <td className='fw-nomal fw-md-medium fs-md-4'>500</td>
-                    <td className='fw-nomal fw-md-medium fs-md-4'>650</td>
+                    <td colSpan={3} className='py-4 px-0'>
+                      <div style={{ backgroundColor: 'var(--bs-secondary-200)',height:'1px'}}></div>
+                    </td>
                   </tr>
-                </tbody>
-              </table>
-              <hr />
-              <table className="table table-spacing-sm table-borderless table-neutral-200 mb-5 mb-md-6 mb-lg-0" style={{marginLeft:-4}}>
-                <thead className='align-top'>
+                  <tr>
+                    <th className='fs-md-5 text-primary-02'>延甲</th>
+                    <td className='fw-normal fw-md-medium fs-md-4'>150/指</td>
+                    <td className='fw-normal fw-md-medium fs-md-4'>150/指</td>
+                  </tr>
+                  <tr>
+                    <td colSpan={3} className='py-4 px-0'>
+                      <div style={{ backgroundColor: 'var(--bs-secondary-200)',height:'1px'}}></div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th className='fs-md-5 text-primary-02'>基礎保養</th>
+                    <td className='fw-normal fw-md-medium fs-md-4'>500</td>
+                    <td className='fw-normal fw-md-medium fs-md-4'>650</td>
+                  </tr>
+                  <tr>
+                    <td colSpan={3} className='py-4 px-0'>
+                      <div style={{ backgroundColor: 'var(--bs-secondary-200)',height:'1px'}}></div>
+                    </td>
+                  </tr>
                   <tr className='text-primary-02 fs-md-5 fw-bold' >
                     <th  scope="col" style={{minWidth:180,maxWidth:324}}>卸甲 <span className='fs-2 d-block d-md-inline'>(手足同價)</span></th>
                     <th  scope="col">本店</th>
                     <th scope="col">他店</th>
                   </tr>
-                </thead>
-                <tbody className='fs-md-4 fw-md-medium'>
                   <tr>
-                    <th className='fw-nomal fw-md-medium' scope="row" >卸甲續做</th>
+                    <th className='fw-normal fw-md-medium' scope="row" >卸甲續做</th>
                     <td>200</td>
                     <td>300</td>
                   </tr>
                   <tr>
-                    <th className='fw-nomal fw-md-medium' scope="row" >純卸甲</th>
+                    <th className='fw-normal fw-md-medium' scope="row" >純卸甲</th>
                     <td>250</td>
                     <td>550</td>
                   </tr>
                   <tr>
-                    <th className='fw-nomal fw-md-medium' scope="row" >不續做＋保養</th>
+                    <th className='fw-normal fw-md-medium' scope="row" >不續做＋保養</th>
                     <td>250</td>
                   </tr>
                   <tr>
-                    <th className='fw-nomal fw-md-medium' scope="row" >卸鑽</th>
+                    <th className='fw-normal fw-md-medium' scope="row" >卸鑽</th>
                     <td>50/指</td>
                   </tr>
                 </tbody>
               </table>
             </div>
               {windowWidth < 992 ?
-                <img className='w-100' style={{borderTopLeftRadius:64,objectFit:"cover",maxHeight:windowWidth < 576? 248: windowWidth< 768 ? 344 : 464}} src="2149171334.jpg" alt="" />
+                <img className='w-100' style={{borderTopLeftRadius:64,objectFit:"cover",maxHeight:windowWidth < 576? 248: windowWidth< 768 ? 344 : 464}} src="/2149171334.jpg" alt="" />
                 :
                 <div className="col-lg-6 position-relative">
                 <div className=" overflow-hidden position-absolute h-100" style={{borderTopLeftRadius:64,width:908,left:100}}>
-                    <img className='h-100 w-100' src="2149171334.jpg" alt="" />
+                    <img className='h-100 w-100' src="/2149171334.jpg" alt="" />
                 </div>
                 </div>
                 }
@@ -252,12 +258,12 @@ function Section3(){
           <div className="row align-items-center mb-6 mb-md-11">
               {windowWidth < 992 ?
                   <div className='mb-5' >
-                  <img className='h-100 w-100' src="2149975490.jpg" alt="" style={{borderTopRightRadius:64,objectFit:"cover",maxHeight:windowWidth < 576? 248: windowWidth< 768 ? 344 : 464}}/>
+                  <img className='h-100 w-100' src="/2149975490.jpg" alt="" style={{borderTopRightRadius:64,objectFit:"cover",maxHeight:windowWidth < 576? 248: windowWidth< 768 ? 344 : 464}}/>
                 </div>
                   :
                   <div className="col-lg-6 position-relative" style={{minHeight:574}}>
                   <div className=" overflow-hidden position-absolute h-100" style={{borderTopRightRadius:64,width:956,minHeight:574,right:100}}>
-                      <img className='h-100 w-100' src="2149975490.jpg" alt="" />
+                      <img className='h-100 w-100' src="/2149975490.jpg" alt="" />
                   </div>
                   </div>
                   }
