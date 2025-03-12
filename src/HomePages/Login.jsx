@@ -82,7 +82,7 @@ export default function Login() {
       showAlert(`登入成功！歡迎 ${res.data.user.name}！`,true);
 
       setTimeout(() => {
-        navigate(res.data.user.user === "admin" ? "/admin/reservation" : "/member/center/data");
+        navigate(res.data.user.user === "admin" ? "/admin/reservation" : "/member/reservation");
       }, 2000);
 
     } catch (error) {

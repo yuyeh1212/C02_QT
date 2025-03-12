@@ -51,7 +51,9 @@ function Section1() {
         slidesPerView={1}
         spaceBetween={30}
         initialSlide={1}
-        autoplay={{ delay: 3000 }}
+        autoplay={{ delay: 5000 }}
+        speed={2000}
+        loop={true}
         className="h-[942px]"
       >
         {manicureData.map((item) => (

@@ -65,6 +65,19 @@ export default function Register() {
 		setAlertState({ show: true, message: message, success: success });
 	};
 
+	const getMinBirthdate = () => {
+		const today = new Date();
+		today.setFullYear(today.getFullYear() - 15); // 減去 18 年
+		return today.toISOString().split("T")[0]; // 格式化為 YYYY-MM-DD
+	};
+
+	const getMaxBirthdate = () => {
+		const today = new Date();
+		today.setFullYear(today.getFullYear() - 100); // 計算「今天 - 100 年」
+		return today.toISOString().split("T")[0]; // 轉換為 YYYY-MM-DD 格式
+	  };
+	  
+
 	const handleRegister = async (data) => {
 		dispatch(setLoading(true)); // 開始 loading
 		try {
@@ -135,6 +148,14 @@ export default function Register() {
 			pattern: {
 				value: /^\d{4}-\d{2}-\d{2}$/,
 				message: '請使用YYYY-MM-DD格式',
+			},
+			max: {
+				value: getMinBirthdate(), // 設定最大日期為 18 年前
+				message: '您必須年滿 18 歲才能註冊',
+			},
+			min: {
+				value: getMaxBirthdate(), // 設定最小日期（今天 - 100 年）
+				message: '生日不能超過 100 歲',
 			},
 		},
 		LineID: {

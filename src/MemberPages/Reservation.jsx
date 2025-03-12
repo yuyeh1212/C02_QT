@@ -161,10 +161,11 @@ export default function Reservation() {
                 date:data.date,
                 timeSlot:data.timeSlot
             }])
-            showAlert("恭喜預約成功",true)
+            showAlert("恭喜預約成功",true);
+            navigate('/member/center/orders');
         } catch (error) {
             console.log(error?.response);
-            showAlert("預約失敗請重新嘗試",false)
+            showAlert("預約失敗請重新嘗試",false);
         }finally{
             dispatch(setLoading(false))
         }

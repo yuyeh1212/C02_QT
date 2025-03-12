@@ -203,7 +203,7 @@ export default function AdminReservation(){
                         />
                     </div>
                 </div>
-                <div className="row mb-4 g-4">
+                <div className="row mb-4 g-4 pb-6">
                     {isMobile?<p className="col-12 fw-bold ">選擇最後預約日期：</p>:<></>}
                     <div className="col-lg-6 col-md-5 col-9">
                         <div className="w-100">
@@ -261,7 +261,7 @@ export default function AdminReservation(){
                         :
                         <></>
                     }
-                    <div className="col-lg-3 col-md-3 col-12 d-block d-sm-flex justify-content-end">
+                    <div className="col-lg-3 col-md-3 col-12 d-block d-sm-flex justify-content-end ">
                         <CustomButton type="btn" className={`btn  ${isMobile?'w-100 btn-primary text-white btn-lg':'btn-outline-primary'}`} onClick={handleUpdateRest}>送出躺平日</CustomButton>
                     </div>
                 </div>
