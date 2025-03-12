@@ -271,7 +271,7 @@ export default function Reservation() {
                                 </label>
                                 <input type="text" 
                                 className="form-control form-control-sm" 
-                                id="renderDate"  placeholder="點擊日歷選擇預約時段" 
+                                id="renderDate"  placeholder="點擊日曆選擇預約時段" 
                                 {...register('renderDate',{
                                     required:{value:true,
                                         message:"必填 : 請確認預約時段"
