@@ -283,8 +283,8 @@ export default function Reservation() {
                                 </div>}
                             </div>
                             {/*平板日歷*/}
-                            {windowSize>767 && windowSize<992?
-                            <div className="mb-4 user-calendar" >
+                            { windowSize<992?
+                            <div className="mb-4 user-calendar d-none d-md-block" >
                             <MyCalendar ref={calendarRef} onDateChange={setCurrentMonth} handleCalendar={handleCalendar} getCalendarInfo={getCalendarInfo} filterEventsByMonth={filterEventsByMonth}/>
                             </div>
                             :
