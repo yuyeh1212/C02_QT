@@ -146,7 +146,7 @@ export default function Orders() {
                                 </td>
                                 <td>
                                   <span className="badge text-bg-neutral-200 text-primary-02">
-                                    {order.bodyPart === "hand"
+                                    {order.bodyPart === "手部"
                                       ? "手部"
                                       : "足部"}
                                   </span>
@@ -240,7 +240,7 @@ export default function Orders() {
                       </td>
                       <td>
                         <p className=" badge text-bg-neutral-200 text-primary-02">
-                          {order.bodyPart === "hand" ? "手部" : "足部"}
+                          {order.bodyPart === "手部" ? "手部" : "足部"}
                         </p>
                       </td>
                     </tr>
