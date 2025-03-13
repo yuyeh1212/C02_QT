@@ -43,8 +43,8 @@ export default function MemberData() {
     }
   },[userData])
 
-  const showAlert = (message, success) => {
-    setAlert({ show: true, message, success });
+  const showAlert = (message, status) => {
+    setAlert({ show: true, message, status });
   };
 
   // 驗證函式
@@ -92,7 +92,7 @@ export default function MemberData() {
   return (
     <section className="container">
       {isLoading && <Loading />}
-      {<AlertModal show={alert.show} onClose={() => setAlert({...alert,show:false})} success={alert.success}>
+      {<AlertModal show={alert.show} onClose={() => setAlert({...alert,show:false})} status={alert.status}>
         {alert.message}
       </AlertModal>}
       <div className="row d-flex justify-content-center">

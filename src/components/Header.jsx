@@ -77,8 +77,8 @@ function Header (){
         document.cookie = `${name}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
     };
 
-    const showAlert = (message,success)=>{
-        setAlertState({show:true,"message":message,"success":success})
+    const showAlert = (message,status)=>{
+        setAlertState({show:true,"message":message,"status":status})
     }
 
     const handleLogout = async()=>{
@@ -105,7 +105,7 @@ function Header (){
             {/* Loading 畫面 */}
             {isLoading && <Loading></Loading>}
             {/* Add AlertModal component */}
-            {<AlertModal show={alertState.show} onClose={() => setAlertState({...alertState,show:false})} success={alertState.success}>{alertState.message}</AlertModal>}
+            {<AlertModal show={alertState.show} onClose={() => setAlertState({...alertState,show:false})} status={alertState.status}>{alertState.message}</AlertModal>}
         <nav className="navbar navbar-expand-md py-4 px-md-2  bg-white">
             <div className="container-fluid d-flex align-items-center justify-content-between flex-nowrap">
             {/* 左側 Logo */}

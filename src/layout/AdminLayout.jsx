@@ -20,8 +20,8 @@ export default function AdminLayout() {
   const [alertState,setAlertState] = useState({show:false,message:"",success:true})
 
   //開啟提示訊息框
-  const showAlert = (message,success)=>{
-    setAlertState({show:true,"message":message,"success":success})
+  const showAlert = (message,status)=>{
+    setAlertState({show:true,"message":message,"status":status})
   }
 
   const getCookie = (name) => {
@@ -51,7 +51,7 @@ export default function AdminLayout() {
     loginCheck()
     if(isLogin==false&& !token){
         setTimeout(()=>{
-            showAlert('登入異常,即將為您跳轉到登入頁面',false)
+          showAlert('您尚未登入,即將為您跳轉到登入頁面','unauthorized')
         },1000)
         // alert('登入異常,為您跳轉到登入頁面')
         setTimeout(()=>{
@@ -62,7 +62,7 @@ export default function AdminLayout() {
 
   return (
     <div className="bg-neutral-100">
-      {<AlertModal show={alertState.show} onClose={() => setAlertState({...alertState,show:false})} success={alertState.success}>
+      {<AlertModal show={alertState.show} onClose={() => setAlertState({...alertState,show:false})} status={alertState.status}>
         {alertState.message}
       </AlertModal>}
       <Header></Header>

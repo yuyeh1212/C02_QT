@@ -16,7 +16,7 @@ const FormInput = ({ register, errors, id, labelText, type = 'text', rules = {},
 	return (
 		<div>
 			<label htmlFor="basic-url" className="form-label">
-				{labelText}
+				<span className='text-primary fw-bold'>＊</span>{labelText}
 			</label>
 			<div className="input-group mb-0">
 				<input
@@ -61,8 +61,8 @@ export default function Register() {
 	const [alertState, setAlertState] = useState({ show: false, message: '', success: true });
 	const isLoading = useSelector((state) => state.loading.isLoading);
 
-	const showAlert = (message, success) => {
-		setAlertState({ show: true, message: message, success: success });
+	const showAlert = (message, status) => {
+		setAlertState({ show: true, message: message, status: status });
 	};
 
 	const getMinBirthdate = () => {
@@ -176,7 +176,7 @@ export default function Register() {
 				<AlertModal
 					show={alertState.show}
 					onClose={() => setAlertState({ ...alertState, show: false })}
-					success={alertState.success}
+					status={alertState.status}
 				>
 					{alertState.message}
 				</AlertModal>
@@ -244,6 +244,9 @@ export default function Register() {
 									/>
 								</div>
 								<div className="col-12">
+									<p className='mb-2 badge bg-primary'>用於提供專屬折扣</p>
+								</div>
+								<div className="col-12">
 									<FormInput
 										id="phone"
 										type="tel"
@@ -264,6 +267,9 @@ export default function Register() {
 										errors={errors}
 										rules={validationRules.LineID}
 									/>
+								</div>
+								<div className="col-12">
+									<p className='mb-2 badge bg-primary'>＊為必填欄位</p>
 								</div>
 								<div className="col-12 d-flex justify-content-center pt-6">
 									<CustomButton

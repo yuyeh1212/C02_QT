@@ -52,8 +52,8 @@ export default function Login() {
   const [alertState,setAlertState] = useState({show:false,message:"",success:true});
   const isLoading = useSelector((state)=> state.loading.isLoading)
 
-  const showAlert = (message,success)=>{
-      setAlertState({show:true,"message":message,"success":success})
+  const showAlert = (message,status)=>{
+      setAlertState({show:true,"message":message,"status":status})
   }
 
   const setCookie = (name, value, hours) => {
@@ -113,7 +113,7 @@ export default function Login() {
             {/* Loading 畫面 */}
             {isLoading && <Loading></Loading>}
             {/* Add AlertModal component */}
-            {<AlertModal show={alertState.show} onClose={() => setAlertState({...alertState,show:false})} success={alertState.success}>{alertState.message}</AlertModal>}    
+            {<AlertModal show={alertState.show} onClose={() => setAlertState({...alertState,show:false})} status={alertState.status}>{alertState.message}</AlertModal>}    
           </div>
         </div>
       </div>

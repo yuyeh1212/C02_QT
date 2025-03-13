@@ -226,7 +226,7 @@ export default function Orders() {
                       <td>{order.LineID}</td>
                       <td>
                         {order.date} <br />
-                        {order.time}
+                        {order.timeSlot}
                       </td>
                       <td>
                         <p className=" badge text-bg-neutral-200 text-primary-02">

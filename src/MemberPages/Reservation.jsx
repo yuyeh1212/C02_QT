@@ -59,8 +59,8 @@ export default function Reservation() {
     };
 
     //開啟提示訊息框
-    const showAlert = (message,success)=>{
-        setAlertState({show:true,"message":message,"success":success})
+    const showAlert = (message,status)=>{
+        setAlertState({show:true,"message":message,"status":status})
     }
     const onSubmit = (data)=>{
         pushHandleSubmit(data)
@@ -424,7 +424,7 @@ export default function Reservation() {
                 </div>
             </div>
             {isLoading && <Loading></Loading>}
-            {<AlertModal show={alertState.show} onClose={() => setAlertState({...alertState,show:false})} success={alertState.success}>{alertState.message}</AlertModal>}
+            {<AlertModal show={alertState.show} onClose={() => setAlertState({...alertState,show:false})} status={alertState.status}>{alertState.message}</AlertModal>}
         </div>
     );
 }
