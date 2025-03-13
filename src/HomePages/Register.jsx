@@ -185,7 +185,7 @@ export default function Register() {
 			<div className="flex-grow-1">
 				<div className="container">
 					<div className="row justify-content-center">
-						<div className="col-md-6 col-10">
+						<div className="col-11 col-sm-10 col-md-8 col-lg-6">
 							<h5 className="text-center mb-8">會員註冊</h5>
 							<form id='registerForm' className="row gy-3 bg-white p-6" onSubmit={handleSubmit(handleRegister)}>
 								<div className="col-12 ">
@@ -226,7 +226,7 @@ export default function Register() {
 										id="name"
 										type="text"
 										labelText="姓名"
-										LabelHolder="請輸入姓名"
+										LabelHolder="請輸入中文正楷姓名"
 										register={register}
 										errors={errors}
 										rules={validationRules.name}
@@ -259,7 +259,7 @@ export default function Register() {
 										id="LineID"
 										type="text"
 										labelText="LINE ID"
-										LabelHolder="請輸入LineID,僅供聯繫使用"
+										LabelHolder="請輸入LineID，方便後續傳送通知"
 										register={register}
 										errors={errors}
 										rules={validationRules.LineID}

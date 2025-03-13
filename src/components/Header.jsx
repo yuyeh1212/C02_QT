@@ -23,6 +23,21 @@ function Header (){
     const dispatch = useDispatch();
     const [alertState,setAlertState] = useState({show:false,message:"",success:true});
 
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 409); // 初始檢查視窗寬度
+  
+    // 監聽視窗大小變化
+    useEffect(() => {
+      const handleResize = () => {
+        setIsMobile(window.innerWidth <= 409); // 每次resize都檢查視窗寬度
+      };
+  
+      // 當視窗尺寸變動時，更新狀態
+      window.addEventListener('resize', handleResize);
+  
+      // 清理事件監聽
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     useEffect(() => {
     if (offcanvasRef.current && bootstrap) {
         // Store the instance in a ref for later use
@@ -91,16 +106,16 @@ function Header (){
             {isLoading && <Loading></Loading>}
             {/* Add AlertModal component */}
             {<AlertModal show={alertState.show} onClose={() => setAlertState({...alertState,show:false})} success={alertState.success}>{alertState.message}</AlertModal>}
-        <nav className="navbar navbar-expand-md py-4 px-md-2 px-3 bg-white">
-            <div className="container-fluid d-flex align-items-center justify-content-between">
+        <nav className="navbar navbar-expand-md py-4 px-md-2  bg-white">
+            <div className="container-fluid d-flex align-items-center justify-content-between flex-nowrap">
             {/* 左側 Logo */}
                 <h1>
                     <Link to="/">
                         <div className="d-flex align-items-center">
                             <img
-                            src="headerLogo.svg"
+                            src='headerLogo.svg'
                             alt="Logo"
-                            className="me-2 logo-img"
+                            className='logo-img'
                             />
                         </div>
                     </Link>
@@ -130,8 +145,8 @@ function Header (){
                     >
                         <div className="offcanvas-header">
                             <h5 className="offcanvas-title" id="offcanvasNavbarLabel">
-                                <img
-                                src="headerLogo.svg"
+                                <img 
+                                src='headerLogo.svg'
                                 alt="Logo"
                                 className="me-2"
                                 style={{ height: "40px" }}

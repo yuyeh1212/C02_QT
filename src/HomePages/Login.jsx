@@ -97,7 +97,7 @@ export default function Login() {
   return (<>
       <div className="bg-neutral-100 pt-6 pb-10 ">
         <div className="row justify-content-center">
-          <div className="col-9 col-md-6 bg-white py-10">
+          <div className="col-11 col-sm-10 col-md-8 col-lg-6 bg-white py-10">
             <h5 className="mb-5 text-center">會員登入</h5>
             <form className="row bg-white gy-4 p-6" onSubmit={handleSubmit(handleLogin)}>
               <div className="col-12">

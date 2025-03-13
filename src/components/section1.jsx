@@ -13,31 +13,16 @@ function Section1() {
     {
       id: 1,
       image: "3270.jpg",
-      title: "精心時刻",
-      subTitle: "為您提供專業的手足部美甲",
-      description1: "享受舒適獨立的居家工作室服務",
-      description2: "讓我們一起打造屬於您的美麗時刻！",
-      description3: "萌寵陪伴與溫馨氣氛，增添更多溫暖。",
       textColor:'secondary',
     },
     {
       id: 2,
       image: "2149171335.png",
-      title: "精心時刻",
-      subTitle: "為您提供專業的手足部美甲",
-      description1: "享受舒適獨立的居家工作室服務",
-      description2: "讓我們一起打造屬於您的美麗時刻！",
-      description3: "萌寵陪伴與溫馨氣氛，增添更多溫暖。",
       textColor:'white',
     },
     {
       id: 3,
       image: "3785.jpg",
-      title: "精心時刻",
-      subTitle: "為您提供專業的手足部美甲",
-      description1: "享受舒適獨立的居家工作室服務",
-      description2: "讓我們一起打造屬於您的美麗時刻！",
-      description3: "萌寵陪伴與溫馨氣氛，增添更多溫暖。",
       textColor:'white',
     },
   ]);
@@ -70,11 +55,11 @@ function Section1() {
               }}
             >
             <div className="bg-black bg-opacity-25 p-6 ">
-              <h1 className="fs-10 fw-bold leading-lg pb-8">{item.title}</h1>
-              <h2 className="fs-6 fs-md-7 fw-medium leading-lg pb-8">{item.subTitle}</h2>
-              <p className="fs-4 fs-md-5 fw-medium leading-lg">{item.description1}</p>
-              <p className="fs-4 fs-md-5 fw-medium leading-lg py-3">{item.description2}</p>
-              <p className="fs-4 fs-md-5 fw-medium leading-lg pb-6">{item.description3}</p>
+              <h1 className="fs-9 fs-md-10 fw-bold leading-lg pb-8">精心時刻</h1>
+              <h2 className="fs-4 fs-sm-6 fs-md-7 fw-medium leading-lg pb-8">為您提供專業的手足部美甲</h2>
+              <p className="fs-3 fs-md-5 fw-medium leading-lg">享受舒適獨立的居家工作室服務</p>
+              <p className="fs-3 fs-md-5 fw-medium leading-lg py-3">讓我們一起打造屬於您的美麗時刻！</p>
+              <p className="fs-3 fs-md-5 fw-medium leading-lg pb-6">萌寵陪伴與溫馨氣氛，<br className="d-sm-none"/>增添更多溫暖。</p>
             </div>
               <CustomButton 
                 to="/member/reservation" 

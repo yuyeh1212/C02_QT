@@ -22,6 +22,7 @@
 @import './slick-slider.scss';
 @import './swiperSlide.scss';
 @import './errorText';
+@import './header.scss';
 
 .linear{
     background: linear-gradient(90deg, #FFFFFF, #ECE6DC);
@@ -39,8 +40,16 @@
   border-radius: 0; /* 保持圖片比例，不拉伸，裁剪多餘部分 */
 }
 
-.logo-img{
-  width: 75%;
-  object-fit: cover;
-}
 
+.number-box{
+  color: white;
+  background-color: $primary;
+  width: 24px;
+  height: 24px;
+  padding-bottom: 2px;
+  font-size: 14px;
+  border-radius:50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

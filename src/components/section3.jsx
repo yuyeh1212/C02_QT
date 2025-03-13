@@ -5,7 +5,7 @@ function Section3(){
   const[notices,setNotices] = useState([
     {
       numbering:1,
-      content:"這裡有一隻臘腸狗和一隻肥橘貓,腸腸有分離焦慮，都會跟在腳邊，他心情好會跟你sayHI(汪)，事先做好心理準備,請不用害怕。如果會擔心接觸他們,可事先告知,會安置在推車內，與您保持友善距離。"
+      content:"這裡有一隻臘腸狗和一隻肥橘貓，腸腸有分離焦慮，都會跟在腳邊，他心情好會跟你sayHI(汪)，事先做好心理準備，請不用害怕。如果會擔心接觸他們，可事先告知，會安置在推車內，與您保持友善距離。"
     }
     ,
     {
@@ -15,7 +15,7 @@ function Section3(){
     ,
     {
       numbering:3,
-      content:"可傳圖報價，但因手法、素材不同,無法100%完全複製，請理解見諒。"
+      content:"可傳圖報價，但因手法、素材不同，無法100%完全複製，請理解見諒。"
     }
     ,
     {
@@ -25,7 +25,7 @@ function Section3(){
     ,
     {
       numbering:5,
-      content:"請確定好日期及時間在做預約,若要取消、更改時段請於3天前告知。"
+      content:"請確定好日期及時間在做預約，若要取消、更改時段請於3天前告知。"
     }
     ,
     {
@@ -74,7 +74,7 @@ function Section3(){
     }
   ]);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  // console.log(windowWidth)
+
   
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -107,15 +107,19 @@ function Section3(){
                 return(
                   numbering !== 14 ?
                   <div className="d-flex align-items-start mb-4" key={numbering}>
-                    <div className="px-1 me-4" style={{paddingTop:2}}>
-                    <div className='rounded-pill bg-primary text-center text-white fw-bold' style={{minWidth:24,minHeight:24}}>{numbering}</div>
+                    <div className="px-1 me-4" >
+                      <span className="number-box">
+                        {numbering}
+                      </span>
                     </div>
                     <p className='fs-2 fs-md-3 text-primary-02'>{content}</p>
                   </div>
                   :
                   <div className="d-flex align-items-start " key={numbering}>
                     <div className="px-1 me-4" style={{paddingTop:2}}>
-                    <div className='rounded-pill bg-primary text-center text-white fw-bold' style={{minWidth:24,minHeight:24}}>{numbering}</div>
+                      <span className="number-box">
+                        {numbering}
+                      </span>
                     </div>
                     <p className='fs-2 fs-md-3 text-primary-02'>{content}</p>
                   </div>
@@ -270,25 +274,33 @@ function Section3(){
             <div className="col-lg-6 ">
               <div className="d-flex align-items-start mb-4">
                 <div className="px-1 me-4" style={{paddingTop:2}}>
-                <div className='rounded-pill bg-primary text-center text-white fw-bold' style={{minWidth:24,minHeight:24}}>1</div>
+                  <span className="number-box">
+                    1
+                  </span>
                 </div>
                 <p className='fs-2 fs-md-3 text-primary-02'>凝膠項目皆含基礎保養及加厚</p>
               </div>
               <div className="d-flex align-items-start mb-4">
                 <div className="px-1 me-4" style={{paddingTop:2}}>
-                <div className='rounded-pill bg-primary text-center text-white fw-bold' style={{minWidth:24,minHeight:24}}>2</div>
+                  <span className="number-box">
+                    2
+                  </span>
                 </div>
                 <p className='fs-2 fs-md-3 text-primary-02'>基礎保養含修剪甲型、甘皮、兩側硬皮、硬甲油塗佈及指緣油保養</p>
               </div>
               <div className="d-flex align-items-start mb-4">
                 <div className="px-1 me-4" style={{paddingTop:2}}>
-                <div className='rounded-pill bg-primary text-center text-white fw-bold' style={{minWidth:24,minHeight:24}}>3</div>
+                  <span className="number-box">
+                    3
+                  </span>
                 </div>
                 <p className='fs-2 fs-md-3 text-primary-02'>純卸甲均不含保養，可另外加購保養</p>
               </div>
               <div className="d-flex align-items-start">
                 <div className="px-1 me-4" style={{paddingTop:2}}>
-                <div className='rounded-pill bg-primary text-center text-white fw-bold' style={{minWidth:24,minHeight:24}}>4</div>
+                  <span className="number-box">
+                    4
+                  </span>
                 </div>
                 <p className='fs-2 fs-md-3 text-primary-02'>現場提供現金及轉帳交易</p>
               </div>
