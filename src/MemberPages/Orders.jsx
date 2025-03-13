@@ -230,12 +230,12 @@ export default function Orders() {
                       </td>
                       <td>
                         <p className=" badge text-bg-neutral-200 text-primary-02">
-                          {order.nailRemoval ? "是" : "否"}
+                          {order.nailRemoval=='true' ? "是" : "否"}
                         </p>
                       </td>
                       <td>
                         <p className=" badge text-bg-neutral-200 text-primary-02">
-                          {order.nailExtension ? "是" : "否"}
+                          {order.nailExtension=='true' ? "是" : "否"}
                         </p>
                       </td>
                       <td>

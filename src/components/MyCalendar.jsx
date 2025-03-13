@@ -29,7 +29,7 @@ const MyCalendar = forwardRef(({ onDateChange ,handleCalendar,getCalendarInfo}, 
                 ];
     
                 let slots = [];
-                const today = new Date();1
+                const today = new Date();
                 today.setHours(0, 0, 0, 0);
                 const endDate = new Date(config.lastBookableDate);
     
