@@ -165,9 +165,8 @@ export default function Reservation() {
                 timeSlot:data.timeSlot
             }])
             showAlert("恭喜預約成功",true);
-            setTimeout(()=>{
-                navigate('/member/center/orders');
-            },1000)
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            navigate('/member/center/orders');
         } catch (error) {
             console.log(error?.response);
             showAlert("預約失敗請重新嘗試",false);
