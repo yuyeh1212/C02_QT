@@ -24,7 +24,7 @@ export default function Reservation() {
     const [currentTime,setCurrentTime] = useState([])
     const [windowSize, setWindowSize] = useState(window.innerWidth);
     const [submitTimeSlots,setSubmitTimeSlots] = useState([])
-    const [alertState,setAlertState] = useState({show:false,message:"",success:true})
+    const [alertState,setAlertState] = useState({show:false,message:"",status:true})
     const isFirstRender = useRef(true);
 
     //hookForm
@@ -165,7 +165,9 @@ export default function Reservation() {
                 timeSlot:data.timeSlot
             }])
             showAlert("恭喜預約成功",true);
-            navigate('/member/center/orders');
+            setTimeout(()=>{
+                navigate('/member/center/orders');
+            },1000)
         } catch (error) {
             console.log(error?.response);
             showAlert("預約失敗請重新嘗試",false);
