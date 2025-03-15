@@ -35,6 +35,7 @@ export default function Reservation() {
         setValue,
         reset
     } = useForm(
+        
         {
             defaultValues:{
                             "name": "",
@@ -47,10 +48,12 @@ export default function Reservation() {
                             "nailRemoval": "",
                             "nailExtension": "",
                             "LineID":"",
-                        
+                            "renderDate":"",
                         },
+            mode: "onChange",
         }
     )
+    
     const getCookie = (name) => {
         const value = `; ${document.cookie}`;
         const parts = value.split(`; ${name}=`);
@@ -177,7 +180,7 @@ export default function Reservation() {
         if(info){
             const date = info.event.startStr
             const time = info.event.title
-            setValue("renderDate",`${date} 時: ${time}`)
+            setValue("renderDate",`${date} 時: ${time}`,{ shouldValidate: true })
             setValue("date",date)
             setValue("timeSlot",time)
             return
@@ -268,20 +271,19 @@ export default function Reservation() {
                         <form id='makeAnAppointment' onSubmit={handleSubmit(onSubmit)}>
                             <div className="mb-4">
                                 <label htmlFor="date" className="form-label fw-bold">
-                                    選擇預約時段：
+                                <span className='text-primary fw-bold'>＊</span>選擇預約時段：
                                 </label>
                                 <input type="text" 
-                                className="form-control form-control-sm" 
+                                className={`form-control form-control-sm ${errors.renderDate ? 'is-invalid' :''}`} 
                                 id="renderDate"  placeholder="點擊日曆選擇預約時段" 
                                 {...register('renderDate',{
                                     required:{value:true,
-                                        message:"必填 : 請確認預約時段"
+                                        message:"請確認預約時段"
                                     }
                                 })}
                                 />
-                                {errors.date && <div className="text-danger text-center mt-2 fs-2" >
-                                    {errors.date.message}
-                                </div>}
+                                {errors.renderDate && 
+                                <div className="invalid-feedback">{errors.renderDate.message}</div>}
                             </div>
                             {/*平板日歷*/}
                             { windowSize<992?
@@ -335,14 +337,14 @@ export default function Reservation() {
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="bodyPart" className="form-label fw-bold">
-                                    手部＆足部：
+                                <span className='text-primary fw-bold'>＊</span>手部＆足部：
                                 </label>
-                                <select className="form-select form-select-sm" 
+                                <select className={`form-select form-select-sm ${errors.bodyPart ? 'is-invalid' :''}`} 
                                 id="bodyPart"
                                 defaultValue=""
                                 {...register('bodyPart',{
                                     required:{value:true,
-                                        message:"必填 : 請選擇施作部位"
+                                        message:"請選擇施作部位"
                                     }
                                 })}
                                 >
@@ -352,20 +354,19 @@ export default function Reservation() {
                                     <option value="手部">手部</option>
                                     <option value="足部">足部</option>
                                 </select>
-                                {errors.bodyPart && <div className="text-danger text-center mt-2 fs-2" >
-                                    {errors.bodyPart.message}
-                                </div>}
+                                {errors.bodyPart && 
+                                <div className="invalid-feedback">{errors.bodyPart.message}</div>}
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="nailRemoval" className="form-label fw-bold">
-                                    是否需要卸甲：
+                                <span className='text-primary fw-bold'>＊</span>是否需要卸甲：
                                 </label>
-                                <select className="form-select form-select-sm" 
+                                <select className={`form-select form-select-sm ${errors.nailRemoval ? 'is-invalid' :''}`}  
                                 id="nailRemoval" 
                                 defaultValue=""
                                 {...register('nailRemoval',{
                                     required:{value:true,
-                                        message:"必填 : 請選擇是否需要卸甲"
+                                        message:"請選擇是否需要卸甲"
                                     }
                                 })}
                                 >
@@ -375,20 +376,19 @@ export default function Reservation() {
                                     <option value="true">是</option>
                                     <option value="false">否</option>
                                 </select>
-                                {errors.nailRemoval && <div className="text-danger text-center mt-2 fs-2" >
-                                    {errors.nailRemoval.message}
-                                </div>}
+                                {errors.nailRemoval && 
+                                <div className="invalid-feedback">{errors.nailRemoval.message}</div>}
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="nailExtension" className="form-label fw-bold">
-                                    是否需要延甲：
+                                <span className='text-primary fw-bold'>＊</span>是否需要延甲：
                                 </label>
-                                <select className="form-select form-select-sm"
+                                <select className={`form-select form-select-sm ${errors.nailExtension ? 'is-invalid' :''}`}  
                                 id="nailExtension"
                                 defaultValue=""
                                 {...register('nailExtension',{
                                     required:{value:true,
-                                        message:"必填 : 請選擇是否需要延甲"
+                                        message:"請選擇是否需要延甲"
                                     }
                                 })}
                                 >
@@ -398,9 +398,8 @@ export default function Reservation() {
                                     <option value="true">是</option>
                                     <option value="false">否</option>
                                 </select>
-                                {errors.nailExtension && <div className="text-danger text-center mt-2 fs-2" >
-                                    {errors.nailExtension.message}
-                                </div>}
+                                {errors.nailExtension && 
+                                <div className="invalid-feedback">{errors.nailExtension.message}</div>}
                             </div>
                             <CustomButton
                                 type="submit"  // 這樣當按鈕被點擊時會提交表單

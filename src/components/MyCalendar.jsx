@@ -34,7 +34,7 @@ const MyCalendar = forwardRef(({ onDateChange ,handleCalendar,getCalendarInfo}, 
                 const endDate = new Date(config.lastBookableDate);
     
                 while (today <= endDate) {
-                    const dateStr = today.toISOString().split("T")[0];
+                    const dateStr = today.toLocaleDateString('sv-SE').split("T")[0];
     
                     // 跳過不可預約的日期
                     if (config.unavailableTimeSlots.includes(dateStr)) {
