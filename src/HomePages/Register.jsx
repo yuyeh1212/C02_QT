@@ -16,7 +16,7 @@ const FormInput = ({ register, errors, id, labelText, type = 'text', rules = {},
 	return (
 		<div>
 			<label htmlFor="basic-url" className="form-label">
-				<span className='text-primary fw-bold'>＊</span>{labelText}
+				{labelText}
 			</label>
 			<div className="input-group mb-0">
 				<input
@@ -78,7 +78,7 @@ export default function Register() {
 	};
 	
 	useEffect(()=>{
-		showAlert('＊符號欄位為必填\n\n未滿18歲不予註冊\n\n註冊密碼至少8字元\n包含一位英文、數字、特殊符號\n\n生日欄位用於提供專屬折扣\n\nLine ID欄位只接受\n英文、數字、底線及連字號','unauthorized')
+		showAlert('所有欄位皆為必填\n\n未滿18歲不予註冊\n\n註冊密碼至少8字元\n包含一位英文、數字、特殊符號\n\n生日欄位用於提供專屬折扣\n\nLine ID欄位只接受\n英文、數字、底線及連字號','unauthorized')
 
 	},[])
 	const handleRegister = async (data) => {
@@ -245,7 +245,6 @@ export default function Register() {
 										errors={errors}
 										rules={validationRules.birthday}
 									/>
-									<p className='mt-3 badge bg-primary'>用於提供專屬折扣</p>
 								</div>
 								<div className="col-12">
 									<FormInput
@@ -268,9 +267,6 @@ export default function Register() {
 										errors={errors}
 										rules={validationRules.LineID}
 									/>
-								</div>
-								<div className="col-12">
-									<p className='mb-2 badge bg-primary'>＊為必填欄位</p>
 								</div>
 								<div className="col-12 d-flex justify-content-center pt-6">
 									<CustomButton

@@ -11,29 +11,37 @@ import AlertModal from "../components/AlertModal";
 import Loading from "../components/Loading";
 const API_URL = import.meta.env.VITE_BASE_URL;
 // 自定義輸入元件
-const FormInput = ({ register, errors, id, labelText, type = "text", rules = {} }) => {
+const FormInput = ({ register, errors, id, labelText, type = "text", rules = {}, LabelHolder}) => {
   const [showPassword, setShowPassword] = useState(false);
   return (
-    <div className="form-floating">
-      <input
-        type={type === "password" ? (showPassword ? "text" : "password") : type}
-        {...register(id, rules)}
-        className={`form-control ${errors[id] ? "is-invalid" : ""}`}
-        placeholder={labelText}
-      />
-      <label>{labelText}</label>
-      {/* 眼睛按鈕 */}
-      {type === "password" && (
-        <button
-          type="button"
-          className="btn position-absolute end-0 top-50 translate-middle-y me-2"
-          onClick={() => setShowPassword(!showPassword)}
-          style={{ background: "none", border: "none" }}
-        >
-          <i className={`bi ${showPassword ? "bi-eye-slash-fill" : "bi-eye-fill"}`}></i>
-        </button>
-      )}
-    </div>
+    <div>
+			<label htmlFor="basic-url" className="form-label">
+				{labelText}
+			</label>
+			<div className="input-group mb-0">
+				<input
+					type={type === 'password' ? (showPassword ? 'text' : 'password') : type}
+					{...register(id, rules)}
+					className={`form-control 
+             ${errors[id] ? 'is-invalid' : ''}`}
+					placeholder={LabelHolder}
+					aria-label="Recipient's username"
+					aria-describedby="basic-addon2"
+				/>
+				{errors[id] && <div className="invalid-feedback">{errors[id].message}</div>}
+				{/* 眼睛按鈕 */}
+				{type === 'password' && (
+					<button
+						type="button"
+						className="btn position-absolute end-0 top-50 translate-middle-y me-2"
+						onClick={() => setShowPassword(!showPassword)}
+						style={{ background: 'none', border: 'none' }}
+					>
+						<i className={`bi ${showPassword ? 'bi-eye-slash-fill' : 'bi-eye-fill'}`}></i>
+					</button>
+				)}
+			</div>
+		</div>
   );
 };
 
@@ -91,8 +99,17 @@ export default function Login() {
       showAlert(error.response?.data?.message||"登入失敗，發生錯誤，請稍後再試",false);
     }finally{
       dispatch(setLoading(false))
-  }
+    }
   };
+
+  const validationRules = {
+		email: {
+			required: '信箱為必填',
+		},
+		password: {
+			required: '密碼為必填',
+		},
+	};
 
   return (<>
       <div className="bg-neutral-100 pt-6 pb-10 ">
@@ -101,10 +118,26 @@ export default function Login() {
             <h5 className="mb-5 text-center">會員登入</h5>
             <form className="row bg-white gy-4 p-6" onSubmit={handleSubmit(handleLogin)}>
               <div className="col-12">
-                <FormInput id="email" type="email" labelText="Email address" register={register} errors={errors} />
+                <FormInput 
+                  id="email" 
+                  type="email" 
+                  labelText="Email" 
+                  LabelHolder="請輸入信箱"
+                  register={register} 
+                  errors={errors} 
+                  rules={validationRules.email}
+                />
               </div>
               <div className="col-12">
-                <FormInput id="password" type="password" labelText="Password" register={register} errors={errors} />
+                <FormInput 
+                  id="password" 
+                  type="password" 
+                  labelText="Password"
+                  LabelHolder="請輸入密碼" 
+                  register={register} 
+                  errors={errors} 
+                  rules={validationRules.password}
+                />
               </div>
               <div className="col-12 d-flex justify-content-center pt-6">
                 <CustomButton type="submit" className="btn btn-primary text-white w-50 fs-4">登入</CustomButton>
