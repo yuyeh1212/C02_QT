@@ -10,7 +10,7 @@ export default function Footer() {
           <div className="col-12 col-md-9 col-lg-8">
             <div className="d-flex flex-column flex-md-row align-items-center fs-2 fs-lg-3">
               <img className="mb-4 mb-md-0 w-25 w-md-75"
-                  src="logo1.png"
+                  src="logo1.svg"
                   alt="Quality Time Logo"
                   style={{maxWidth:"217px"}}
                 />
