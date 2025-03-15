@@ -268,7 +268,7 @@ export default function Reservation() {
                         <form id='makeAnAppointment' onSubmit={handleSubmit(onSubmit)}>
                             <div className="mb-4">
                                 <label htmlFor="date" className="form-label fw-bold">
-                                    選擇預約時段：：
+                                    選擇預約時段：
                                 </label>
                                 <input type="text" 
                                 className="form-control form-control-sm" 

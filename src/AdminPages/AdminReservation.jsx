@@ -207,12 +207,13 @@ export default function AdminReservation(){
                     {isMobile?<p className="col-12 fw-bold ">選擇最後預約日期：</p>:<></>}
                     <div className="col-lg-6 col-md-5 col-9">
                         <div className="w-100">
-                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="zh-tw">
                                 <DatePicker
                                     label="選擇最後預約日期"
                                     value={selectLastDate}
                                     onChange={(newDate) => setSelectLastDate(newDate)}
                                     disablePast  // 禁用過去的日期
+                                    format="YYYY/MM/DD"
                                     sx={{ width: '100%' }}
                                 />
                             </LocalizationProvider>

@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 // Import AlertModal component
 import AlertModal from '../components/AlertModal';
@@ -75,9 +75,12 @@ export default function Register() {
 		const today = new Date();
 		today.setFullYear(today.getFullYear() - 100); // 計算「今天 - 100 年」
 		return today.toISOString().split("T")[0]; // 轉換為 YYYY-MM-DD 格式
-	  };
-	  
+	};
+	
+	useEffect(()=>{
+		showAlert('＊符號欄位為必填\n\n未滿18歲不予註冊\n\n註冊密碼至少8字元\n包含一位英文、數字、特殊符號\n\n生日欄位用於提供專屬折扣\n\nLine ID欄位只接受\n英文、數字、底線及連字號','unauthorized')
 
+	},[])
 	const handleRegister = async (data) => {
 		dispatch(setLoading(true)); // 開始 loading
 		try {
@@ -242,9 +245,7 @@ export default function Register() {
 										errors={errors}
 										rules={validationRules.birthday}
 									/>
-								</div>
-								<div className="col-12">
-									<p className='mb-2 badge bg-primary'>用於提供專屬折扣</p>
+									<p className='mt-3 badge bg-primary'>用於提供專屬折扣</p>
 								</div>
 								<div className="col-12">
 									<FormInput

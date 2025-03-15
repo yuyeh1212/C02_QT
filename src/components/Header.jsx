@@ -9,7 +9,8 @@ import { logout } from "../slice/authSlice";
 import { clearUserData } from "../slice/userSlice";
 import Loading from "./Loading";
 import AlertModal from "./AlertModal";
-
+import { setUserData } from "../slice/userSlice";
+import { login } from "../slice/authSlice";
 
 const API_URL = import.meta.env.VITE_BASE_URL;
 
@@ -23,20 +24,7 @@ function Header (){
     const dispatch = useDispatch();
     const [alertState,setAlertState] = useState({show:false,message:"",success:true});
 
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 409); // 初始檢查視窗寬度
-  
-    // 監聽視窗大小變化
-    useEffect(() => {
-      const handleResize = () => {
-        setIsMobile(window.innerWidth <= 409); // 每次resize都檢查視窗寬度
-      };
-  
-      // 當視窗尺寸變動時，更新狀態
-      window.addEventListener('resize', handleResize);
-  
-      // 清理事件監聽
-      return () => window.removeEventListener('resize', handleResize);
-    }, []);
+    
 
     useEffect(() => {
     if (offcanvasRef.current && bootstrap) {
@@ -76,6 +64,21 @@ function Header (){
     const clearCookie = (name) => {
         document.cookie = `${name}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
     };
+
+    const loginCheck = async ()=>{
+        try {
+            const res = await axios.get(`${API_URL}/login/check`);
+            // 更新 Redux 登入狀態
+            dispatch(setUserData(res.data.user))
+            dispatch(login());
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(()=>{
+        loginCheck();
+    },[])
 
     const showAlert = (message,status)=>{
         setAlertState({show:true,"message":message,"status":status})

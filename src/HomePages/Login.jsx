@@ -44,7 +44,7 @@ export default function Login() {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    mode: "onTouched",
+    mode: "onBlur",
   });
 
   const navigate = useNavigate();
