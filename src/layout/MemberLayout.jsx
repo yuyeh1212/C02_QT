@@ -18,11 +18,16 @@ export default function MemberLayout() {
   //讀取狀態
   const dispatch = useDispatch()
   const isLogin = useSelector(state => state.auth.isLoggedIn);
-  const [alertState,setAlertState] = useState({show:false,message:"",success:true})
+  const [alertState, setAlertState] = useState({
+    show: false,
+    status: true,
+    message: "",
+    redirectTo: null,  // 設定跳轉的路徑
+  });
 
   //開啟提示訊息框
-  const showAlert = (message,status)=>{
-    setAlertState({show:true,"message":message,"status":status})
+  const showAlert = (message,status,redirectTo)=>{
+    setAlertState({show:true,"message":message,"status":status,'redirectTo':redirectTo})
   }
 
   const getCookie = (name) => {
@@ -51,13 +56,7 @@ export default function MemberLayout() {
     }
     loginCheck()
     if(isLogin==false&& !token){
-        setTimeout(()=>{
-            showAlert('您尚未登入,即將為您跳轉到登入頁面','unauthorized')
-        },1000)
-        // alert('登入異常,為您跳轉到登入頁面')
-        setTimeout(()=>{
-            navigate('/login')
-        },3000)
+      showAlert('您尚未登入,即將為您跳轉到登入頁面','unauthorized','/login');
     }
   },[isLogin])
 
@@ -65,9 +64,19 @@ export default function MemberLayout() {
 
   return (
     <>
-      {<AlertModal show={alertState.show} onClose={() => setAlertState({...alertState,show:false})} status={alertState.status}>
+      {<AlertModal show={alertState.show}
+        onClose={() => {
+        setAlertState({ ...alertState, show: false });
+        if (alertState.redirectTo) {
+            navigate(alertState.redirectTo); // 使用 navigate 跳轉頁面
+        }
+        }}
+        status={alertState.status}
+        redirectTo={alertState.redirectTo} // 傳遞 redirectTo 屬性
+        >
         {alertState.message}
-      </AlertModal>}
+      </AlertModal>
+      }
       <Header></Header>
       {/* 內容區域 */}
       <Outlet />

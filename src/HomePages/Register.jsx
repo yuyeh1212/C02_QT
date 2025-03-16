@@ -58,12 +58,18 @@ export default function Register() {
 	const navigate = useNavigate();
 	const password = watch('password');
 	const dispatch = useDispatch();
-	const [alertState, setAlertState] = useState({ show: false, message: '', success: true });
+	const [alertState, setAlertState] = useState({
+        show: false,
+        status: true,
+        message: "",
+        redirectTo: null,  // 設定跳轉的路徑
+    });
 	const isLoading = useSelector((state) => state.loading.isLoading);
 
-	const showAlert = (message, status) => {
-		setAlertState({ show: true, message: message, status: status });
-	};
+	//開啟提示訊息框
+    const showAlert = (message,status,redirectTo)=>{
+        setAlertState({show:true,"message":message,"status":status,'redirectTo':redirectTo})
+    }
 
 	const getMinBirthdate = () => {
 		const today = new Date();
@@ -78,7 +84,7 @@ export default function Register() {
 	};
 	
 	useEffect(()=>{
-		showAlert('所有欄位皆為必填\n\n未滿18歲不予註冊\n\n註冊密碼至少8字元\n包含一位英文、數字、特殊符號\n\n生日欄位用於提供專屬折扣\n\nLine ID欄位只接受\n英文、數字、底線及連字號','unauthorized')
+		showAlert('所有欄位皆為必填\n\n未滿15歲不予註冊\n\n註冊密碼至少8字元\n包含一位英文、數字、特殊符號\n\n生日欄位用於提供專屬折扣\n\nLine ID欄位只接受\n英文、數字、底線及連字號','unauthorized')
 
 	},[])
 	const handleRegister = async (data) => {
@@ -102,12 +108,12 @@ export default function Register() {
 
 			// Replace SweetAlert with AlertModal
 
-			showAlert(`註冊成功！歡迎 ${res.data.user.name}！請登入您的帳號`, true);
+			showAlert(`註冊成功！歡迎 ${res.data.user.name}！請登入您的帳號`, true ,'/login');
 
-			// Navigate after user confirms
-			setTimeout(() => {
-				navigate('/login');
-			}, 1500);
+			// // Navigate after user confirms
+			// await new Promise(resolve => setTimeout(resolve, 2500));
+			// navigate('/login');
+			
 		} catch (error) {
 			console.error('請求錯誤', error);
 			// Replace SweetAlert with AlertModal for error
@@ -175,14 +181,18 @@ export default function Register() {
 			{/* Loading 畫面 */}
 			{isLoading && <Loading></Loading>}
 			{/* Add AlertModal component */}
-			{
-				<AlertModal
-					show={alertState.show}
-					onClose={() => setAlertState({ ...alertState, show: false })}
-					status={alertState.status}
+			{<AlertModal show={alertState.show}
+				onClose={() => {
+				setAlertState({ ...alertState, show: false });
+				if (alertState.redirectTo) {
+					navigate(alertState.redirectTo); // 使用 navigate 跳轉頁面
+				}
+				}}
+				status={alertState.status}
+				redirectTo={alertState.redirectTo} // 傳遞 redirectTo 屬性
 				>
-					{alertState.message}
-				</AlertModal>
+				{alertState.message}
+			</AlertModal>
 			}
 
 			<div className="flex-grow-1">

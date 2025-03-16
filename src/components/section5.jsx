@@ -104,8 +104,8 @@ function Section5() {
                             }}>
                                 <CardMedia component="img" image={card.img} height='312' className='card-img' alt={card.title} />
                                 <CardContent >
-                                <Typography className="fs-4 fs-md-5 fw-medium mb-1 text-primary-02 text-start">{card.title}</Typography>
-                                <Typography component="div" className="card-text fs-2" >{card.text}</Typography>
+                                <Typography className="fs-4 fs-md-5 fw-medium mb-1 text-primary-02 text-start"sx={{ fontFamily: '"Noto Serif TC","Noto Serif"' }}>{card.title}</Typography>
+                                <Typography component="div" className="card-text fs-2" sx={{ fontFamily: '"Noto Serif TC","Noto Serif"' }}>{card.text}</Typography>
                                 </CardContent>
                             </Card>
                         </div>

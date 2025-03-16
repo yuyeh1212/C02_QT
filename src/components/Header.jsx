@@ -22,8 +22,12 @@ function Header (){
     const offcanvasInstanceRef = useRef(null);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [alertState,setAlertState] = useState({show:false,message:"",success:true});
-
+    const [alertState, setAlertState] = useState({
+        show: false,
+        status: true,
+        message: "",
+        redirectTo: null,  // 設定跳轉的路徑
+    });
     
 
     useEffect(() => {
@@ -55,11 +59,6 @@ function Header (){
         return null;
     };
 
-    const token = getCookie("token");
-
-    if (token) {
-        axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-    }
 
     const clearCookie = (name) => {
         document.cookie = `${name}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
@@ -77,12 +76,17 @@ function Header (){
     }
 
     useEffect(()=>{
+        const token = getCookie("token");
+        if (token) {
+            axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+        }
         loginCheck();
     },[])
 
-    const showAlert = (message,status)=>{
-        setAlertState({show:true,"message":message,"status":status})
-    }
+    //開啟提示訊息框
+  const showAlert = (message,status,redirectTo)=>{
+    setAlertState({show:true,"message":message,"status":status,'redirectTo':redirectTo})
+  }
 
     const handleLogout = async()=>{
         dispatch(setLoading(true));
@@ -93,9 +97,7 @@ function Header (){
             delete axios.defaults.headers.common.Authorization; 
             dispatch(logout());
             dispatch(clearUserData());
-            setTimeout(()=>{
-                navigate("/login");
-            },2000)
+            showAlert('登出成功！',true,"/login");
         } catch (error) {
             showAlert('登出失敗，請稍後再試',false);
             console.log(error);
@@ -108,7 +110,19 @@ function Header (){
             {/* Loading 畫面 */}
             {isLoading && <Loading></Loading>}
             {/* Add AlertModal component */}
-            {<AlertModal show={alertState.show} onClose={() => setAlertState({...alertState,show:false})} status={alertState.status}>{alertState.message}</AlertModal>}
+            {<AlertModal show={alertState.show}
+                onClose={() => {
+                setAlertState({ ...alertState, show: false });
+                if (alertState.redirectTo) {
+                    navigate(alertState.redirectTo); // 使用 navigate 跳轉頁面
+                }
+                }}
+                status={alertState.status}
+                redirectTo={alertState.redirectTo} // 傳遞 redirectTo 屬性
+                >
+                {alertState.message}
+                </AlertModal>
+            }
         <nav className="navbar navbar-expand-md py-4 px-md-2  bg-white">
             <div className="container-fluid d-flex align-items-center justify-content-between flex-nowrap">
             {/* 左側 Logo */}

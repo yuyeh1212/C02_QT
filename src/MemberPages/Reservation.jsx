@@ -10,6 +10,7 @@ import Loading from "../components/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "../slice/loadingSlice";
 import AlertModal from "../components/AlertModal";
+import ReservationModal from "../components/ReservationModal";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
@@ -22,9 +23,15 @@ export default function Reservation() {
     const [currentMonthEvent,setCurrentMonthEvent] = useState([])
     const [monthEventState,setMonthEventState] = useState([])
     const [currentTime,setCurrentTime] = useState([])
-    const [windowSize, setWindowSize] = useState(window.innerWidth);
+    const [windowSize, setWindowSize] = useState(window.innerWidth)
     const [submitTimeSlots,setSubmitTimeSlots] = useState([])
-    const [alertState,setAlertState] = useState({show:false,message:"",status:true})
+    const [alertState, setAlertState] = useState({
+        show: false,
+        status: true,
+        message: "",
+        redirectTo: null,  // 設定跳轉的路徑
+    });
+    const [reservationAlertState,setReservationAlertState] = useState({show:false})
     const isFirstRender = useRef(true);
 
     //hookForm
@@ -62,8 +69,12 @@ export default function Reservation() {
     };
 
     //開啟提示訊息框
-    const showAlert = (message,status)=>{
-        setAlertState({show:true,"message":message,"status":status})
+    const showAlert = (message,status,redirectTo)=>{
+        setAlertState({show:true,"message":message,"status":status,'redirectTo':redirectTo})
+    }
+
+    const showReservationAlert = ()=>{
+        setReservationAlertState({show:true})
     }
     const onSubmit = (data)=>{
         pushHandleSubmit(data)
@@ -74,7 +85,7 @@ export default function Reservation() {
     const dispatch = useDispatch()
     const isLoading = useSelector((state)=> state.loading.isLoading)
     const userData = useSelector(state => state.userData);
-    const isLogin = useSelector(state => state.auth.isLoggedIn);
+    
 
     useEffect(()=>{
         if(userData){
@@ -88,6 +99,10 @@ export default function Reservation() {
         }
     },[userData])
     // 會員資料讀取
+
+    useEffect(()=>{
+        showReservationAlert();
+    },[])
 
     //提交資訊後更新已預約日期
     useEffect(()=>{
@@ -164,9 +179,9 @@ export default function Reservation() {
                 date:data.date,
                 timeSlot:data.timeSlot
             }])
-            showAlert("恭喜預約成功",true);
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            navigate('/member/center/orders');
+            showAlert("恭喜預約成功",true,'/member/center/orders');
+            // await new Promise(resolve => setTimeout(resolve, 2000));
+            // navigate('/member/center/orders');
         } catch (error) {
             console.log(error?.response);
             showAlert("預約失敗請重新嘗試",false);
@@ -181,14 +196,14 @@ export default function Reservation() {
         if(info){
             const date = info.event.startStr
             const time = info.event.title
-            setValue("renderDate",`${date} 時: ${time}`,{ shouldValidate: true })
+            setValue("renderDate",`${date} ， ${time}`,{ shouldValidate: true })
             setValue("date",date)
             setValue("timeSlot",time)
             return
         }
         const date = mobileInfo.date
         const time = mobileInfo.title
-        setValue("renderDate",`${date} 時: ${time}`)
+        setValue("renderDate",`${date} ， ${time}`)
         setValue("date",date)
         setValue("timeSlot",time)
     }
@@ -277,6 +292,7 @@ export default function Reservation() {
                                 <input type="text" 
                                 className={`form-control form-control-sm ${errors.renderDate ? 'is-invalid' :''}`} 
                                 id="renderDate"  placeholder="點擊日曆選擇預約時段" 
+                                disabled
                                 {...register('renderDate',{
                                     required:{value:true,
                                         message:"請確認預約時段"
@@ -424,7 +440,20 @@ export default function Reservation() {
                 </div>
             </div>
             {isLoading && <Loading></Loading>}
-            {<AlertModal show={alertState.show} onClose={() => setAlertState({...alertState,show:false})} status={alertState.status}>{alertState.message}</AlertModal>}
+            {<AlertModal show={alertState.show}
+                onClose={() => {
+                setAlertState({ ...alertState, show: false });
+                if (alertState.redirectTo) {
+                    navigate(alertState.redirectTo); // 使用 navigate 跳轉頁面
+                }
+                }}
+                status={alertState.status}
+                redirectTo={alertState.redirectTo} // 傳遞 redirectTo 屬性
+                >
+                {alertState.message}
+            </AlertModal>
+            }
+            {<ReservationModal show={reservationAlertState.show} onClose={() => setReservationAlertState({show:false})}></ReservationModal>}
         </div>
     );
 }

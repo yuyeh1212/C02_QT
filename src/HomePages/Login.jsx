@@ -57,11 +57,17 @@ export default function Login() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch(); // 用來更新 Redux 狀態
-  const [alertState,setAlertState] = useState({show:false,message:"",success:true});
+  const [alertState, setAlertState] = useState({
+    show: false,
+    status: true,
+    message: "",
+    redirectTo: null,  // 設定跳轉的路徑
+  });
   const isLoading = useSelector((state)=> state.loading.isLoading)
 
-  const showAlert = (message,status)=>{
-      setAlertState({show:true,"message":message,"status":status})
+  //開啟提示訊息框
+  const showAlert = (message,status,redirectTo)=>{
+    setAlertState({show:true,"message":message,"status":status,'redirectTo':redirectTo})
   }
 
   const setCookie = (name, value, hours) => {
@@ -87,11 +93,7 @@ export default function Login() {
       dispatch(setUserData(res.data.user))
       // 更新 Redux 登入狀態
       dispatch(login());
-      showAlert(`登入成功！歡迎 ${res.data.user.name}！`,true);
-
-      setTimeout(() => {
-        navigate(res.data.user.user === "admin" ? "/admin/reservation" : "/member/reservation");
-      }, 2000);
+      showAlert(`登入成功！歡迎 ${res.data.user.name}！`,true,res.data.user.user === "admin" ? "/admin/reservation" : "/member/reservation");
 
     } catch (error) {
       console.error("請求錯誤", error);
@@ -146,7 +148,19 @@ export default function Login() {
             {/* Loading 畫面 */}
             {isLoading && <Loading></Loading>}
             {/* Add AlertModal component */}
-            {<AlertModal show={alertState.show} onClose={() => setAlertState({...alertState,show:false})} status={alertState.status}>{alertState.message}</AlertModal>}    
+            {<AlertModal show={alertState.show}
+              onClose={() => {
+              setAlertState({ ...alertState, show: false });
+              if (alertState.redirectTo) {
+                  navigate(alertState.redirectTo); // 使用 navigate 跳轉頁面
+              }
+              }}
+              status={alertState.status}
+              redirectTo={alertState.redirectTo} // 傳遞 redirectTo 屬性
+              >
+              {alertState.message}
+            </AlertModal>
+            }   
           </div>
         </div>
       </div>

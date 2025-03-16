@@ -278,7 +278,7 @@ function Section3(){
                     1
                   </span>
                 </div>
-                <p className='fs-2 fs-md-3 text-primary-02'>凝膠項目皆含基礎保養及加厚</p>
+                <p className='fs-2 fs-md-4 text-primary-02'>凝膠項目皆含基礎保養及加厚。</p>
               </div>
               <div className="d-flex align-items-start mb-4">
                 <div className="px-1 me-4" style={{paddingTop:2}}>
@@ -286,7 +286,7 @@ function Section3(){
                     2
                   </span>
                 </div>
-                <p className='fs-2 fs-md-3 text-primary-02'>基礎保養含修剪甲型、甘皮、兩側硬皮、硬甲油塗佈及指緣油保養</p>
+                <p className='fs-2 fs-md-4 text-primary-02'>基礎保養含修剪甲型、甘皮、兩側硬皮、硬甲油塗佈及指緣油保養。</p>
               </div>
               <div className="d-flex align-items-start mb-4">
                 <div className="px-1 me-4" style={{paddingTop:2}}>
@@ -294,7 +294,8 @@ function Section3(){
                     3
                   </span>
                 </div>
-                <p className='fs-2 fs-md-3 text-primary-02'>純卸甲均不含保養，可另外加購保養</p>
+                <p className='fs-2 fs-md-4 text-primary-02'>純卸甲均不含保養，可另外加購保養。
+                </p>
               </div>
               <div className="d-flex align-items-start">
                 <div className="px-1 me-4" style={{paddingTop:2}}>
@@ -302,7 +303,7 @@ function Section3(){
                     4
                   </span>
                 </div>
-                <p className='fs-2 fs-md-3 text-primary-02'>現場提供現金及轉帳交易</p>
+                <p className='fs-2 fs-md-4 text-primary-02'>現場提供現金及轉帳交易。</p>
               </div>
             </div>
           </div>
