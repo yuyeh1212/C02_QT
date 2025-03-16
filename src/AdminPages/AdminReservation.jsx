@@ -28,9 +28,9 @@ export default function AdminReservation(){
     const [currentMonthEvent,setCurrentMonthEvent] = useState([]);
     const [monthEventState,setMonthEventState] = useState([]);
     const [currentTime,setCurrentTime] = useState([]);
-    const [alertState,setAlertState] = useState({show:false,message:"",success:true});
-    const showAlert = (message,success)=>{
-        setAlertState({show:true,"message":message,"success":success})
+    const [alertState,setAlertState] = useState({show:false,message:"",status:true});
+    const showAlert = (message,status)=>{
+        setAlertState({show:true,"message":message,"status":status})
     }
     const isLoading = useSelector((state)=> state.loading.isLoading);
     const dispatch = useDispatch();
@@ -179,7 +179,7 @@ export default function AdminReservation(){
 
     return (<div>
                 {isLoading && <Loading />}
-                {<AlertModal show={alertState.show} onClose={() => setAlertState({...alertState,show:false})} success={alertState.success}>
+                {<AlertModal show={alertState.show} onClose={() => setAlertState({...alertState,show:false})} status={alertState.status}>
                     {alertState.message}
                 </AlertModal>}
                 <div className="my-custom-header d-flex justify-content-between mb-6">
