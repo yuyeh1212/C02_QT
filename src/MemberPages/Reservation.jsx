@@ -124,7 +124,7 @@ export default function Reservation() {
     const handleUpdateReservedTimeSlots = async()=>{
         if(submitTimeSlots.length > 0){
             try {
-                const res = await axios.patch(`${API_URL}/scheduleConfig`,{reservedTimeSlots: submitTimeSlots})
+                 await axios.patch(`${API_URL}/scheduleConfig`,{reservedTimeSlots: submitTimeSlots})
                 calendarRef.current?.refreshCalendar()
             } catch (error) {
                 console.log(error);
@@ -192,7 +192,7 @@ export default function Reservation() {
 
     //更新日歷已預約資訊
 
-    const handleCalendar = (info,mobileInfo,e)=>{
+    const handleCalendar = (info,mobileInfo)=>{
         if(info){
             const date = info.event.startStr
             const time = info.event.title
@@ -341,7 +341,7 @@ export default function Reservation() {
                                         <Radio
                                         className="btn btn-outline-success-200 px-2 py-1 w-100"
                                         id={index}
-                                        onClick={(e)=>handleCalendar("",item)}
+                                        onClick={()=>handleCalendar("",item)}
                                         name="time"
                                         
                                         >

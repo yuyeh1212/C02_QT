@@ -91,7 +91,7 @@ function Header (){
     const handleLogout = async()=>{
         dispatch(setLoading(true));
         try {
-            const res = await axios.post(`${API_URL}/logout`)
+            await axios.post(`${API_URL}/logout`)
             showAlert('登出成功！',true);
             clearCookie("token"); 
             delete axios.defaults.headers.common.Authorization; 

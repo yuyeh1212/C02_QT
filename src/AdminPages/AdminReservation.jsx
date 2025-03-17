@@ -25,9 +25,9 @@ export default function AdminReservation(){
     const [reservedTimeSlots, setReservedTimeSlots] = useState([]);
     const [lastBookableDate, setLastBookableDate] = useState('');
     const [selectLastDate, setSelectLastDate] = useState(dayjs());
-    const [currentMonthEvent,setCurrentMonthEvent] = useState([]);
-    const [monthEventState,setMonthEventState] = useState([]);
-    const [currentTime,setCurrentTime] = useState([]);
+    const [setCurrentMonthEvent] = useState([]);
+    const [setMonthEventState] = useState([]);
+    const [setCurrentTime] = useState([]);
     const [alertState,setAlertState] = useState({show:false,message:"",status:true});
     const showAlert = (message,status)=>{
         setAlertState({show:true,"message":message,"status":status})
@@ -127,12 +127,12 @@ export default function AdminReservation(){
     const handleUpdateRest = async()=>{
         dispatch(setLoading(true));
         try {
-            const res = await axios.patch(`${API_URL}/scheduleConfig`,{
+            await axios.patch(`${API_URL}/scheduleConfig`,{
                 unavailableTimeSlots: unavailableDates
             })
             getCalendar();
             showAlert("躺平日新增成功",true);
-        } catch (error) {
+        } catch {
             showAlert("躺平日新增失敗，請稍後再試",false);
         }finally{
             dispatch(setLoading(false));
@@ -142,12 +142,12 @@ export default function AdminReservation(){
     const handleUpdateLast = async()=>{
         dispatch(setLoading(true));
         try {
-            const res = await axios.patch(`${API_URL}/scheduleConfig`,{
+            await axios.patch(`${API_URL}/scheduleConfig`,{
                 lastBookableDate: selectLastDate.format("YYYY-MM-DD")
             })
             getCalendar();
             showAlert("開放預約日更新成功",true);
-        } catch (error) {
+        } catch  {
             showAlert("開放預約日更新失敗，請稍後再試",false);
         }finally{
             dispatch(setLoading(false));

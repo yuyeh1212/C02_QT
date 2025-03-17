@@ -2,7 +2,7 @@ import { useState ,useEffect} from 'react'
 
 function Section3(){
 
-  const[notices,setNotices] = useState([
+  const[notices] = useState([
     {
       numbering:1,
       content:"這裡有一隻臘腸狗和一隻肥橘貓，腸腸有分離焦慮，都會跟在腳邊，他心情好會跟你sayHI(汪)，事先做好心理準備，請不用害怕。如果會擔心接觸他們，可事先告知，會安置在推車內，與您保持友善距離。"

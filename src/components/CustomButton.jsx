@@ -25,12 +25,14 @@ const CustomButton = ({ href,to, type = 'button', className = 'btn btn-primary t
 };
 
 CustomButton.propTypes = {
+  href: PropTypes.string,
   to: PropTypes.string,
   type: PropTypes.string,
   className: PropTypes.string,
   children: PropTypes.node.isRequired,
   onClick: PropTypes.func,
-  form:PropTypes.string,
+  form: PropTypes.string,
+  target: PropTypes.string,
 };
 
 export default CustomButton;

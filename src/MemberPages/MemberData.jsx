@@ -78,11 +78,11 @@ export default function MemberData() {
     
     dispatch(setLoading(true))
     try {
-      const res = await axios.patch(`${API_URL}/members/update`, formData);
+      await axios.patch(`${API_URL}/members/update`, formData);
       setIsEditing(false);
       dispatch(setUserData(formData)); // 更新 Redux Store
       showAlert("更新成功！", true);
-    } catch (err) {
+    } catch {
       showAlert("更新失敗，請重試！", false);
     } finally {
       dispatch(setLoading(false))

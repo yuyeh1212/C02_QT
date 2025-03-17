@@ -10,6 +10,7 @@ import { setLoading } from '../slice/loadingSlice';
 import CustomButton from '../components/CustomButton';
 // Adjust path as needed
 const API_URL = import.meta.env.VITE_BASE_URL;
+import PropTypes from 'prop-types';
 
 const FormInput = ({ register, errors, id, labelText, type = 'text', rules = {}, LabelHolder }) => {
 	const [showPassword, setShowPassword] = useState(false);
@@ -43,7 +44,9 @@ const FormInput = ({ register, errors, id, labelText, type = 'text', rules = {},
 			</div>
 		</div>
 	);
-};
+}
+
+
 
 export default function Register() {
 	const {
@@ -90,7 +93,7 @@ export default function Register() {
 	const handleRegister = async (data) => {
 		dispatch(setLoading(true)); // 開始 loading
 		try {
-			const { confirmPassword, ...modifiedData } = data;
+			const { ...modifiedData } = data;
 			const finalData = {
 				...modifiedData,
 				user: 'user',
@@ -296,3 +299,12 @@ export default function Register() {
 		</div>
 	);
 }
+FormInput.propTypes = {
+	register: PropTypes.func.isRequired,
+	errors: PropTypes.object.isRequired,
+	id: PropTypes.string.isRequired,
+	labelText: PropTypes.string.isRequired,
+	type: PropTypes.string,
+	rules: PropTypes.object,
+	LabelHolder: PropTypes.string,
+};

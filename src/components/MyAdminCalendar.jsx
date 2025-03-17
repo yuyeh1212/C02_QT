@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 const MyAdminCalendar = forwardRef(({ onDateChange,getCalendarInfo,unavailableDates,reservedTimeSlots,lastBookableDate,setUnavailableDates}, ref) => {
 
     const [calendarInfo,setCalendarInfo] = useState(null)
-    const [events, setEvents] = useState([]);
+    const [events] = useState([]);
    
   
     // 將 FullCalendar API 傳遞出去，讓外層能控制

@@ -160,6 +160,8 @@ const MyCalendar = forwardRef(({ onDateChange ,handleCalendar,getCalendarInfo}, 
 
 MyCalendar.propTypes = {
     onDateChange: PropTypes.func.isRequired,
+    handleCalendar: PropTypes.func.isRequired,
+    getCalendarInfo: PropTypes.func.isRequired,
 };
 
 MyCalendar.displayName = "MyCalendar";

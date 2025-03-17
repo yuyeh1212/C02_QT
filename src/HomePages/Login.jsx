@@ -9,8 +9,9 @@ import { setLoading } from "../slice/loadingSlice";
 import CustomButton from "../components/CustomButton";
 import AlertModal from "../components/AlertModal";
 import Loading from "../components/Loading";
+import PropTypes from 'prop-types';
 const API_URL = import.meta.env.VITE_BASE_URL;
-// 自定義輸入元件
+
 const FormInput = ({ register, errors, id, labelText, type = "text", rules = {}, LabelHolder}) => {
   const [showPassword, setShowPassword] = useState(false);
   return (
@@ -44,7 +45,6 @@ const FormInput = ({ register, errors, id, labelText, type = "text", rules = {},
 		</div>
   );
 };
-
 
 export default function Login() {
   const {
@@ -167,3 +167,12 @@ export default function Login() {
     </>
   );
 }
+FormInput.propTypes = {
+  register: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+  id: PropTypes.string.isRequired,
+  labelText: PropTypes.string.isRequired,
+  type: PropTypes.string,
+  rules: PropTypes.object,
+  LabelHolder: PropTypes.string,
+};
