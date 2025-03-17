@@ -97,7 +97,7 @@ export default function Reservation() {
                 'LineID': userData.LineID}
             ) 
         }
-    },[userData])
+    },[userData,reset])
     // 會員資料讀取
 
     useEffect(()=>{
@@ -121,22 +121,25 @@ export default function Reservation() {
         })()
     },[])
     
-    const handleUpdateReservedTimeSlots = async()=>{
-        if(submitTimeSlots.length > 0){
-            try {
-                 await axios.patch(`${API_URL}/scheduleConfig`,{reservedTimeSlots: submitTimeSlots})
-                calendarRef.current?.refreshCalendar()
-            } catch (error) {
-                console.log(error);
-            }
-        }
-    }
+    
 
     useEffect(() => {
         if (isFirstRender.current) {
             isFirstRender.current = false;
             return; // 跳過初次渲染時的更新動作
         }
+
+        const handleUpdateReservedTimeSlots = async()=>{
+            if(submitTimeSlots.length > 0){
+                try {
+                     await axios.patch(`${API_URL}/scheduleConfig`,{reservedTimeSlots: submitTimeSlots})
+                    calendarRef.current?.refreshCalendar()
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        }
+
         handleUpdateReservedTimeSlots();
     }, [submitTimeSlots]); 
     //監聽視窗大小
