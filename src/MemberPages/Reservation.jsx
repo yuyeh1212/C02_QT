@@ -2,7 +2,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import MyCalendar from "../components/MyCalendar";
-import { useRef, useState ,useEffect} from "react";
+import { useRef, useState ,useEffect, useCallback} from "react";
 import CustomButton from "../components/CustomButton";
 import axios from "axios";
 import Radio from "../components/Radio";
@@ -210,28 +210,48 @@ export default function Reservation() {
         setValue("date",date)
         setValue("timeSlot",time)
     }
-    //取得日歷的狀態以及活動資料
-    const getCalendarInfo = (info,eventDate)=>{
-        const viewTitle = info.view.title
-        filterEventsByMonth(viewTitle,eventDate)
-    }
+    
     //篩選當月活動
-    const filterEventsByMonth = (viewTitle,eventDate) => {
+    // const filterEventsByMonth = (viewTitle,eventDate) => {
+    //     const monthYear = viewTitle.split('年');
+    //     const year = monthYear[0];
+    //     let month = monthYear[1].replace('月', '');
+    //     if (Number(month) < 10){
+    //         month = `0${month}`
+    //     }
+    //     const date = `${year}-${month}`
+
+    //     const newEvent = [...new Set(eventDate.map((item)=>item.date))]
+    //     .filter((item)=>item.startsWith(date))
+    //     setCurrentMonthEvent(newEvent)
+    //     const eventTime = eventDate.filter((item)=>item.date.startsWith(date))
+    //     setMonthEventState(eventTime)
+    //     setCurrentTime([])
+    //   };
+    const filterEventsByMonth = useCallback((viewTitle, eventDate) => {
         const monthYear = viewTitle.split('年');
         const year = monthYear[0];
         let month = monthYear[1].replace('月', '');
-        if (Number(month) < 10){
-            month = `0${month}`
+    
+        if (Number(month) < 10) {
+            month = `0${month}`;
         }
-        const date = `${year}-${month}`
-
-        const newEvent = [...new Set(eventDate.map((item)=>item.date))]
-        .filter((item)=>item.startsWith(date))
-        setCurrentMonthEvent(newEvent)
-        const eventTime = eventDate.filter((item)=>item.date.startsWith(date))
-        setMonthEventState(eventTime)
-        setCurrentTime([])
-      };
+        const date = `${year}-${month}`;
+    
+        const newEvent = [...new Set(eventDate.map((item) => item.date))]
+            .filter((item) => item.startsWith(date));
+    
+        setCurrentMonthEvent(newEvent);
+    
+        const eventTime = eventDate.filter((item) => item.date.startsWith(date));
+        setMonthEventState(eventTime);
+        setCurrentTime([]);
+    }, [setCurrentMonthEvent, setMonthEventState, setCurrentTime]);
+    //取得日歷的狀態以及活動資料
+    const getCalendarInfo = useCallback((info,eventDate)=>{
+        const viewTitle = info.view.title
+        filterEventsByMonth(viewTitle,eventDate)
+    },[filterEventsByMonth])
     //篩選當日時段
     const filterEventTime  = (date)=>{
         const newCurrentTime = monthEventState.filter((item)=>item.date ===date)
@@ -343,7 +363,7 @@ export default function Reservation() {
                                         <div key={item.date+item.title}>
                                         <Radio
                                         className="btn btn-outline-success-200 px-2 py-1 w-100"
-                                        id={index}
+                                        id={`${index}`}
                                         onClick={()=>handleCalendar("",item)}
                                         name="time"
                                         

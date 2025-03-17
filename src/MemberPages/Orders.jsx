@@ -34,7 +34,7 @@ export default function Orders() {
   const [openOrder, setOpenOrder] = useState(null);
   
   // 追踪動畫狀態
-  const [setAnimating] = useState(false);
+  const [,setAnimating] = useState(false);
 
   // 切換訂單開關狀態的函數
   const toggleOrder = (orderId) => {

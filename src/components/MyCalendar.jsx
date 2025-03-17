@@ -111,7 +111,7 @@ const MyCalendar = forwardRef(({ onDateChange ,handleCalendar,getCalendarInfo}, 
         if( events.length !== 0){
             getCalendarInfo(calendarInfo,events);
         }
-    }, [events, calendarInfo, getCalendarInfo])
+    }, [events, calendarInfo,getCalendarInfo])
 
     const handleDatesSet = (info) => {
         dispatch(setLoading(true))

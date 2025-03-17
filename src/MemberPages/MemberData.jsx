@@ -24,7 +24,7 @@ export default function MemberData() {
     LineID: "",
   });
   const [isEditing, setIsEditing] = useState(false);
-  const [alert, setAlert] = useState({ show: false, message: "", success:true });
+  const [alert, setAlert] = useState({ show: false, message: "", status:true });
   const [errors, setErrors] = useState({ email: "", phone: "", LineID: "" });
 
   const userData = useSelector(state => state.userData);
