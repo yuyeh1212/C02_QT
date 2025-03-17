@@ -212,8 +212,8 @@ export default function Reservation() {
     }
     //取得日歷的狀態以及活動資料
     const getCalendarInfo = (info,eventDate)=>{
-        const viewtitle = info.view.title
-        filterEventsByMonth(viewtitle,eventDate)
+        const viewTitle = info.view.title
+        filterEventsByMonth(viewTitle,eventDate)
     }
     //篩選當月活動
     const filterEventsByMonth = (viewTitle,eventDate) => {
