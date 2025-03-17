@@ -32,14 +32,15 @@ export default function MemberData() {
 
   useEffect(()=>{
     if(userData){
-        setFormData({...formData,
-          'id':userData.id,
-          'name':userData.name,
-          'birthday': userData.birthday,
-          'email': userData.email,
-          'phone': userData.phone,
-          'LineID': userData.LineID}
-      )
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        'id':userData.id,
+        'name':userData.name,
+        'birthday': userData.birthday,
+        'email': userData.email,
+        'phone': userData.phone,
+        'LineID': userData.LineID
+      }))
     }
   },[userData])
 

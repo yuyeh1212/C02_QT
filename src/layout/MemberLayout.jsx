@@ -1,7 +1,7 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import AlertModal from "../components/AlertModal";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -37,28 +37,31 @@ export default function MemberLayout() {
     return null;
   };
 
-  const loginCheck = async ()=>{
-    try {
-      const res = await axios.get(`${API_URL}/login/check`);
-      dispatch(setUserData(res.data.user))
-      // 更新 Redux 登入狀態
-      dispatch(login());
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
+  const stableDispatch = useMemo(() => dispatch, [dispatch]); // 讓 dispatch 穩定
 
-  useEffect(()=>{
-    const token = getCookie("token");
-    if (token) {
-      axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-    }
-    loginCheck()
-    if(isLogin==false&& !token){
-      showAlert('您尚未登入,即將為您跳轉到登入頁面','unauthorized','/login');
-    }
-  },[isLogin])
+  const loginCheck = useCallback(async () => {
+      try {
+          const res = await axios.get(`${API_URL}/login/check`);
+          stableDispatch(setUserData(res.data.user));
+          stableDispatch(login());
+      } catch (error) {
+          console.error("登入檢查失敗:", error);
+      }
+  }, [stableDispatch]); // 依賴穩定的 dispatch
+
+  useEffect(() => {
+      const token = getCookie("token");
+      if (token) {
+          axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+          loginCheck();
+      }
+
+      if (isLogin === false && !token) {
+          showAlert('您尚未登入，即將為您跳轉到登入頁面', 'unauthorized', '/login');
+      }
+  }, [isLogin, loginCheck]); // 依賴 isLogin 和 loginCheck
+
 
 
 

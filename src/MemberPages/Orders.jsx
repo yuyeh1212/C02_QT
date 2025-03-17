@@ -1,6 +1,6 @@
 import axios from "axios";
 import Pagination from "../components/Pagination";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { useDispatch, useSelector } from "react-redux";
@@ -46,25 +46,6 @@ export default function Orders() {
     setOpenOrder((prev) => (prev === orderId ? null : orderId));
   };
 
-  const getOrders = async (page = 1) => {
-    dispatch(setLoading(true));
-    try {
-      const res = await axios.get(
-        `${API_URL}/appointments?page=${page}&limit=10`
-      );
-      setPageInfo({
-        page: res.data.pageInfo.currentPage,
-        maxPage: res.data.pageInfo.totalPages,
-      });
-      console.log(res);
-      setOrders(res.data.appointments);
-    } catch (error) {
-      console.log(error);
-    }finally{
-      dispatch(setLoading(false));
-    }
-  };
-
   const getCookie = (name) => {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
@@ -72,17 +53,37 @@ export default function Orders() {
     return null;
   };
 
-  useEffect(() => {
+  const stableDispatch = useMemo(() => dispatch, [dispatch]); // 讓 dispatch 穩定
+
+const getOrders = useCallback(async (page = 1) => {
+    stableDispatch(setLoading(true));
+    try {
+        const res = await axios.get(
+            `${API_URL}/appointments?page=${page}&limit=10`
+        );
+        setPageInfo({
+            page: res.data.pageInfo.currentPage,
+            maxPage: res.data.pageInfo.totalPages,
+        });
+        setOrders(res.data.appointments);
+    } catch (error) {
+        console.error("獲取訂單失敗:", error);
+    } finally {
+        stableDispatch(setLoading(false));
+    }
+}, [stableDispatch]);
+
+useEffect(() => {
     const token = getCookie("token");
     if (token) {
         axios.defaults.headers.common.Authorization = `Bearer ${token}`;
     }
-    getOrders();
-  }, []);
+    getOrders(); // 只執行一次
+}, [getOrders]); // 讓 useEffect 依賴 getOrders
 
-  const handlePageChange = (page) => {
+const handlePageChange = (page) => {
     getOrders(page);
-  };
+}
 
   return (
     <>

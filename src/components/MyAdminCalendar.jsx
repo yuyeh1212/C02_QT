@@ -22,7 +22,7 @@ const MyAdminCalendar = forwardRef(({ onDateChange,getCalendarInfo,unavailableDa
         if( events.length !== 0){
             getCalendarInfo(calendarInfo,events);
         }
-    },[events])
+    },[calendarInfo, events, getCalendarInfo])
 
     const handleDatesSet = (info) => {
         onDateChange(info.view.title);

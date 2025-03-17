@@ -1,7 +1,7 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { forwardRef, useEffect, useState, useImperativeHandle, useRef } from "react";
+import { forwardRef, useEffect, useState, useImperativeHandle, useRef, useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { useDispatch } from "react-redux";
@@ -16,32 +16,37 @@ const MyCalendar = forwardRef(({ onDateChange ,handleCalendar,getCalendarInfo}, 
     const [events, setEvents] = useState([]);
     const dispatch = useDispatch();
     //在API中抓日期
-    const fetchCalendarData = async()=>{
-        
+    const stableDispatch = useMemo(() => dispatch, [dispatch]); // 讓 dispatch 穩定
+
+    const fetchCalendarData = useCallback(async () => {
         try {
-            const res = await axios.get(`${API_URL}/scheduleConfig`)
-            const config = res.data[0]
+            stableDispatch(setLoading(true)); // 確保開始時設定 loading 狀態
+
+            const res = await axios.get(`${API_URL}/scheduleConfig`);
+            const config = res.data[0];
+
             const generateCalendarEvents = (config) => {
                 const fixedSlots = [
                     { title: "10:30～14:30", start: "10:30:00", end: "14:30:00" },
                     { title: "14:30～18:30", start: "14:30:00", end: "18:30:00" },
                     { title: "18:30～22:30", start: "18:30:00", end: "22:30:00" },
                 ];
-    
+
                 let slots = [];
                 const today = new Date();
                 today.setHours(0, 0, 0, 0);
                 const endDate = new Date(config.lastBookableDate);
-    
+
                 while (today <= endDate) {
                     const dateStr = today.toLocaleDateString('sv-SE').split("T")[0];
     
+
                     // 跳過不可預約的日期
                     if (config.unavailableTimeSlots.includes(dateStr)) {
                         today.setDate(today.getDate() + 1);
                         continue;
                     }
-    
+
                     // 逐個檢查固定時段
                     fixedSlots.forEach((slot) => {
                         const isReserved = config.reservedTimeSlots.some(
@@ -50,8 +55,6 @@ const MyCalendar = forwardRef(({ onDateChange ,handleCalendar,getCalendarInfo}, 
                         if (!isReserved) {
                             slots.push({
                                 title: slot.title,
-                                // start: `${dateStr}T${slot.start}`,
-                                // end: `${dateStr}T${slot.end}`,
                                 date: dateStr,
                                 backgroundColor: "#F7F0EA",
                                 textColor: "#6E5E57",
@@ -62,22 +65,30 @@ const MyCalendar = forwardRef(({ onDateChange ,handleCalendar,getCalendarInfo}, 
                             });
                         }
                     });
-                    
+
                     today.setDate(today.getDate() + 1);
                 }
                 setEvents(slots);
             };
+
             generateCalendarEvents(config);
         } catch (error) {
-            console.log(error);
-        }finally{
-            setTimeout(()=>{
-                dispatch(setLoading(false))
-            },500
-            )
+            console.error("獲取行程失敗:", error);
+        } finally {
+            stableDispatch(setLoading(false)); // 直接關閉 loading，避免不必要的 `setTimeout`
         }
-    }
-    
+    }, [stableDispatch]);
+
+    useEffect(() => {
+        const token = getCookie("token");
+        if (token) {
+            axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+        }
+        fetchCalendarData();
+    }, [fetchCalendarData]); // 讓 useEffect 只執行一次
+
+
+
     const getCookie = (name) => {
         const value = `; ${document.cookie}`;
         const parts = value.split(`; ${name}=`);
@@ -86,13 +97,7 @@ const MyCalendar = forwardRef(({ onDateChange ,handleCalendar,getCalendarInfo}, 
     };    
 
 
-    useEffect(()=>{
-        const token = getCookie("token");
-        if (token) {
-            axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-        }
-        fetchCalendarData()
-    },[])
+    
 
     // 將 FullCalendar API 傳遞出去，讓外層能控制
     useImperativeHandle(ref, () => ({
@@ -106,7 +111,7 @@ const MyCalendar = forwardRef(({ onDateChange ,handleCalendar,getCalendarInfo}, 
         if( events.length !== 0){
             getCalendarInfo(calendarInfo,events);
         }
-    },[events])
+    }, [events, calendarInfo, getCalendarInfo])
 
     const handleDatesSet = (info) => {
         dispatch(setLoading(true))

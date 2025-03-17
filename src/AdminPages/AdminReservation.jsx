@@ -1,4 +1,4 @@
-import { useState,useRef, useEffect } from "react";
+import { useState,useRef, useEffect, useCallback, useMemo } from "react";
 import dayjs from "dayjs";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -61,6 +61,28 @@ export default function AdminReservation(){
         return null;
     };
 
+    const stableDispatch = useMemo(() => dispatch, [dispatch]);
+
+    const getCalendar = useCallback(async () => {
+        stableDispatch(setLoading(true));
+
+        try {
+            const res = await axios.get(`${API_URL}/scheduleConfig`);
+            const data = res.data[0] || {};
+
+            setUnavailableDates(data.unavailableTimeSlots || []);
+            const lastBookable = data.lastBookableDate || getLastDayOfMonth();
+            setLastBookableDate(lastBookable);
+            setSelectLastDate(dayjs(lastBookable));
+            setReservedTimeSlots(data.reservedTimeSlots || []);
+        } catch (error) {
+            console.error(error);
+            showAlert(error?.response?.data?.message || "獲取行程時發生錯誤", false);
+        } finally {
+            stableDispatch(setLoading(false));
+        }
+    }, [stableDispatch]); // **依賴於 memo 化的 dispatch**
+
 
     useEffect(()=>{
         const token = getCookie("token");
@@ -68,23 +90,9 @@ export default function AdminReservation(){
             axios.defaults.headers.common.Authorization = `Bearer ${token}`;
         }
         getCalendar();
-    },[])
+    },[getCalendar])
 
-    const getCalendar = async()=>{
-        dispatch(setLoading(true));
-        try {
-            const res = await axios.get(`${API_URL}/scheduleConfig`);
-            setUnavailableDates(res.data[0].unavailableTimeSlots|| []);
-            setLastBookableDate(res.data[0].lastBookableDate|| getLastDayOfMonth());
-            setSelectLastDate(dayjs(res.data[0].lastBookableDate||getLastDayOfMonth()));
-            setReservedTimeSlots(res.data[0].reservedTimeSlots|| []);
-        } catch (error) {
-            console.log(error.response.data.message);
-            showAlert(`${error.response.data.message}`,false);
-        }finally{
-            dispatch(setLoading(false));
-        }
-    }
+
 
     const getLastDayOfMonth = () => {
         const today = new Date();

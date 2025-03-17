@@ -1,5 +1,5 @@
 
-import { useRef ,useEffect, useState} from "react";
+import { useRef ,useEffect, useState, useMemo, useCallback} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import * as bootstrap from 'bootstrap/dist/js/bootstrap.bundle.min.js';
@@ -64,24 +64,27 @@ function Header (){
         document.cookie = `${name}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
     };
 
-    const loginCheck = async ()=>{
-        try {
-            const res = await axios.get(`${API_URL}/login/check`);
-            // 更新 Redux 登入狀態
-            dispatch(setUserData(res.data.user))
-            dispatch(login());
-        } catch (error) {
-            console.log(error);
-        }
-    }
+    const stableDispatch = useMemo(() => dispatch, [dispatch]); // 確保 dispatch 穩定
 
-    useEffect(()=>{
+    const loginCheck = useCallback(async () => {
+    try {
         const token = getCookie("token");
         if (token) {
             axios.defaults.headers.common.Authorization = `Bearer ${token}`;
         }
+
+        const res = await axios.get(`${API_URL}/login/check`);
+        stableDispatch(setUserData(res.data.user));
+        stableDispatch(login());
+    } catch (error) {
+        console.error("登入檢查失敗:", error);
+    }
+    }, [stableDispatch]); // **確保 loginCheck 依賴於穩定的 dispatch**
+
+    useEffect(() => {
         loginCheck();
-    },[])
+    }, [loginCheck]); // **確保 useEffect 只在 mount 時執行**
+
 
     //開啟提示訊息框
   const showAlert = (message,status,redirectTo)=>{
