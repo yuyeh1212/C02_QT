@@ -158,7 +158,7 @@ export default function Orders() {
                                 </td>
                                 <td>
                                   <span className="badge text-bg-neutral-200 text-primary-02">
-                                    {order.nailRemoval ? "是" : "否"}
+                                    {order.nailRemoval=='true' ? "是" : "否"}
                                   </span>
                                 </td>
                               </tr>
@@ -168,7 +168,7 @@ export default function Orders() {
                                 </td>
                                 <td>
                                   <span className="badge text-bg-neutral-200 text-primary-02">
-                                    {order.nailExtension ? "是" : "否"}
+                                    {order.nailExtension=='true' ? "是" : "否"}
                                   </span>
                                 </td>
                               </tr>
