@@ -77,7 +77,7 @@ const ReservationModal = ({ show, onClose }) => {
       ]);
 
     return (
-        <div className={`modal fade ${show ? 'show d-block' : ''}`} tabIndex="-1" role="dialog" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+        <div className={`modal fade ${show ? 'show d-block' : ''}`} tabIndex="-1" role="dialog" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' ,zIndex:999}}>
             <div className="modal-dialog modal-dialog-centered" role="document" style={{ height: '100vh', display: 'flex', alignItems: 'center' }}>
                 <div className="modal-content text-center" style={{ border: '2px solid #BF9958', height: '90vh' }}>
                     

@@ -18,7 +18,7 @@ const AlertModal = ({ show, onClose, children, status, redirectTo }) => {
       className={`modal fade ${show ? 'show d-block' : ''}`}
       tabIndex="-1"
       role="dialog"
-      style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
+      style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' ,zIndex:1000}}
     >
       <div className="modal-dialog modal-dialog-centered" role="document">
         <div className="modal-content text-center" style={{ border: '2px solid #BF9958' }}>
