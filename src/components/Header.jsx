@@ -94,13 +94,12 @@ function Header (){
     const handleLogout = async()=>{
         dispatch(setLoading(true));
         try {
-            await axios.post(`${API_URL}/logout`)
-            showAlert('登出成功！',true);
+            await axios.post(`${API_URL}/logout`);
             clearCookie("token"); 
             delete axios.defaults.headers.common.Authorization; 
             dispatch(logout());
             dispatch(clearUserData());
-            showAlert('登出成功！',true,"/login");
+            showAlert('登出成功！',true,"/");
         } catch (error) {
             showAlert('登出失敗，請稍後再試',false);
             console.log(error);
@@ -252,7 +251,7 @@ function Header (){
                                 <button
                                 className="p-0 border-0 d-flex bg-white justify-content-center align-items-center icon me-lg-15 me-md-3"
                                 type="button"
-                                onClick={()=>{handleNavigate("/member/center/data")}}
+                                onClick={()=>{handleNavigate("/member/center/orders")}}
                                 >
                                     <i className="bi bi-person-circle me-3 mx-md-3 text-primary-02 " style={{fontSize:36}}></i>
                                     <span className="text-primary-02 fw-medium fs-3 fs-lg-4">

@@ -76,7 +76,7 @@ export default function Register() {
 
 	const getMinBirthdate = () => {
 		const today = new Date();
-		today.setFullYear(today.getFullYear() - 15); // 減去 18 年
+		today.setFullYear(today.getFullYear() - 15); // 減去 15 年
 		return today.toISOString().split("T")[0]; // 格式化為 YYYY-MM-DD
 	};
 
@@ -87,7 +87,7 @@ export default function Register() {
 	};
 	
 	useEffect(()=>{
-		showAlert('所有欄位皆為必填\n\n未滿15歲不予註冊\n\n註冊密碼至少8字元\n包含一位英文、數字、特殊符號\n\n生日欄位用於提供專屬折扣\n\nLine ID欄位只接受\n英文、數字、底線及連字號','unauthorized')
+		showAlert('所有欄位皆為必填\n\n未滿15歲不予註冊\n\n註冊密碼至少8字元\n包含至少一位英文、數字、特殊符號\n\n生日欄位用於提供專屬折扣\n\nLine ID欄位只接受\n英文、數字、底線及連字號','unauthorized')
 
 	},[])
 	const handleRegister = async (data) => {
@@ -162,8 +162,8 @@ export default function Register() {
 				message: '請使用YYYY-MM-DD格式',
 			},
 			max: {
-				value: getMinBirthdate(), // 設定最大日期為 18 年前
-				message: '您必須年滿 18 歲才能註冊',
+				value: getMinBirthdate(), // 設定最大日期為 15 年前
+				message: '您必須年滿 15 歲才能註冊',
 			},
 			min: {
 				value: getMaxBirthdate(), // 設定最小日期（今天 - 100 年）

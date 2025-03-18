@@ -5,12 +5,12 @@ function Section3(){
   const[notices] = useState([
     {
       numbering:1,
-      content:"這裡有一隻臘腸狗和一隻肥橘貓，腸腸有分離焦慮，都會跟在腳邊，他心情好會跟你sayHI(汪)，事先做好心理準備，請不用害怕。如果會擔心接觸他們，可事先告知，會安置在推車內，與您保持友善距離。"
+      content:"這裡有一隻臘腸狗和一隻肥橘貓，腸腸有分離焦慮，都會跟在腳邊，他心情好會跟你sayHI（汪），事先做好心理準備，請不用害怕。如果會擔心接觸他們，可事先告知，會安置在推車內，與您保持友善距離。"
     }
     ,
     {
       numbering:2,
-      content:"施作需2.5～4小時(依施作項目)，預約前請事先評估預留足夠時間，趕時間的人請斟酌預約。"
+      content:"施作需2.5～4小時（依施作項目），預約前請事先評估預留足夠時間，趕時間的人請斟酌預約。"
     }
     ,
     {
@@ -88,7 +88,7 @@ function Section3(){
       <section className='container '>
         <div className="py-5 py-md-13 mx-auto" >
           <h2 className='fs-6 fs-md-7 text-primary-02 text-center mb-4 fw-semibold fw-md-bold'>預約須知</h2>
-          <div  className="py-3 px-5 text-primary fs-md-4 bg-neutral-200 text-center mb-6 mb-md-11 mx-auto">預約諮詢請加Line@:@893ukbbx</div>
+          <div  className="py-3 px-5 text-primary fs-md-4 bg-neutral-200 text-center mb-6 mb-md-11 mx-auto">預約諮詢請加Line@：@893ukbbx</div>
             <div className="row justify-content-end mb-6 mb-md-11 ">
               {windowWidth < 992 ?
               <div className='mb-5' >
@@ -170,7 +170,7 @@ function Section3(){
                   </tr>
                   <tr>
                     <td colSpan={3} >
-                      <small>(花磚、Q 版小手繪、等...)</small>
+                      <small>（花磚、Q 版小手繪、等...）</small>
                     </td>
                   </tr>
                   <tr>
@@ -188,7 +188,7 @@ function Section3(){
                   </tr>
                   <tr>
                     <td>
-                    <small>(可攜圖、可依預算討論設計)</small>
+                    <small>（可攜圖、可依預算討論設計）</small>
                     </td>
                   </tr>
                   <tr>
@@ -217,7 +217,7 @@ function Section3(){
                     </td>
                   </tr>
                   <tr className='text-primary-02 fs-md-5 fw-bold' >
-                    <th  scope="col" style={{minWidth:180,maxWidth:324}}>卸甲 <span className='fs-2 d-block d-md-inline'>(手足同價)</span></th>
+                    <th  scope="col" style={{minWidth:180,maxWidth:324}}>卸甲 <span className='fs-2 d-block d-md-inline'>（手足同價）</span></th>
                     <th  scope="col">本店</th>
                     <th scope="col">他店</th>
                   </tr>
