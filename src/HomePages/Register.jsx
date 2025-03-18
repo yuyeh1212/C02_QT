@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -281,7 +281,13 @@ export default function Register() {
 										rules={validationRules.LineID}
 									/>
 								</div>
-								<div className="col-12 d-flex justify-content-center pt-6">
+								<div className="col-12 d-flex justify-content-center fs-3">
+									<span>已經有帳號了？</span>
+									<Link to='/login' className="text-primary fw-bold">
+										點擊登入
+									</Link>
+								</div>
+								<div className="col-12 d-flex justify-content-center pt-1">
 									<CustomButton
 										type="submit"  // 這樣當按鈕被點擊時會提交表單
 										className="btn px-5 py-4 btn-primary text-white w-50 fs-4"

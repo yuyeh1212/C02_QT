@@ -314,7 +314,7 @@ export default function Reservation() {
                                 </label>
                                 <input type="text" 
                                 className={`form-control form-control-sm ${errors.renderDate ? 'is-invalid' :''}`} 
-                                id="renderDate"  placeholder="點擊日曆選擇預約時段" 
+                                id="renderDate"  placeholder={`${windowSize<768?"點擊時段選擇預約時間":"點擊月曆選擇預約時間"}`} 
                                 disabled
                                 {...register('renderDate',{
                                     required:{value:true,

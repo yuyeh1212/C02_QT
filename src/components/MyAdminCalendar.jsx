@@ -1,6 +1,7 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import "dayjs/locale/zh-tw"; 
 import { forwardRef, useEffect, useState, useImperativeHandle, useRef } from "react";
 import PropTypes from "prop-types";
 

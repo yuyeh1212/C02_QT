@@ -174,7 +174,7 @@ export default function MemberData() {
             <div className="col-12 d-flex justify-content-center"></div>
           </form>
         </div>
-        <div className="col-12 d-flex justify-content-center pt-6">
+        <div className="col-12 d-flex justify-content-center pt-6 pb-4">
           <CustomButton
             type="submit"  // 這樣當按鈕被點擊時會提交表單
             className="btn px-5 py-4 btn-primary text-white"

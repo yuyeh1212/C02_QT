@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -96,8 +96,6 @@ export default function Login() {
       showAlert(`登入成功！歡迎 ${res.data.user.name}！`,true,res.data.user.user === "admin" ? "/admin/reservation" : "/member/reservation");
 
     } catch (error) {
-      console.error("請求錯誤", error);
-      // Replace SweetAlert with AlertModal for error
       showAlert(error.response?.data?.message||"登入失敗，發生錯誤，請稍後再試",false);
     }finally{
       dispatch(setLoading(false))
@@ -114,7 +112,7 @@ export default function Login() {
 	};
 
   return (<>
-      <div className="bg-neutral-100 pt-6 pb-10 ">
+      <div className="bg-neutral-100 pt-8 pb-10 ">
         <div className="row justify-content-center">
           <div className="col-11 col-sm-10 col-md-8 col-lg-6 bg-white py-10">
             <h5 className="mb-5 text-center">會員登入</h5>
@@ -140,6 +138,12 @@ export default function Login() {
                   errors={errors} 
                   rules={validationRules.password}
                 />
+              </div>
+              <div className="col-12 d-flex justify-content-center fs-3">
+                <span>還沒有帳號嗎？</span>
+                <Link to='/register' className="text-primary fw-bold">
+                  點擊註冊
+                </Link>
               </div>
               <div className="col-12 d-flex justify-content-center pt-6">
                 <CustomButton type="submit" className="btn btn-primary text-white w-50 fs-4">登入</CustomButton>

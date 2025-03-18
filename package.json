@@ -19,7 +19,7 @@
     "@fullcalendar/timegrid": "^6.1.15",
     "@mui/icons-material": "^6.4.0",
     "@mui/material": "^6.4.4",
-    "@mui/x-date-pickers": "^7.26.0",
+    "@mui/x-date-pickers": "^7.28.0",
     "@popperjs/core": "^2.11.8",
     "@reduxjs/toolkit": "^2.6.0",
     "axios": "^1.7.9",
