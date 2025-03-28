@@ -22,5 +22,11 @@ $utilities: map-merge(
           responsive: true,
         )
       ),
+    "white-space": ( // 加入 white-space 讓 text-nowrap 支援響應式
+      property: white-space,
+      class: text,
+      responsive: true,
+      values: nowrap
+    )
   )
 );

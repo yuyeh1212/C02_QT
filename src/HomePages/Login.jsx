@@ -112,59 +112,61 @@ export default function Login() {
 	};
 
   return (<>
-      <div className="bg-neutral-100 pt-8 pb-10 ">
-        <div className="row justify-content-center">
-          <div className="col-11 col-sm-10 col-md-8 col-lg-6 bg-white py-10">
-            <h5 className="mb-5 text-center">會員登入</h5>
-            <form className="row bg-white gy-4 p-6" onSubmit={handleSubmit(handleLogin)}>
-              <div className="col-12">
-                <FormInput 
-                  id="email" 
-                  type="email" 
-                  labelText="Email" 
-                  LabelHolder="請輸入信箱"
-                  register={register} 
-                  errors={errors} 
-                  rules={validationRules.email}
-                />
-              </div>
-              <div className="col-12">
-                <FormInput 
-                  id="password" 
-                  type="password" 
-                  labelText="Password"
-                  LabelHolder="請輸入密碼" 
-                  register={register} 
-                  errors={errors} 
-                  rules={validationRules.password}
-                />
-              </div>
-              <div className="col-12 d-flex justify-content-center fs-3">
-                <span>還沒有帳號嗎？</span>
-                <Link to='/register' className="text-primary fw-bold">
-                  點擊註冊
-                </Link>
-              </div>
-              <div className="col-12 d-flex justify-content-center pt-6">
-                <CustomButton type="submit" className="btn btn-primary text-white w-50 fs-4">登入</CustomButton>
-              </div>
-            </form>
-            {/* Loading 畫面 */}
-            {isLoading && <Loading></Loading>}
-            {/* Add AlertModal component */}
-            {<AlertModal show={alertState.show}
-              onClose={() => {
-              setAlertState({ ...alertState, show: false });
-              if (alertState.redirectTo) {
-                  navigate(alertState.redirectTo); // 使用 navigate 跳轉頁面
-              }
-              }}
-              status={alertState.status}
-              redirectTo={alertState.redirectTo} // 傳遞 redirectTo 屬性
-              >
-              {alertState.message}
-            </AlertModal>
-            }   
+      <div className="bg-neutral-100  py-md-15 py-4">
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-11 col-sm-10 col-md-8 col-lg-6 bg-white py-10">
+              <h5 className="mb-5 text-center">會員登入</h5>
+              <form className="row bg-white gy-4 p-6" onSubmit={handleSubmit(handleLogin)}>
+                <div className="col-12">
+                  <FormInput 
+                    id="email" 
+                    type="email" 
+                    labelText="Email" 
+                    LabelHolder="請輸入信箱"
+                    register={register} 
+                    errors={errors} 
+                    rules={validationRules.email}
+                  />
+                </div>
+                <div className="col-12">
+                  <FormInput 
+                    id="password" 
+                    type="password" 
+                    labelText="Password"
+                    LabelHolder="請輸入密碼" 
+                    register={register} 
+                    errors={errors} 
+                    rules={validationRules.password}
+                  />
+                </div>
+                <div className="col-12 d-flex justify-content-center fs-3">
+                  <span>還沒有帳號嗎？</span>
+                  <Link to='/register' className="text-primary fw-bold">
+                    點擊註冊
+                  </Link>
+                </div>
+                <div className="col-12 d-flex justify-content-center pt-6">
+                  <CustomButton type="submit" className="btn btn-primary text-white w-50 fs-4">登入</CustomButton>
+                </div>
+              </form>
+              {/* Loading 畫面 */}
+              {isLoading && <Loading></Loading>}
+              {/* Add AlertModal component */}
+              {<AlertModal show={alertState.show}
+                onClose={() => {
+                setAlertState({ ...alertState, show: false });
+                if (alertState.redirectTo) {
+                    navigate(alertState.redirectTo); // 使用 navigate 跳轉頁面
+                }
+                }}
+                status={alertState.status}
+                redirectTo={alertState.redirectTo} // 傳遞 redirectTo 屬性
+                >
+                {alertState.message}
+              </AlertModal>
+              }   
+            </div>
           </div>
         </div>
       </div>

@@ -180,7 +180,7 @@ export default function Register() {
 	};
 
 	return (
-		<div className="d-flex flex-column pt-6 pb-10 bg-neutral-100">
+		<div className="d-flex flex-column py-md-15 py-4 bg-neutral-100">
 			{/* Loading 畫面 */}
 			{isLoading && <Loading></Loading>}
 			{/* Add AlertModal component */}

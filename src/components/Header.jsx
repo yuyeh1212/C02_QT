@@ -125,7 +125,7 @@ function Header (){
                 {alertState.message}
                 </AlertModal>
             }
-        <nav className="navbar navbar-expand-md py-4 px-md-2  bg-white">
+        <nav className="navbar navbar-expand-md py-4 px-md-2  bg-white sticky-top">
             <div className="container-fluid d-flex align-items-center justify-content-between flex-nowrap">
             {/* 左側 Logo */}
                 <h1>

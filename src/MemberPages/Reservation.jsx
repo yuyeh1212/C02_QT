@@ -269,7 +269,7 @@ export default function Reservation() {
         return `${month}/${day}(${weekDay.replace('週',"")})`;
       };
     return (
-        <div className="bg-neutral-100" style={{ paddingTop: 48, paddingBottom: 48 }}>
+        <div className="bg-neutral-100  py-md-15 py-4" >
             <div className="container">
                 <div>
                     <h2 className="fs-5 fs-md-6 fw-semibold mb-md-4 text-center text-lg-start">預約時段</h2>
