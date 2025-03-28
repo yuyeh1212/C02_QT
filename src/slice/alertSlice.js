@@ -1,22 +1,22 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const alertSlice = createSlice({
-  name: "alert",
+  name: 'alert',
   initialState: {
-    message: "",
-    type: "", // success, error, warning
+    message: '',
+    type: '', // success, error, warning
     visible: false,
   },
   reducers: {
     showAlert: (state, action) => {
       state.message = action.payload.message;
-      state.type = action.payload.type || "success";
+      state.type = action.payload.type || 'success';
       state.visible = true;
     },
     hideAlert: (state) => {
       state.visible = false;
-      state.message = "";
-      state.type = "";
+      state.message = '';
+      state.type = '';
     },
   },
 });

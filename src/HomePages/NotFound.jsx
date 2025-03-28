@@ -1,17 +1,18 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom"
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-export default function NotFund(){
-    const navigate = useNavigate();
+export default function NotFund() {
+  const navigate = useNavigate();
 
-    useEffect(()=>{
-        setTimeout(()=>{
-            navigate('/');
-        },2000);
-        
-    },[navigate])
+  useEffect(() => {
+    setTimeout(() => {
+      navigate('/');
+    }, 2000);
+  }, [navigate]);
 
-    return <>
-        <div>此頁面不存在</div>
+  return (
+    <>
+      <div>此頁面不存在</div>
     </>
+  );
 }

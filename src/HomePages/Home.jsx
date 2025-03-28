@@ -1,21 +1,19 @@
-import Section1 from '../components/section1';
-import Section2 from '../components/section2';
-import Section3 from '../components/section3';
-import Section4 from '../components/section4';
-import Section5 from '../components/section5';
-
+import HomeBanner from '../components/HomeBanner';
+import HomeStep from '../components/HomeStep';
+import HomeNotice from '../components/HomeNotice';
+import HomeArtwork from '../components/HomeArtwork';
+import HomeFeedback from '../components/HomeFeedback';
 
 function Home() {
-
   return (
     <>
-      <Section1/>
-      <Section2/>
-      <Section3/>
-      <Section4/>
-      <Section5/>
+      <HomeBanner />
+      <HomeStep />
+      <HomeNotice />
+      <HomeArtwork />
+      <HomeFeedback />
     </>
-  )
+  );
 }
 
-export default Home
+export default Home;

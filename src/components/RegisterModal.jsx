@@ -4,7 +4,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 
-const AlertModal = ({ show, onClose, children, status, redirectTo }) => {
+const RegisterModal = ({ show, onClose, redirectTo }) => {
   const navigate = useNavigate();
 
    // 使用 useEffect 鎖定背景滾動
@@ -32,6 +32,15 @@ const AlertModal = ({ show, onClose, children, status, redirectTo }) => {
       navigate(redirectTo); // 如果有 redirectTo，跳轉到該路徑
     }
   };
+  
+  const registrationRules = [
+    "所有欄位皆為必填",
+    "未滿15歲不予註冊",
+    "註冊密碼至少8字元，包含至少一位英文、數字、特殊符號",
+    "生日欄位用於提供專屬折扣",
+    "Line ID欄位只接受英文、數字、底線及連字號"
+  ];
+  
 
   return (
     <div
@@ -41,26 +50,21 @@ const AlertModal = ({ show, onClose, children, status, redirectTo }) => {
       style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 1050 }}
     >
       <div className="modal-dialog modal-dialog-centered" role="document">
+        
         <div className="modal-content text-center" style={{ border: '2px solid #BF9958' }}>
+          <div className="modal-header">
+            <h5 className="modal-title text-primary text-center w-100">註冊須知</h5>
+          </div>
           <div className="modal-body py-5">
-            {status === true ? (
-              <i
-                className="bi bi-check-circle-fill"
-                style={{ color: '#BF9958', fontSize: '60px' }}
-              ></i>
-            ) : status === false ? (
-              <i className="bi bi-x-circle-fill" style={{ color: '#D9534F', fontSize: '60px' }}></i>
-            ) : status === 'unauthorized' ? (
-              <i className="bi bi-person-lock" style={{ color: '#F0AD4E', fontSize: '60px' }}></i>
-            ) : null}
-
-            <h4 className="mt-3 fs-4 fs-sm-5" style={{ color: '#6E5E57' }}>
-              {children.split('\n').map((line, index) => (
-                <span key={index}>
+            <h4 className="mt-3 fs-4 fs-sm-5 text-start" style={{ color: '#6E5E57' }}>
+              <ul>
+              {registrationRules.map((line, index) => (
+                <li key={index} className='py-2'>
                   {line}
-                  <br />
-                </span>
+                </li>
               ))}
+              </ul>
+              
             </h4>
           </div>
           <div className="modal-footer justify-content-center border-0">
@@ -84,7 +88,7 @@ const AlertModal = ({ show, onClose, children, status, redirectTo }) => {
   );
 };
 
-AlertModal.propTypes = {
+RegisterModal.propTypes = {
   show: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
@@ -92,4 +96,4 @@ AlertModal.propTypes = {
   redirectTo: PropTypes.string, // 接受跳轉路徑作為 prop
 };
 
-export default AlertModal;
+export default RegisterModal;

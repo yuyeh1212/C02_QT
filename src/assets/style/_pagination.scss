@@ -1,16 +1,16 @@
 .pagination .page-link {
-    border: none !important;
+  border: none !important;
 }
 
 .pagination .page-item.active .page-link,
 .pagination .page-item:hover .page-link {
-    border: none !important;
+  border: none !important;
 }
 
 .pagination .page-item:first-child {
-    margin-right: 15px; /* 左箭頭與數字按鈕分開 */
+  margin-right: 15px; /* 左箭頭與數字按鈕分開 */
 }
 
 .pagination .page-item:last-child {
-    margin-left: 15px; /* 右箭頭與數字按鈕分開 */
+  margin-left: 15px; /* 右箭頭與數字按鈕分開 */
 }

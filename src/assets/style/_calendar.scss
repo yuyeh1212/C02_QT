@@ -1,5 +1,5 @@
 .fc-event {
-  border: none !important;  /* 強制移除所有事件的邊框 */
+  border: none !important; /* 強制移除所有事件的邊框 */
   cursor: pointer !important;
 }
 
@@ -7,13 +7,12 @@
   display: inline-flex;
   align-items: center;
   width: 96%;
-  padding-left:8px;
+  padding-left: 8px;
 }
 
-.fc-daygrid-event.custom-events{
+.fc-daygrid-event.custom-events {
   padding-left: 0;
 }
-
 
 .fc-daygrid-event.custom-events:before {
   content: '';
@@ -21,7 +20,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: #9D7A3F; /* 根據事件的背景顏色設置 */
+  background-color: #9d7a3f; /* 根據事件的背景顏色設置 */
   margin-left: 2px;
 }
 
@@ -31,6 +30,6 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: #F7F0EA; /* 根據事件的背景顏色設置 */
+  background-color: #f7f0ea; /* 根據事件的背景顏色設置 */
   margin-left: 2px;
 }

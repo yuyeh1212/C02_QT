@@ -1,17 +1,17 @@
-import axios from "axios";
-import Pagination from "../components/Pagination";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { useDispatch, useSelector } from "react-redux";
-import { setLoading } from "../slice/loadingSlice";
-import Loading from "../components/Loading";
+import axios from 'axios';
+import Pagination from '../components/Pagination';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLoading } from '../slice/loadingSlice';
+import Loading from '../components/Loading';
 
 const API_URL = import.meta.env.VITE_BASE_URL;
 
 export default function Orders() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 992);
-  const isLoading = useSelector((state)=> state.loading.isLoading);
+  const isLoading = useSelector((state) => state.loading.isLoading);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -19,8 +19,8 @@ export default function Orders() {
       setIsMobile(window.innerWidth <= 992);
     };
 
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const [pageInfo, setPageInfo] = useState({
@@ -32,9 +32,9 @@ export default function Orders() {
 
   // 將 openOrder 改為數組來追踪多個打開的訂單
   const [openOrder, setOpenOrder] = useState(null);
-  
+
   // 追踪動畫狀態
-  const [,setAnimating] = useState(false);
+  const [, setAnimating] = useState(false);
 
   // 切換訂單開關狀態的函數
   const toggleOrder = (orderId) => {
@@ -42,52 +42,53 @@ export default function Orders() {
     setTimeout(() => {
       setAnimating(false);
     }, 300); // 動畫持續時間
-    
+
     setOpenOrder((prev) => (prev === orderId ? null : orderId));
   };
 
   const getCookie = (name) => {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(";").shift();
+    if (parts.length === 2) return parts.pop().split(';').shift();
     return null;
   };
 
   const stableDispatch = useMemo(() => dispatch, [dispatch]); // 讓 dispatch 穩定
 
-const getOrders = useCallback(async (page = 1) => {
-    stableDispatch(setLoading(true));
-    try {
-        const res = await axios.get(
-            `${API_URL}/appointments?page=${page}&limit=10`
-        );
+  const getOrders = useCallback(
+    async (page = 1) => {
+      stableDispatch(setLoading(true));
+      try {
+        const res = await axios.get(`${API_URL}/appointments?page=${page}&limit=10`);
         setPageInfo({
-            page: res.data.pageInfo.currentPage,
-            maxPage: res.data.pageInfo.totalPages,
+          page: res.data.pageInfo.currentPage,
+          maxPage: res.data.pageInfo.totalPages,
         });
         setOrders(res.data.appointments);
-    } catch (error) {
-        console.error("獲取訂單失敗:", error);
-    } finally {
+      } catch (error) {
+        console.error('獲取訂單失敗:', error);
+      } finally {
         stableDispatch(setLoading(false));
-    }
-}, [stableDispatch]);
+      }
+    },
+    [stableDispatch],
+  );
 
-useEffect(() => {
-    const token = getCookie("token");
+  useEffect(() => {
+    const token = getCookie('token');
     if (token) {
-        axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+      axios.defaults.headers.common.Authorization = `Bearer ${token}`;
     }
     getOrders(); // 只執行一次
-}, [getOrders]); // 讓 useEffect 依賴 getOrders
+  }, [getOrders]); // 讓 useEffect 依賴 getOrders
 
-const handlePageChange = (page) => {
+  const handlePageChange = (page) => {
     getOrders(page);
-}
+  };
 
   return (
     <>
-     {isLoading && <Loading />}
+      {isLoading && <Loading />}
       <div>
         <div className="bg-white p-6">
           {orders.length > 0 ? (
@@ -102,37 +103,38 @@ const handlePageChange = (page) => {
                     <h2 className="accordion-header">
                       <button
                         className={`accordion-button bg-secondary-25 d-flex flex-column align-items-start border-0 ${
-                          openOrder === order.id ? "" : "collapsed"
+                          openOrder === order.id ? '' : 'collapsed'
                         }`}
                         type="button"
                         onClick={() => toggleOrder(order.id)}
                       >
-                        <p className="fw-bold text-primary mb-3">
-                          訂單編號：{order.id}
+                        <p className="fw-bold text-primary mb-3">訂單編號：{order.id}</p>
+                        <p className="mb-2 text-secondary-200">姓名</p>
+                        <p className='mb-3 fw-bold'>
+                          {order.name}
                         </p>
-                        <p className="mb-3">
-                          <strong>姓名：</strong> {order.name}
-                        </p>
-                        <p className="mb-3">
-                          <strong>預約時段：</strong> {order.date}{" "}
-                          {order.timeSlot}
+                        <p className="mb-2 text-secondary-200">預約時段</p>
+                        <p className='mb-3 fw-bold'>
+                          {order.date} {order.timeSlot}
                         </p>
                         <span className="small text-muted">
-                          查看詳細資訊{openOrder === order.id ?<KeyboardArrowUpIcon/>:<KeyboardArrowDownIcon />}
+                          查看詳細資訊
+                          {openOrder === order.id ? (
+                            <KeyboardArrowUpIcon />
+                          ) : (
+                            <KeyboardArrowDownIcon />
+                          )}
                         </span>
                       </button>
                     </h2>
                     {/* 手風琴內容 - 使用 CSS 過渡效果 */}
-                    <div className={`accordion-body ${openOrder === order.id ? "open" : ""}`}>
+                    <div className={`accordion-body ${openOrder === order.id ? 'open' : ''}`}>
                       <div className="accordion-content p-3">
                         <div className="card border-0 p-3">
                           <table className="table table-borderless mb-0">
                             <tbody>
                               <tr>
-                                <td
-                                  className="text-secondary-200"
-                                  style={{ width: "120px" }}
-                                >
+                                <td className="text-secondary-200" style={{ width: '120px' }}>
                                   LINE ID
                                 </td>
                                 <td>{order.LineID}</td>
@@ -142,34 +144,26 @@ const handlePageChange = (page) => {
                                 <td>{order.phone}</td>
                               </tr>
                               <tr>
-                                <td className="text-secondary-200">
-                                  手部或足部
-                                </td>
+                                <td className="text-secondary-200">手部或足部</td>
                                 <td>
                                   <span className="badge text-bg-neutral-200 text-primary-02">
-                                    {order.bodyPart === "手部"
-                                      ? "手部"
-                                      : "足部"}
+                                    {order.bodyPart === '手部' ? '手部' : '足部'}
                                   </span>
                                 </td>
                               </tr>
                               <tr>
-                                <td className="text-secondary-200">
-                                  是否卸甲
-                                </td>
+                                <td className="text-secondary-200">是否卸甲</td>
                                 <td>
                                   <span className="badge text-bg-neutral-200 text-primary-02">
-                                    {order.nailRemoval=='true' ? "是" : "否"}
+                                    {order.nailRemoval == 'true' ? '是' : '否'}
                                   </span>
                                 </td>
                               </tr>
                               <tr>
-                                <td className="text-secondary-200">
-                                  是否延甲
-                                </td>
+                                <td className="text-secondary-200">是否延甲</td>
                                 <td>
                                   <span className="badge text-bg-neutral-200 text-primary-02">
-                                    {order.nailExtension=='true' ? "是" : "否"}
+                                    {order.nailExtension == 'true' ? '是' : '否'}
                                   </span>
                                 </td>
                               </tr>
@@ -231,17 +225,17 @@ const handlePageChange = (page) => {
                       </td>
                       <td>
                         <p className=" badge text-bg-neutral-200 text-primary-02">
-                          {order.nailRemoval=='true' ? "是" : "否"}
+                          {order.nailRemoval == 'true' ? '是' : '否'}
                         </p>
                       </td>
                       <td>
                         <p className=" badge text-bg-neutral-200 text-primary-02">
-                          {order.nailExtension=='true' ? "是" : "否"}
+                          {order.nailExtension == 'true' ? '是' : '否'}
                         </p>
                       </td>
                       <td>
                         <p className=" badge text-bg-neutral-200 text-primary-02">
-                          {order.bodyPart == "手部" ? "手部" : "足部"}
+                          {order.bodyPart == '手部' ? '手部' : '足部'}
                         </p>
                       </td>
                     </tr>
@@ -258,10 +252,7 @@ const handlePageChange = (page) => {
           )}
         </div>
         <div className="pt-6">
-          <Pagination
-            pageInfo={pageInfo}
-            handlePageChange={handlePageChange}
-          ></Pagination>
+          <Pagination pageInfo={pageInfo} handlePageChange={handlePageChange}></Pagination>
         </div>
       </div>
     </>

@@ -1,0 +1,30 @@
+$utilities: map-merge(
+  $utilities,
+  (
+    'font-size': map-merge(
+        map-get($utilities, 'font-size'),
+        (
+          responsive: true,
+        )
+      ),
+    'font-weight': map-merge(
+        map-get($utilities, 'font-weight'),
+        (
+          responsive: true,
+        )
+      ),
+    'width': map-merge(
+        map-get($utilities, 'width'),
+        (
+          responsive: true,
+        )
+      ),
+    'white-space': (
+      // 加入 white-space 讓 text-nowrap 支援響應式
+      property: white-space,
+      class: text,
+      responsive: true,
+      values: nowrap,
+    ),
+  )
+);

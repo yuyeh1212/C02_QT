@@ -1,0 +1,28 @@
+.linear {
+  background: linear-gradient(90deg, #ffffff, #ece6dc);
+}
+
+.img-over {
+  width: auto;
+  min-width: 100%;
+  height: auto;
+}
+
+.card-img {
+  width: 100%; /* 讓圖片填滿容器 */
+  object-fit: cover;
+  border-radius: 0; /* 保持圖片比例，不拉伸，裁剪多餘部分 */
+}
+
+.number-box {
+  color: white;
+  background-color: $primary;
+  width: 24px;
+  height: 24px;
+  padding-bottom: 2px;
+  font-size: 14px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

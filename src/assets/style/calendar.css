@@ -16,21 +16,21 @@
 }
 
 .fc-daygrid-event.custom-events:before {
-  content: "";
+  content: '';
   display: inline-block;
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: #9D7A3F; /* 根據事件的背景顏色設置 */
+  background-color: #9d7a3f; /* 根據事件的背景顏色設置 */
   margin-left: 2px;
 }
 
 .fc-daygrid-event.selected-event:before {
-  content: "";
+  content: '';
   display: inline-block;
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: #F7F0EA; /* 根據事件的背景顏色設置 */
+  background-color: #f7f0ea; /* 根據事件的背景顏色設置 */
   margin-left: 2px;
-}/*# sourceMappingURL=calendar.css.map */
+} /*# sourceMappingURL=calendar.css.map */

@@ -14,4 +14,4 @@
 .accordion-body.open {
   max-height: 400px; /* 足夠大的最大高度 */
   transition: max-height 0.3s ease-in;
-}/*# sourceMappingURL=accordion.css.map */
+} /*# sourceMappingURL=accordion.css.map */
