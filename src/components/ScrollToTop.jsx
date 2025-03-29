@@ -1,16 +1,14 @@
-import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 const ScrollToTop = () => {
-  const location = useLocation();
-
-  useEffect(() => {
-    console.log("Current Location Hash:", location.hash); // 檢查哈希路徑
-    window.scrollTo(0, 0);
-  }, [location.hash]); // 當哈希路徑變更時觸發
+  const location = useLocation(); // 取得當前路由
   
+  useEffect(() => {
+    window.scrollTo(0, 0); // 滾動到最上方
+  }, [location.pathname]); // 當 pathname 改變時執行
 
-  return null;
+  return null; // 這個元件不渲染任何 UI
 };
 
 export default ScrollToTop;

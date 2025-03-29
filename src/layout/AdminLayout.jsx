@@ -7,6 +7,7 @@ import { setUserData } from '../slice/userSlice';
 import { login } from '../slice/authSlice';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import ScrollToTop from '../components/ScrollToTop';
 
 const API_URL = import.meta.env.VITE_BASE_URL;
 
@@ -60,7 +61,9 @@ export default function AdminLayout() {
   }, [isLogin, loginCheck]); // 依賴 isLogin 和 loginCheck
 
   return (
+    
     <div className="bg-neutral-100">
+      <ScrollToTop/>
       {
         <AlertModal
           show={alertState.show}

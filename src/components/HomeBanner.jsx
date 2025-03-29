@@ -28,7 +28,7 @@ function HomeBanner() {
   ]);
 
   return (
-    <div className="w-full">
+    <div className=" position-relative" style={{maxHeight: '942px'}}>
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         navigation
@@ -39,15 +39,14 @@ function HomeBanner() {
         autoplay={{ delay: 5000 }}
         speed={2000}
         loop={true}
-        style={{ height: '90vh' }}
       >
         {manicureData.map((item) => (
-          <SwiperSlide key={item.id} className="relative" style={{ height: '90vh' }}>
+          <SwiperSlide key={item.id} >
             {/* 設定背景圖片 */}
-            <div className="absolute inset-0 bg-cover bg-center"></div>
+            {/* <div className="absolute inset-0 bg-cover bg-center"></div> */}
             {/* 文字區塊 */}
             <div
-              className="absolute inset-0 text-white text-center py-14 d-flex flex-column align-items-center"
+              className=" text-white text-center py-14 d-flex flex-column align-items-center"
               style={{
                 backgroundImage: `url( '${item.image}')`,
                 backgroundSize: 'cover',

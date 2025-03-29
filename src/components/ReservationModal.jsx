@@ -37,13 +37,13 @@ const ReservationModal = ({ show, onClose }) => {
 
   return (
     <div
-      className={`modal fade ${show ? 'show d-block' : ''}`}
+      className={`modal fade  ${show ? 'show d-block' : ''}`}
       tabIndex="-1"
       role="dialog"
       style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 1049 }}
     >
       <div
-        className="modal-dialog modal-dialog-centered"
+        className="modal-dialog modal-dialog-centered "
         role="document"
         style={{ maxHeight: '90vh', overflow: 'hidden' }}  // 控制 modal-dialog 的最大高度
       >
@@ -57,7 +57,7 @@ const ReservationModal = ({ show, onClose }) => {
           </div>
 
           {/* Modal Body - 設定滿版高度，並允許滾動 */}
-          <div className="modal-body py-4" style={{ overflowY: 'auto', maxHeight: 'calc(80vh - 56px)' }}>
+          <div className="modal-body py-4" style={{ overflowY: 'auto', maxHeight: 'calc(90vh - 112px',flex: '1' }}>
             {notices.map(({ numbering, content }) => (
               <div className="d-flex align-items-start mb-3" key={numbering}>
                 <div className="px-1 me-3">

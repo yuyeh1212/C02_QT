@@ -159,32 +159,32 @@ function HomeNotice() {
                         單色
                       </th>
                       <td>800</td>
-                      <td>1000</td>
+                      <td>1,000</td>
                     </tr>
                     <tr>
                       <th className="fw-normal fw-md-medium" scope="row">
                         特殊色
                       </th>
                       <td>900</td>
-                      <td>1100</td>
+                      <td>1,100</td>
                     </tr>
                     <tr>
                       <th className="fw-normal fw-md-medium" scope="row">
                         鏡面
                       </th>
-                      <td>1000</td>
+                      <td>1,000</td>
                     </tr>
                     <tr>
                       <th className="fw-normal fw-md-medium" scope="row">
                         法式
                       </th>
-                      <td>1200</td>
+                      <td>1,200</td>
                     </tr>
                     <tr>
                       <th className="fw-normal fw-md-medium" scope="row">
                         手繪款
                       </th>
-                      <td>1300up</td>
+                      <td>1,300up</td>
                     </tr>
                     <tr>
                       <td colSpan={3}>
@@ -202,13 +202,13 @@ function HomeNotice() {
                       <th className="fw-normal fw-md-medium" scope="row">
                         當月款式
                       </th>
-                      <td>1000</td>
+                      <td>1,000</td>
                     </tr>
                     <tr>
                       <th className="fw-normal fw-md-medium" scope="row">
                         指定款式
                       </th>
-                      <td>1000up</td>
+                      <td>1,000up</td>
                     </tr>
                     <tr>
                       <td>
