@@ -128,7 +128,7 @@ function Header() {
         <div className="container-fluid d-flex align-items-center justify-content-between flex-nowrap">
           {/* 左側 Logo */}
           <h1>
-            <Link to="/">
+            <Link to="/" onClick={() => window.scrollTo({ top: 0 })}>
               <div className="d-flex align-items-center">
                 <img src="headerLogo.svg" alt="Logo" className="logo-img" />
               </div>
