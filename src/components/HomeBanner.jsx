@@ -52,7 +52,7 @@ function HomeBanner() {
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
-                maxHeight:'800px'
+                maxHeight:'790px'
               }}
             >
               <div className="bg-black bg-opacity-25 p-6 ">
