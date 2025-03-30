@@ -28,7 +28,7 @@ function HomeBanner() {
   ]);
 
   return (
-    <div className=" position-relative" style={{maxHeight: '942px'}}>
+    <div className=" position-relative">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         navigation
@@ -52,6 +52,7 @@ function HomeBanner() {
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
+                maxHeight: '810px'
               }}
             >
               <div className="bg-black bg-opacity-25 p-6 ">

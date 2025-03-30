@@ -222,7 +222,7 @@ export default function Register() {
               <h5 className="text-center mb-8">會員註冊</h5>
               <form
                 id="registerForm"
-                className="row gy-3 bg-white p-6"
+                className="row gy-5 bg-white p-6"
                 onSubmit={handleSubmit(handleRegister)}
               >
                 <div className="col-12 ">
