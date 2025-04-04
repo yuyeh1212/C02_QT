@@ -259,7 +259,7 @@ export default function AdminReservation() {
                           className="btn btn-sm border-0 text-primary"
                           onClick={() => removeDate(date)}
                         >
-                          <CloseIcon></CloseIcon>
+                          <CloseIcon/>
                         </button>
                       </div>
                     ))}

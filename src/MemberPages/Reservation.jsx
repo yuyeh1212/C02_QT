@@ -176,8 +176,6 @@ export default function Reservation() {
         },
       ]);
       showAlert('恭喜預約成功', true, '/member/center/orders');
-      // await new Promise(resolve => setTimeout(resolve, 2000));
-      // navigate('/member/center/orders');
     } catch (error) {
       console.log(error?.response);
       showAlert('預約失敗請重新嘗試', false);
@@ -205,22 +203,6 @@ export default function Reservation() {
   };
 
   //篩選當月活動
-  // const filterEventsByMonth = (viewTitle,eventDate) => {
-  //     const monthYear = viewTitle.split('年');
-  //     const year = monthYear[0];
-  //     let month = monthYear[1].replace('月', '');
-  //     if (Number(month) < 10){
-  //         month = `0${month}`
-  //     }
-  //     const date = `${year}-${month}`
-
-  //     const newEvent = [...new Set(eventDate.map((item)=>item.date))]
-  //     .filter((item)=>item.startsWith(date))
-  //     setCurrentMonthEvent(newEvent)
-  //     const eventTime = eventDate.filter((item)=>item.date.startsWith(date))
-  //     setMonthEventState(eventTime)
-  //     setCurrentTime([])
-  //   };
   const filterEventsByMonth = useCallback(
     (viewTitle, eventDate) => {
       const monthYear = viewTitle.split('年');

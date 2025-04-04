@@ -89,7 +89,7 @@ AlertModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
   status: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
-  redirectTo: PropTypes.string, // 接受跳轉路徑作為 prop
+  redirectTo: PropTypes.string, 
 };
 
 export default AlertModal;

@@ -84,6 +84,10 @@ export default function Orders() {
 
   const handlePageChange = (page) => {
     getOrders(page);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   };
 
   return (
@@ -108,12 +112,12 @@ export default function Orders() {
                         type="button"
                         onClick={() => toggleOrder(order.id)}
                       >
-                        <p className="fw-bold text-primary mb-3">訂單編號：{order.id}</p>
-                        <p className="mb-2 text-secondary-200">姓名</p>
+                        <p className="fw-bold text-primary mb-5">訂單編號：{order.id}</p>
+                        <p className="mb-1 text-secondary-200">姓名</p>
                         <p className='mb-3 fw-bold'>
                           {order.name}
                         </p>
-                        <p className="mb-2 text-secondary-200">預約時段</p>
+                        <p className="mb-1 text-secondary-200">預約時段</p>
                         <p className='mb-3 fw-bold'>
                           {order.date} {order.timeSlot}
                         </p>

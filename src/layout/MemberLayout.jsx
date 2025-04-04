@@ -79,10 +79,10 @@ export default function MemberLayout() {
           {alertState.message}
         </AlertModal>
       }
-      <Header></Header>
+      <Header/>
       {/* 內容區域 */}
       <Outlet />
-      <Footer></Footer>
+      <Footer/>
     </>
   );
 }

@@ -41,18 +41,15 @@ function HomeBanner() {
         loop={true}
       >
         {manicureData.map((item) => (
-          <SwiperSlide key={item.id} >
-            {/* 設定背景圖片 */}
-            {/* <div className="absolute inset-0 bg-cover bg-center"></div> */}
-            {/* 文字區塊 */}
+          <SwiperSlide key={item.id}>
             <div
-              className=" text-white text-center py-14 d-flex flex-column align-items-center"
+              className=" text-white text-center py-7 py-md-10 py-lg-12 d-flex flex-column align-items-center"
               style={{
                 backgroundImage: `url( '${item.image}')`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
-                maxHeight:'790px'
+                maxHeight:'800px'
               }}
             >
               <div className="bg-black bg-opacity-25 p-6 ">
@@ -72,7 +69,7 @@ function HomeBanner() {
               </div>
               <CustomButton
                 to="/member/reservation"
-                className="mt-6 px-5 py-4 btn-primary text-white"
+                className="my-6 btn-primary text-white"
               >
                 立即預約 <ArrowForwardIcon className="text-white" />
               </CustomButton>

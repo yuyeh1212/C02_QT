@@ -8,7 +8,6 @@ import { login } from '../slice/authSlice';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ScrollToTop from '../components/ScrollToTop';
-
 const API_URL = import.meta.env.VITE_BASE_URL;
 
 export default function AdminLayout() {
@@ -44,7 +43,7 @@ export default function AdminLayout() {
       stableDispatch(setUserData(res.data.user));
       stableDispatch(login());
     } catch (error) {
-      console.error('登入檢查失敗:', error);
+      console.log('登入檢查失敗:', error);
     }
   }, [stableDispatch]); // 依賴穩定的 dispatch
 
@@ -79,7 +78,7 @@ export default function AdminLayout() {
           {alertState.message}
         </AlertModal>
       }
-      <Header></Header>
+      <Header/>
       <div className="container">
         <nav className="d-flex nav justify-content-center pt-4 mb-4 gap-md-7 gap-4">
           <div className="nav-item ">
@@ -108,9 +107,9 @@ export default function AdminLayout() {
             </NavLink>
           </div>
         </nav>
-        <Outlet></Outlet>
+        <Outlet/>
       </div>
-      <Footer></Footer>
+      <Footer/>
     </div>
   );
 }

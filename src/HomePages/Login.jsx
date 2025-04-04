@@ -94,7 +94,7 @@ export default function Login() {
       // 更新 Redux 登入狀態
       dispatch(login());
       showAlert(
-        `登入成功！歡迎 ${res.data.user.name}！`,
+        `登入成功！歡迎回來～`,
         true,
         res.data.user.user === 'admin' ? '/admin/reservation' : '/member/reservation',
       );

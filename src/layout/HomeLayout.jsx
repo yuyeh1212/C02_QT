@@ -6,9 +6,9 @@ export default function HomeLayout() {
   return (
     <>
       <ScrollToTop/>
-      <Header></Header>
-      <Outlet></Outlet>
-      <Footer></Footer>
+      <Header/>
+      <Outlet/>
+      <Footer/>
     </>
   );
 }

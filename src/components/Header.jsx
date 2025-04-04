@@ -64,17 +64,16 @@ function Header() {
   const stableDispatch = useMemo(() => dispatch, [dispatch]); // 確保 dispatch 穩定
 
   const loginCheck = useCallback(async () => {
-    try {
-      const token = getCookie('token');
-      if (token) {
-        axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+    const token = getCookie('token');
+    if (token) {
+      axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+      try {
+        const res = await axios.get(`${API_URL}/login/check`);
+        stableDispatch(setUserData(res.data.user));
+        stableDispatch(login());
+      } catch (error) {
+        console.error('登入檢查失敗:', error);
       }
-
-      const res = await axios.get(`${API_URL}/login/check`);
-      stableDispatch(setUserData(res.data.user));
-      stableDispatch(login());
-    } catch (error) {
-      console.error('登入檢查失敗:', error);
     }
   }, [stableDispatch]); // **確保 loginCheck 依賴於穩定的 dispatch**
 
@@ -107,7 +106,7 @@ function Header() {
   return (
     <>
       {/* Loading 畫面 */}
-      {isLoading && <Loading></Loading>}
+      {isLoading && <Loading/>}
       {/* Add AlertModal component */}
       {
         <AlertModal

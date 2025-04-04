@@ -79,11 +79,15 @@ export default function Orders() {
     if (token) {
       axios.defaults.headers.common.Authorization = `Bearer ${token}`;
     }
-    getOrders(); // 初次執行
+    getOrders(); 
   }, [getOrders]); // 依賴 getOrders，保證它只會在初次掛載時執行
 
   const handlePageChange = (page) => {
     getOrders(page);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   };
 
   return (
@@ -108,12 +112,14 @@ export default function Orders() {
                         type="button"
                         onClick={() => toggleOrder(order.id)}
                       >
-                        <p className="fw-bold text-primary mb-3">訂單編號：{order.id}</p>
-                        <p className="mb-3">
-                          <strong>姓名：</strong> {order.name}
+                        <p className="fw-bold text-primary mb-5">訂單編號：{order.id}</p>
+                        <p className="mb-1 text-secondary-200">姓名</p>
+                        <p className='mb-3 fw-bold'>
+                          {order.name}
                         </p>
-                        <p className="mb-3">
-                          <strong>預約時段：</strong> {order.date} {order.timeSlot}
+                        <p className="mb-1 text-secondary-200">預約時段</p>
+                        <p className='mb-3 fw-bold'>
+                          {order.date} {order.timeSlot}
                         </p>
                         <span className="small text-muted">
                           查看詳細資訊
@@ -250,7 +256,7 @@ export default function Orders() {
           )}
         </div>
         <div className="py-6">
-          <Pagination pageInfo={pageInfo} handlePageChange={handlePageChange}></Pagination>
+          <Pagination pageInfo={pageInfo} handlePageChange={handlePageChange}/>
         </div>
       </div>
     </>

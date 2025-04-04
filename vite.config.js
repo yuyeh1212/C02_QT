@@ -1,8 +1,8 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
-export default defineConfig({
-  base: process.env.NODE_ENV === 'production' ? '/C02_QT/' : '/',
+// 用 import.meta.env.MODE 判斷
+export default defineConfig(({ mode }) => ({
+  base: mode === 'production' ? '/C02_QT/' : '/',
   plugins: [react()],
-});
+}));

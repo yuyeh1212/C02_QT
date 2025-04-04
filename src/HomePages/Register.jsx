@@ -2,14 +2,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-// Import AlertModal component
 import AlertModal from '../components/AlertModal';
 import RegisterModal from '../components/RegisterModal';
 import Loading from '../components/Loading';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoading } from '../slice/loadingSlice';
 import CustomButton from '../components/CustomButton';
-// Adjust path as needed
 const API_URL = import.meta.env.VITE_BASE_URL;
 import PropTypes from 'prop-types';
 
@@ -110,23 +108,15 @@ export default function Register() {
 
       // 設定隨機延遲時間
       const randomDelay = Math.floor(Math.random() * 1000);
-      console.log('randomDelay:', randomDelay);
 
       // 使用 Promise 延遲請求
       await new Promise((resolve) => setTimeout(resolve, randomDelay));
 
       await axios.post(`${API_URL}/register`, finalData);
 
-      // Replace SweetAlert with AlertModal
-
       showAlert(`註冊成功！歡迎您的加入，請登入帳號開始體驗`, true, '/login');
 
-      // // Navigate after user confirms
-      // await new Promise(resolve => setTimeout(resolve, 2500));
-      // navigate('/login');
     } catch (error) {
-      console.error('請求錯誤', error);
-      // Replace SweetAlert with AlertModal for error
       showAlert(error.response?.data?.message || '註冊失敗，發生錯誤，請稍後再試', false);
     } finally {
       dispatch(setLoading(false));
@@ -189,7 +179,7 @@ export default function Register() {
   return (
     <div className="d-flex flex-column py-md-15 py-4 bg-neutral-100">
       {/* Loading 畫面 */}
-      {isLoading && <Loading></Loading>}
+      {isLoading && <Loading/>}
       {/* Add AlertModal component */}
       {
         <AlertModal
