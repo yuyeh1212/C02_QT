@@ -43,13 +43,13 @@ function HomeBanner() {
         {manicureData.map((item) => (
           <SwiperSlide key={item.id}>
             <div
-              className=" text-white text-center py-7 py-md-10 py-lg-12 d-flex flex-column align-items-center"
+              className=" text-white text-center py-7 py-md-10 d-flex flex-column align-items-center"
               style={{
                 backgroundImage: `url( '${item.image}')`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
-                maxHeight:'800px'
+                maxHeight:'780px'
               }}
             >
               <div className="bg-black bg-opacity-25 p-6 ">
