@@ -4,32 +4,26 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 
-const AlertModal = ({ show, onClose, children, status, redirectTo }) => {
+const AlertModal = ({ show, onClose, children, status, redirectTo, onComplete }) => {
   const navigate = useNavigate();
 
-   // 使用 useEffect 鎖定背景滾動
-   useEffect(() => {
+  useEffect(() => {
     if (show) {
-      // 鎖定滾動並隱藏滾動條
       document.body.style.overflow = 'hidden';
-      
     } else {
-      // 恢復滾動
       document.body.style.overflow = 'auto';
-      
     }
 
-    // 清除副作用
     return () => {
       document.body.style.overflow = 'auto';
-      
     };
   }, [show]);
 
   const handleClose = () => {
-    onClose(); // 呼叫父組件傳入的 onClose 函數
+    onClose();           // 關閉目前 modal（你設 show = false）
+    onComplete?.();      // 若有傳入 onComplete，就呼叫（外層可用來關外部 modal）
     if (redirectTo) {
-      navigate(redirectTo); // 如果有 redirectTo，跳轉到該路徑
+      navigate(redirectTo);
     }
   };
 
@@ -44,10 +38,7 @@ const AlertModal = ({ show, onClose, children, status, redirectTo }) => {
         <div className="modal-content text-center" style={{ border: '2px solid #BF9958' }}>
           <div className="modal-body py-5">
             {status === true ? (
-              <i
-                className="bi bi-check-circle-fill"
-                style={{ color: '#BF9958', fontSize: '60px' }}
-              ></i>
+              <i className="bi bi-check-circle-fill" style={{ color: '#BF9958', fontSize: '60px' }}></i>
             ) : status === false ? (
               <i className="bi bi-x-circle-fill" style={{ color: '#D9534F', fontSize: '60px' }}></i>
             ) : status === 'unauthorized' ? (
@@ -73,7 +64,7 @@ const AlertModal = ({ show, onClose, children, status, redirectTo }) => {
                 padding: '0.5rem 2rem',
                 borderRadius: '2rem',
               }}
-              onClick={handleClose} // 呼叫 handleClose 來處理關閉和跳轉
+              onClick={handleClose}
             >
               確認
             </button>
@@ -89,7 +80,8 @@ AlertModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
   status: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
-  redirectTo: PropTypes.string, 
+  redirectTo: PropTypes.string,
+  onComplete: PropTypes.func, // ✅ 加入 onComplete
 };
 
 export default AlertModal;

@@ -64,6 +64,7 @@ export default function Orders() {
           page: res.data.pageInfo.currentPage,
           maxPage: res.data.pageInfo.totalPages,
         });
+        console.log('獲取訂單成功:', res.data);
         setOrders(res.data.appointments);
       } catch (error) {
         console.error('獲取訂單失敗:', error);
@@ -115,7 +116,7 @@ export default function Orders() {
                         <p className="fw-bold text-primary mb-5">訂單編號：{order.id}</p>
                         <p className="mb-1 text-secondary-200">姓名</p>
                         <p className='mb-3 fw-bold'>
-                          {order.name}
+                          {order.user.name}
                         </p>
                         <p className="mb-1 text-secondary-200">預約時段</p>
                         <p className='mb-3 fw-bold'>
@@ -141,11 +142,11 @@ export default function Orders() {
                                 <td className="text-secondary-200" style={{ width: '120px' }}>
                                   LINE ID
                                 </td>
-                                <td>{order.LineID}</td>
+                                <td>{order.user.LineID}</td>
                               </tr>
                               <tr>
                                 <td className="text-secondary-200">電話</td>
-                                <td>{order.phone}</td>
+                                <td>{order.user.phone}</td>
                               </tr>
                               <tr>
                                 <td className="text-secondary-200">手部或足部</td>
@@ -220,9 +221,9 @@ export default function Orders() {
                   {orders.map((order) => (
                     <tr className="border-bottom" key={order.id}>
                       <td>{order.id}</td>
-                      <td>{order.name}</td>
-                      <td>{order.phone}</td>
-                      <td>{order.LineID}</td>
+                      <td>{order.user.name}</td>
+                      <td>{order.user.phone}</td>
+                      <td>{order.user.LineID}</td>
                       <td>
                         {order.date} <br />
                         {order.timeSlot}
