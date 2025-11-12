@@ -298,6 +298,9 @@ export default function Register() {
                     點擊登入
                   </Link>
                 </div>
+                <div className="col-12 d-flex justify-content-center fs-3 text-primary">
+                  首次註冊若載入時間過長，請重整網頁重新嘗試
+                </div>
                 <div className="col-12 d-flex justify-content-center pt-1">
                   <CustomButton
                     type="submit" // 這樣當按鈕被點擊時會提交表單

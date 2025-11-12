@@ -20,7 +20,7 @@ export default function Orders() {
     show: false,
     status: true,
     message: '',
-    redirectTo: null, // 設定跳轉的路徑
+    redirectTo: null, 
   });
 
   const [orderModalState, setOrderModalState] = useState({
@@ -45,13 +45,13 @@ export default function Orders() {
 
   const [orders, setOrders] = useState([]);
 
-  // 將 openOrder 改為數組來追踪多個打開的訂單
+
   const [openOrder, setOpenOrder] = useState(null);
 
-  // 追踪動畫狀態
+  
   const [, setAnimating] = useState(false);
 
-  // 切換訂單開關狀態的函數
+  
   const toggleOrder = (orderId) => {
     setAnimating(true);
     setTimeout(() => {
@@ -94,8 +94,8 @@ export default function Orders() {
     if (token) {
       axios.defaults.headers.common.Authorization = `Bearer ${token}`;
     }
-    getOrders(); // 只執行一次
-  }, [getOrders]); // 讓 useEffect 依賴 getOrders
+    getOrders(); 
+  }, [getOrders]); 
 
   const handlePageChange = (page) => {
     getOrders(page);
@@ -137,12 +137,12 @@ export default function Orders() {
       {isLoading && <Loading />}
       {
         <OrderModal
-          show={orderModalState.show} // 控制模態框顯示狀態
+          show={orderModalState.show} 
           onClose={() => {
             setOrderModalState({  show: false });
-          }}// 關閉模態框的函數
-          getOrders={getOrders} // 傳遞 getOrders 函數
-          initialData={selectOrder} // 初始數據，根據需要填充
+          }}
+          getOrders={getOrders} 
+          initialData={selectOrder} 
         />
       }
       {
@@ -151,11 +151,11 @@ export default function Orders() {
           onClose={() => {
             setAlertState({ ...alertState, show: false });
             if (alertState.redirectTo) {
-              navigate(alertState.redirectTo); // 使用 navigate 跳轉頁面
+              navigate(alertState.redirectTo); 
             }
           }}
           status={alertState.status}
-          redirectTo={alertState.redirectTo} // 傳遞 redirectTo 屬性
+          redirectTo={alertState.redirectTo} 
         >
           {alertState.message}
         </AlertModal>

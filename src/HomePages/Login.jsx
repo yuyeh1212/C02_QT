@@ -150,6 +150,9 @@ export default function Login() {
                     點擊註冊
                   </Link>
                 </div>
+                <div className="col-12 d-flex justify-content-center fs-3 text-primary">
+                  首次登入若載入時間過長，請重整網頁重新嘗試
+                </div>
                 <div className="col-12 d-flex justify-content-center pt-6">
                   <CustomButton type="submit" className="btn btn-primary text-white w-50 fs-4">
                     登入
